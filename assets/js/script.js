@@ -41,7 +41,9 @@
     });
     if (window.scrollY < 80) currentId = "top";
     navLinks.forEach(function (link) {
-      var target = link.getAttribute("href").replace("#", "");
+      var href = link.getAttribute("href");
+      if (href.charAt(0) !== "#") return;
+      var target = href.replace("#", "");
       link.classList.toggle("active", target === currentId);
     });
   }
