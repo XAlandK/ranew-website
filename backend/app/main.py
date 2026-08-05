@@ -23,6 +23,7 @@ from __future__ import annotations
 
 import io
 import logging
+from urllib.parse import quote
 
 from fastapi import FastAPI, File, HTTPException, Request, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
@@ -88,6 +89,19 @@ def _build_output_filename(original_name: str) -> str:
     return f"{stem}_corrected.docx"
 
 
+def _content_disposition(filename: str) -> str:
+    """Build a Content-Disposition value safe for names outside Latin-1
+    (e.g. Kurdish/Arabic script) — HTTP headers can only hold Latin-1 bytes,
+    so a raw non-ASCII filename in `filename="..."` crashes the response
+    with UnicodeEncodeError. RFC 6266 covers this with two parameters: an
+    ASCII-safe `filename` for old clients, and `filename*` (UTF-8,
+    percent-encoded) that every current browser prefers when present.
+    """
+    ascii_fallback = filename.encode("ascii", "ignore").decode("ascii").strip() or "corrected.docx"
+    encoded = quote(filename)
+    return f'attachment; filename="{ascii_fallback}"; filename*=UTF-8\'\'{encoded}'
+
+
 @app.post("/api/correct")
 def correct_document(file: UploadFile = File(...)):
     filename = file.filename or ""
@@ -123,7 +137,7 @@ def correct_document(file: UploadFile = File(...)):
     return StreamingResponse(
         io.BytesIO(corrected_bytes),
         media_type=DOCX_MEDIA_TYPE,
-        headers={"Content-Disposition": f'attachment; filename="{output_name}"'},
+        headers={"Content-Disposition": _content_disposition(output_name)},
     )
 
 

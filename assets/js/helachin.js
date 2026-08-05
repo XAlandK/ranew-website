@@ -111,7 +111,13 @@
 
   function extractFilename(xhr, fallback) {
     var header = xhr.getResponseHeader("Content-Disposition") || "";
-    var match = /filename="?([^"]+)"?/.exec(header);
+    // Prefer filename* (RFC 6266, UTF-8 percent-encoded) so non-ASCII names
+    // (Kurdish/Arabic) come through correctly instead of the ASCII fallback.
+    var star = /filename\*=UTF-8''([^;]+)/i.exec(header);
+    if (star) {
+      try { return decodeURIComponent(star[1]); } catch (e) { /* fall through */ }
+    }
+    var match = /filename="?([^";]+)"?/.exec(header);
     return match ? match[1] : fallback;
   }
 
