@@ -32,7 +32,12 @@ from fastapi.responses import JSONResponse, StreamingResponse
 from . import messages
 from .config import settings
 from .correction_engine import CorrectionEngineError, InvalidDocxError, correct_docx_bytes
-from .supabase_client import SupabaseConnectionError, SupabaseQueryError, corrections_cache
+from .supabase_client import (
+    SupabaseConnectionError,
+    SupabaseQueryError,
+    corrections_cache,
+    skipped_words_cache,
+)
 
 logger = logging.getLogger("helachin")
 logging.basicConfig(level=logging.INFO)
@@ -65,7 +70,11 @@ async def unhandled_exception_handler(request: Request, exc: Exception):
 
 @app.get("/health")
 def health():
-    return {"status": "ok", "cache": corrections_cache.status()}
+    return {
+        "status": "ok",
+        "corrections_cache": corrections_cache.status(),
+        "skipped_words_cache": skipped_words_cache.status(),
+    }
 
 
 def _read_upload_within_limit(file: UploadFile, max_mb: int) -> bytes:
@@ -113,7 +122,7 @@ def correct_document(file: UploadFile = File(...)):
         raise HTTPException(status_code=400, detail=messages.EMPTY_FILE)
 
     try:
-        dictionary_entries = corrections_cache.get_entries()
+        dictionary_entries = corrections_cache.get()
     except (SupabaseConnectionError, SupabaseQueryError) as exc:
         logger.error("Supabase fetch failed: %s", exc)
         raise HTTPException(status_code=503, detail=messages.DB_UNAVAILABLE) from exc
@@ -122,8 +131,17 @@ def correct_document(file: UploadFile = File(...)):
         logger.error("Correction dictionary is empty; refusing to process uploads.")
         raise HTTPException(status_code=503, detail=messages.DB_UNAVAILABLE)
 
+    # Skipped-word highlighting is a secondary enhancement on top of the core
+    # correction pass, so a Supabase hiccup here degrades to "no highlights"
+    # instead of failing the whole request — corrections still go out.
     try:
-        corrected_bytes, stats = correct_docx_bytes(raw_bytes, dictionary_entries)
+        skipped_words = skipped_words_cache.get()
+    except (SupabaseConnectionError, SupabaseQueryError) as exc:
+        logger.error("Supabase skipped-words fetch failed, continuing without highlighting: %s", exc)
+        skipped_words = []
+
+    try:
+        corrected_bytes, stats = correct_docx_bytes(raw_bytes, dictionary_entries, skipped_words)
     except InvalidDocxError as exc:
         logger.warning("Invalid .docx upload (%s): %s", filename, exc)
         raise HTTPException(status_code=400, detail=messages.CORRUPTED_FILE) from exc
@@ -149,4 +167,5 @@ def invalidate_cache(request: Request):
     if provided != settings.ADMIN_TOKEN:
         raise HTTPException(status_code=401, detail="Unauthorized")
     corrections_cache.invalidate()
+    skipped_words_cache.invalidate()
     return {"status": "invalidated"}

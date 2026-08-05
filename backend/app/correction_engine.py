@@ -4,14 +4,16 @@ correction_engine.py
 Thin wrapper around the existing corrector.py algorithm for a single
 in-memory .docx upload (as opposed to corrector.py's own CLI, which walks a
 folder of volumes). No correction logic is reimplemented here — the exact
-same functions the CLI tool uses are imported and called in the same order,
-so behavior stays identical between the two entry points.
+same functions the CLI tool uses are imported and called in the same order
+as corrector.py's own process_volume_document, so behavior stays identical
+between the two entry points:
 
-Skipped-word highlighting (corrector.py's second action) is intentionally
-not run here: the web upload flow only promises a corrected document back,
-so that pass — and the harakat-highlight cleanup pass that only matters when
-highlighting happened — are left out to keep large-document processing time
-down.
+    1. Normalize narrow NBSP
+    2. Waw/comma pre-pass
+    3. Apply corrections (CorrectedWords)
+    4. Highlight skipped words (SkippedWords), if any were supplied
+    5. Remove highlights from text containing Arabic diacritics
+    6. Waw/comma final pass
 """
 
 from __future__ import annotations
@@ -29,9 +31,13 @@ from docx import Document  # noqa: E402
 from corrector import (  # noqa: E402
     apply_corrections,
     build_replacement_rules,
+    highlight_words_with_list,
     normalize_document_narrow_nbsp,
+    remove_harakat_highlights,
     separate_waw,
 )
+
+DEFAULT_HIGHLIGHT_KEY = "YELLOW"
 
 
 class InvalidDocxError(ValueError):
@@ -42,9 +48,14 @@ class CorrectionEngineError(RuntimeError):
     """The correction algorithm itself failed on an otherwise valid document."""
 
 
-def correct_docx_bytes(file_bytes: bytes, dictionary_entries: list[dict[str, str]]) -> tuple[bytes, dict]:
-    """Run corrector.py's correction pipeline over `file_bytes` and return
-    (corrected_docx_bytes, stats)."""
+def correct_docx_bytes(
+    file_bytes: bytes,
+    dictionary_entries: list[dict[str, str]],
+    skipped_words: list[str] | None = None,
+    highlight_key: str = DEFAULT_HIGHLIGHT_KEY,
+) -> tuple[bytes, dict]:
+    """Run corrector.py's correction + skipped-word-highlight pipeline over
+    `file_bytes` and return (corrected_docx_bytes, stats)."""
     try:
         document = Document(io.BytesIO(file_bytes))
     except Exception as exc:
@@ -58,6 +69,16 @@ def correct_docx_bytes(file_bytes: bytes, dictionary_entries: list[dict[str, str
 
         rules = build_replacement_rules(dictionary_entries)
         stats["corrections_applied"] = apply_corrections(document, rules, None, None)
+
+        if skipped_words:
+            stats["skipped_highlights"] = highlight_words_with_list(
+                document, highlight_key, skipped_words, dictionary_entries
+            )
+            stats["harakat_highlight_cleanup"] = remove_harakat_highlights(document)
+        else:
+            stats["skipped_highlights"] = 0
+            stats["harakat_highlight_cleanup"] = 0
+
         stats["waw_fixes_post"] = separate_waw(document)
 
         output = io.BytesIO()

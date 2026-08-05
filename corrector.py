@@ -884,9 +884,34 @@ def highlight_words(
     skipped_words_path: Path = DEFAULT_SKIPPED_WORDS,
     dictionary_entries: Sequence[dict[str, str]] = (),
 ) -> int:
+    """CLI entry point: load skipped words from the local JSON file, then
+    delegate to highlight_words_with_list for the actual matching logic."""
     unique_words = load_skipped_words_from_file(skipped_words_path)
     if not unique_words:
         print(f"  No skipped words found in {skipped_words_path}")
+        return 0
+    return highlight_words_with_list(document, highlight_key, unique_words, dictionary_entries)
+
+
+def highlight_words_with_list(
+    document,
+    highlight_key: str,
+    skipped_words: Sequence[str],
+    dictionary_entries: Sequence[dict[str, str]] = (),
+) -> int:
+    """Same matching/highlighting logic as highlight_words, but takes an
+    already-loaded list of skipped words instead of a JSON file path — used
+    by the web backend, which sources this list from Supabase instead."""
+    # Same normalization load_skipped_words_from_file applies to the JSON
+    # path: normalize narrow NBSP, drop 1-character entries, dedupe, and
+    # sort longest-first so multi-word / longer terms are tried before
+    # shorter ones that could otherwise pre-empt them.
+    unique_words = sorted(
+        {normalize_narrow_nbsp(str(word).strip()) for word in skipped_words if len(str(word).strip()) >= 2},
+        key=len,
+        reverse=True,
+    )
+    if not unique_words:
         return 0
 
     single_words = [word for word in unique_words if " " not in word]
@@ -918,7 +943,7 @@ def highlight_words(
     paragraphs = list(iter_all_paragraphs(document))
     total_paragraphs = len(paragraphs)
 
-    print(f"  Starting skipped-word highlight pass: {total_paragraphs} paragraphs, {len(unique_words)} words from {skipped_words_path}.")
+    print(f"  Starting skipped-word highlight pass: {total_paragraphs} paragraphs, {len(unique_words)} words.")
     print("  Progress is shown on one updating line.")
 
     total = 0
