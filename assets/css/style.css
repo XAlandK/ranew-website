@@ -561,12 +561,18 @@ body[data-page="helachin"] .section{ padding-top:64px; }
   transition:width .2s var(--ease);
 }
 .helachin-progress__fill.is-indeterminate{
-  width:40% !important;
-  animation:helachin-indeterminate 1.1s ease-in-out infinite;
+  width:100% !important;
+  background-image:repeating-linear-gradient(
+    135deg,
+    rgba(255,255,255,.4) 0 10px,
+    transparent 10px 20px
+  );
+  background-size:28px 28px;
+  animation:helachin-stripes 1s linear infinite;
 }
-@keyframes helachin-indeterminate{
-  0%{ transform:translateX(-100%); }
-  100%{ transform:translateX(250%); }
+@keyframes helachin-stripes{
+  from{ background-position:0 0; }
+  to{ background-position:-28px 0; }
 }
 .helachin-status{ margin-top:10px; font-size:.9rem; color:var(--ink-soft); }
 
