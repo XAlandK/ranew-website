@@ -4,10 +4,19 @@ main.py
 FastAPI app for the هەڵەچن (correction) upload service.
 
 Routes:
-    GET  /health                 liveness/readiness check
-    POST /api/correct            upload a .docx, get the corrected .docx back
-    POST /api/cache/invalidate   force the next request to refetch from
-                                  Supabase (protected by ADMIN_TOKEN)
+    GET  /health                        liveness/readiness check
+    POST /api/correct                   upload a .docx, get back a job id
+    GET  /api/correct/{job_id}          poll job status
+    GET  /api/correct/{job_id}/download download the corrected .docx once done
+    POST /api/cache/invalidate          force the next request to refetch
+                                         from Supabase (protected by ADMIN_TOKEN)
+
+Correction runs as a background job (see jobs.py) rather than inline in the
+POST handler: a large real document can take minutes to process (the
+correction algorithm itself, unchanged, is simply slow at that scale), which
+is far longer than a browser or reverse-proxy will hold an HTTP request open.
+The upload endpoint returns a job id immediately; the frontend polls for
+completion instead.
 
 Security posture, matching the project's requirements:
     * CORS is locked to ALLOWED_ORIGINS (no wildcard) — only the deployed
@@ -32,12 +41,19 @@ from fastapi.responses import JSONResponse, StreamingResponse
 from . import messages
 from .config import settings
 from .correction_engine import CorrectionEngineError, InvalidDocxError, correct_docx_bytes
+from .jobs import JobError, job_store
 from .supabase_client import (
     SupabaseConnectionError,
     SupabaseQueryError,
     corrections_cache,
     skipped_words_cache,
 )
+
+JOB_ERROR_MESSAGES = {
+    "corrupted": messages.CORRUPTED_FILE,
+    "processing": messages.PROCESSING_FAILED,
+    "unexpected": messages.UNEXPECTED_ERROR,
+}
 
 logger = logging.getLogger("helachin")
 logging.basicConfig(level=logging.INFO)
@@ -111,8 +127,11 @@ def _content_disposition(filename: str) -> str:
     return f'attachment; filename="{ascii_fallback}"; filename*=UTF-8\'\'{encoded}'
 
 
-@app.post("/api/correct")
-def correct_document(file: UploadFile = File(...)):
+@app.post("/api/correct", status_code=202)
+def start_correction(file: UploadFile = File(...)):
+    """Validate the upload and the currently-cached data synchronously (all
+    fast), then hand the actual correction work to a background job and
+    return its id right away — see jobs.py for why."""
     filename = file.filename or ""
     if not filename.lower().endswith(".docx"):
         raise HTTPException(status_code=400, detail=messages.UNSUPPORTED_TYPE)
@@ -122,12 +141,12 @@ def correct_document(file: UploadFile = File(...)):
         raise HTTPException(status_code=400, detail=messages.EMPTY_FILE)
 
     try:
-        dictionary_entries = corrections_cache.get()
+        corrections_data = corrections_cache.get()
     except (SupabaseConnectionError, SupabaseQueryError) as exc:
         logger.error("Supabase fetch failed: %s", exc)
         raise HTTPException(status_code=503, detail=messages.DB_UNAVAILABLE) from exc
 
-    if not dictionary_entries:
+    if not corrections_data.entries:
         logger.error("Correction dictionary is empty; refusing to process uploads.")
         raise HTTPException(status_code=503, detail=messages.DB_UNAVAILABLE)
 
@@ -140,22 +159,49 @@ def correct_document(file: UploadFile = File(...)):
         logger.error("Supabase skipped-words fetch failed, continuing without highlighting: %s", exc)
         skipped_words = []
 
-    try:
-        corrected_bytes, stats = correct_docx_bytes(raw_bytes, dictionary_entries, skipped_words)
-    except InvalidDocxError as exc:
-        logger.warning("Invalid .docx upload (%s): %s", filename, exc)
-        raise HTTPException(status_code=400, detail=messages.CORRUPTED_FILE) from exc
-    except CorrectionEngineError as exc:
-        logger.exception("Correction engine failed on %s", filename)
-        raise HTTPException(status_code=500, detail=messages.PROCESSING_FAILED) from exc
+    def work() -> tuple[bytes, str]:
+        try:
+            corrected_bytes, stats = correct_docx_bytes(
+                raw_bytes, corrections_data.entries, corrections_data.rules, skipped_words
+            )
+        except InvalidDocxError as exc:
+            logger.warning("Invalid .docx upload (%s): %s", filename, exc)
+            raise JobError("corrupted", str(exc)) from exc
+        except CorrectionEngineError as exc:
+            logger.exception("Correction engine failed on %s", filename)
+            raise JobError("processing", str(exc)) from exc
+        logger.info("Corrected %s: %s", filename, stats)
+        return corrected_bytes, _build_output_filename(filename)
 
-    logger.info("Corrected %s: %s", filename, stats)
+    job_id = job_store.submit(filename, work)
+    return {"job_id": job_id}
 
-    output_name = _build_output_filename(filename)
+
+@app.get("/api/correct/{job_id}")
+def correction_status(job_id: str):
+    job = job_store.get(job_id)
+    if job is None:
+        raise HTTPException(status_code=404, detail="Job not found")
+
+    if job.status == "error":
+        detail = JOB_ERROR_MESSAGES.get(job.error_kind, messages.UNEXPECTED_ERROR)
+        if job.error_kind == "unexpected":
+            logger.error("Unexpected job error for %s: %s", job.filename, job.error_detail)
+        return {"status": "error", "detail": detail}
+
+    return {"status": job.status}
+
+
+@app.get("/api/correct/{job_id}/download")
+def correction_download(job_id: str):
+    job = job_store.get(job_id)
+    if job is None or job.status != "done" or job.result_bytes is None:
+        raise HTTPException(status_code=404, detail="Result not available")
+
     return StreamingResponse(
-        io.BytesIO(corrected_bytes),
+        io.BytesIO(job.result_bytes),
         media_type=DOCX_MEDIA_TYPE,
-        headers={"Content-Disposition": _content_disposition(output_name)},
+        headers={"Content-Disposition": _content_disposition(job.output_name or "corrected.docx")},
     )
 
 

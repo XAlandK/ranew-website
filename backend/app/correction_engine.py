@@ -30,7 +30,6 @@ from docx import Document  # noqa: E402
 
 from corrector import (  # noqa: E402
     apply_corrections,
-    build_replacement_rules,
     highlight_words_with_list,
     normalize_document_narrow_nbsp,
     remove_harakat_highlights,
@@ -51,11 +50,19 @@ class CorrectionEngineError(RuntimeError):
 def correct_docx_bytes(
     file_bytes: bytes,
     dictionary_entries: list[dict[str, str]],
+    rules: list[tuple],
     skipped_words: list[str] | None = None,
     highlight_key: str = DEFAULT_HIGHLIGHT_KEY,
 ) -> tuple[bytes, dict]:
     """Run corrector.py's correction + skipped-word-highlight pipeline over
-    `file_bytes` and return (corrected_docx_bytes, stats)."""
+    `file_bytes` and return (corrected_docx_bytes, stats).
+
+    `rules` must already be the compiled output of build_replacement_rules()
+    — callers are expected to build it once (e.g. cached alongside
+    dictionary_entries) rather than per request; compiling ~86k regex rules
+    takes several seconds and tens of MB, which is fine once but not on
+    every upload.
+    """
     try:
         document = Document(io.BytesIO(file_bytes))
     except Exception as exc:
@@ -67,7 +74,6 @@ def correct_docx_bytes(
             "waw_fixes_pre": separate_waw(document),
         }
 
-        rules = build_replacement_rules(dictionary_entries)
         stats["corrections_applied"] = apply_corrections(document, rules, None, None)
 
         if skipped_words:

@@ -26,7 +26,7 @@ import sys
 import threading
 import time
 from pathlib import Path
-from typing import Callable, Generic, TypeVar
+from typing import Callable, Generic, NamedTuple, TypeVar
 
 # The correction engine (corrector.py) and its Supabase repository classes
 # live at the repo root, one level above backend/. Reusing them directly
@@ -36,7 +36,7 @@ REPO_ROOT = Path(__file__).resolve().parents[2]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-from corrector import normalize_narrow_nbsp  # noqa: E402
+from corrector import build_replacement_rules, normalize_narrow_nbsp  # noqa: E402
 from supabase_repository import (  # noqa: E402
     CorrectionsRepository,
     SkippedWordsRepository,
@@ -60,9 +60,10 @@ class TTLCache(Generic[T]):
     """Generic in-memory cache that refreshes at most once per `ttl_seconds`
     via `fetch(force_refresh=...)`, and can be force-invalidated on demand."""
 
-    def __init__(self, fetch: Callable[[bool], T], ttl_seconds: int, empty: T):
+    def __init__(self, fetch: Callable[[bool], T], ttl_seconds: int, empty: T, size: Callable[[T], int] = len):
         self._fetch = fetch
         self._ttl_seconds = ttl_seconds
+        self._size = size
         self._lock = threading.Lock()
         self._fetched_at: float = 0.0
         self._value: T = empty
@@ -84,7 +85,7 @@ class TTLCache(Generic[T]):
     def status(self) -> dict:
         with self._lock:
             return {
-                "entry_count": len(self._value),
+                "entry_count": self._size(self._value),
                 "age_seconds": None if self._fetched_at == 0.0 else round(time.monotonic() - self._fetched_at, 1),
                 "ttl_seconds": self._ttl_seconds,
             }
@@ -100,16 +101,40 @@ def _normalize_entries(raw_entries: list[dict[str, str]]) -> list[dict[str, str]
     return entries
 
 
+class CorrectionsData(NamedTuple):
+    """Normalized dictionary entries plus their pre-compiled regex rules.
+
+    Compiling all ~86k rules (build_replacement_rules) takes several seconds
+    and tens of MB — measured at ~7s / ~42MB locally, and worse on a
+    memory-constrained server. Doing that on every single upload (as the CLI
+    does, fine for a one-shot local run) is what was pushing the web backend
+    over Render's memory limit and causing timeouts. Building it once here,
+    cached alongside the entries, means it only happens once per
+    CACHE_TTL_SECONDS window instead of once per request.
+    """
+
+    entries: list[dict[str, str]]
+    rules: list[tuple]
+
+
 _corrections_repository = CorrectionsRepository(
     url=settings.SUPABASE_URL,
     key=settings.SUPABASE_SERVICE_ROLE_KEY,
 )
-corrections_cache: TTLCache[list[dict[str, str]]] = TTLCache(
-    fetch=lambda force_refresh: _normalize_entries(
-        _corrections_repository.get_dictionary_entries(force_refresh=force_refresh)
-    ),
+
+
+def _fetch_corrections_data(force_refresh: bool) -> CorrectionsData:
+    raw = _corrections_repository.get_dictionary_entries(force_refresh=force_refresh)
+    entries = _normalize_entries(raw)
+    rules = build_replacement_rules(entries)
+    return CorrectionsData(entries=entries, rules=rules)
+
+
+corrections_cache: TTLCache[CorrectionsData] = TTLCache(
+    fetch=_fetch_corrections_data,
     ttl_seconds=settings.CACHE_TTL_SECONDS,
-    empty=[],
+    empty=CorrectionsData(entries=[], rules=[]),
+    size=lambda data: len(data.entries),
 )
 
 _skipped_words_repository = SkippedWordsRepository(

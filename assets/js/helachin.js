@@ -2,7 +2,16 @@
   "use strict";
 
   var MAX_UPLOAD_MB = 20; // keep in sync with backend MAX_UPLOAD_MB (backend/.env)
-  var REQUEST_TIMEOUT_MS = 180000; // 3 minutes — large documents take a while
+  var UPLOAD_TIMEOUT_MS = 300000; // 5 minutes — covers slow connections uploading a large file
+  var DOWNLOAD_TIMEOUT_MS = 120000; // 2 minutes — fetching the finished result
+  var POLL_INTERVAL_MS = 2500;
+  var POLL_TIMEOUT_MS = 30000; // a single status check should be near-instant
+  var MAX_POLL_FAILURES = 5; // consecutive network failures before giving up
+
+  // Correction on a large real document can take minutes — the algorithm
+  // itself is slow at that scale, not the connection — so the backend runs
+  // it as a background job and this page polls for completion instead of
+  // holding one long request open (which is what timed out in production).
 
   var MSG = {
     unsupportedType: "تکایە تەنها فایلێکی .docx باربکە.",
@@ -12,7 +21,7 @@
     timeout: "کاتی چاوەڕوانی تەواو بوو. تکایە دووبارە هەوڵبدەرەوە.",
     fallback: "هەڵەیەکی چاوەڕواننەکراو ڕوویدا. تکایە دواتر هەوڵبدەرەوە.",
     uploading: "بەڵگەنامەکە بار دەکرێت...",
-    processing: "بەڵگەنامەکە چاک دەکرێتەوە... تکایە چاوەڕێبە"
+    processing: "بەڵگەنامەکە چاک دەکرێتەوە... ئەمە بۆ بەڵگەنامەی گەورە دەکرێت چەند خولەکێک بخایەنێت."
   };
 
   function resolveApiBase() {
@@ -128,34 +137,12 @@
     reader.readAsText(blob);
   }
 
-  function startUpload() {
-    if (!selectedFile) return;
-
-    progressBox.hidden = false;
-    successBox.hidden = true;
-    errorBox.hidden = true;
-    setProgress(0, false);
-    statusText.textContent = MSG.uploading;
-    startBtn.disabled = true;
-
-    var formData = new FormData();
-    formData.append("file", selectedFile, selectedFile.name);
-
+  function downloadResult(jobId) {
     var xhr = new XMLHttpRequest();
     currentXhr = xhr;
-    xhr.open("POST", API_BASE_URL + "/api/correct");
+    xhr.open("GET", API_BASE_URL + "/api/correct/" + jobId + "/download");
     xhr.responseType = "blob";
-    xhr.timeout = REQUEST_TIMEOUT_MS;
-
-    xhr.upload.onprogress = function (e) {
-      if (e.lengthComputable) {
-        setProgress(Math.round((e.loaded / e.total) * 100), false);
-      }
-    };
-    xhr.upload.onload = function () {
-      setProgress(100, true);
-      statusText.textContent = MSG.processing;
-    };
+    xhr.timeout = DOWNLOAD_TIMEOUT_MS;
 
     xhr.onload = function () {
       startBtn.disabled = false;
@@ -177,6 +164,96 @@
           } catch (e) { /* keep fallback message */ }
           showError(message);
         });
+      }
+    };
+    xhr.onerror = function () {
+      startBtn.disabled = false;
+      showError(MSG.network);
+    };
+    xhr.ontimeout = function () {
+      startBtn.disabled = false;
+      showError(MSG.timeout);
+    };
+
+    xhr.send();
+  }
+
+  function pollJobStatus(jobId, failureCount) {
+    var xhr = new XMLHttpRequest();
+    currentXhr = xhr;
+    xhr.open("GET", API_BASE_URL + "/api/correct/" + jobId);
+    xhr.responseType = "json";
+    xhr.timeout = POLL_TIMEOUT_MS;
+
+    function retryOrGiveUp() {
+      var next = failureCount + 1;
+      if (next >= MAX_POLL_FAILURES) {
+        startBtn.disabled = false;
+        showError(MSG.network);
+        return;
+      }
+      setTimeout(function () { pollJobStatus(jobId, next); }, POLL_INTERVAL_MS);
+    }
+
+    xhr.onload = function () {
+      var body = xhr.response;
+      if (xhr.status < 200 || xhr.status >= 300 || !body || !body.status) {
+        retryOrGiveUp();
+        return;
+      }
+      if (body.status === "processing") {
+        setTimeout(function () { pollJobStatus(jobId, 0); }, POLL_INTERVAL_MS);
+      } else if (body.status === "done") {
+        downloadResult(jobId);
+      } else if (body.status === "error") {
+        startBtn.disabled = false;
+        showError(body.detail || MSG.fallback);
+      } else {
+        retryOrGiveUp();
+      }
+    };
+    xhr.onerror = retryOrGiveUp;
+    xhr.ontimeout = retryOrGiveUp;
+
+    xhr.send();
+  }
+
+  function startUpload() {
+    if (!selectedFile) return;
+
+    progressBox.hidden = false;
+    successBox.hidden = true;
+    errorBox.hidden = true;
+    setProgress(0, false);
+    statusText.textContent = MSG.uploading;
+    startBtn.disabled = true;
+
+    var formData = new FormData();
+    formData.append("file", selectedFile, selectedFile.name);
+
+    var xhr = new XMLHttpRequest();
+    currentXhr = xhr;
+    xhr.open("POST", API_BASE_URL + "/api/correct");
+    xhr.responseType = "json";
+    xhr.timeout = UPLOAD_TIMEOUT_MS;
+
+    xhr.upload.onprogress = function (e) {
+      if (e.lengthComputable) {
+        setProgress(Math.round((e.loaded / e.total) * 100), false);
+      }
+    };
+    xhr.upload.onload = function () {
+      setProgress(100, true);
+      statusText.textContent = MSG.processing;
+    };
+
+    xhr.onload = function () {
+      var body = xhr.response;
+      if (xhr.status === 202 && body && body.job_id) {
+        pollJobStatus(body.job_id, 0);
+      } else {
+        startBtn.disabled = false;
+        showError((body && body.detail) || MSG.fallback);
       }
     };
     xhr.onerror = function () {
