@@ -1,0 +1,32 @@
+# Render Blueprint for the هەڵەچن correction API.
+# Deploy: push this repo to GitHub, then in Render choose
+# "New +" -> "Blueprint" and point it at the repo. Render finds this file
+# automatically. Leave "Root Directory" unset (repo root) — the build/start
+# commands below reference backend/ explicitly so the app can still import
+# corrector.py and supabase_repository.py from the repo root.
+#
+# After the first deploy, set the real values for SUPABASE_SERVICE_ROLE_KEY
+# and ALLOWED_ORIGINS in the Render dashboard (Environment tab) — do not put
+# secrets in this file, since it is committed to the repo.
+
+services:
+  - type: web
+    name: ranew-helachin-api
+    runtime: python
+    plan: starter
+    buildCommand: pip install -r backend/requirements.txt
+    startCommand: uvicorn backend.app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    envVars:
+      - key: SUPABASE_URL
+        value: https://ocpkvqspoxbseoojhwob.supabase.co
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false
+      - key: ALLOWED_ORIGINS
+        sync: false
+      - key: CACHE_TTL_SECONDS
+        value: "600"
+      - key: MAX_UPLOAD_MB
+        value: "20"
+      - key: ADMIN_TOKEN
+        sync: false

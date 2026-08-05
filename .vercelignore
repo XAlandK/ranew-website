@@ -1,0 +1,23 @@
+# Vercel deploys this static site as-is, so anything listed here would
+# otherwise be publicly downloadable at its file path (e.g. /corrector.py).
+# Keep all backend/CLI Python source, secrets, and local dev artifacts out
+# of what gets served.
+
+# Internal CLI correction tool and its Supabase access layer.
+corrector.py
+supabase_repository.py
+
+# FastAPI backend service (deployed separately, e.g. on Render).
+backend/
+
+# Secrets / local environment files.
+.env
+.env.*
+!.env.example
+
+# Local dev / tooling artifacts.
+__pycache__/
+*.pyc
+VolumeLogs/
+CompletedVolumes/
+Volumes/

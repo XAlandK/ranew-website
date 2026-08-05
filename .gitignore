@@ -1,1 +1,15 @@
 .DS_Store
+
+# Secrets / local environment files.
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.pyc
+
+# corrector.py CLI run artifacts
+VolumeLogs/
+CompletedVolumes/
+Volumes/
