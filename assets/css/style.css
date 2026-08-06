@@ -138,7 +138,7 @@ button{ font-family:inherit; }
 .site-header.is-scrolled{ box-shadow:var(--shadow-sm); }
 .header__inner{ display:flex; align-items:center; gap:24px; height:82px; }
 .brand{ display:flex; align-items:center; gap:12px; margin-inline-end:auto; }
-.brand__logo{ width:48px; height:48px; border-radius:12px; box-shadow:var(--shadow-sm); }
+.brand__logo{ width:48px; height:48px; }
 .brand__text{ display:flex; flex-direction:column; line-height:1.3; }
 .brand__text strong{ font-size:1.05rem; color:var(--blue-900); }
 .brand__text small{ font-size:.74rem; color:var(--ink-faint); font-weight:500; }
@@ -215,13 +215,10 @@ button{ font-family:inherit; }
 .hero__badge{
   justify-self:center;
   width:min(260px, 100%); aspect-ratio:1;
-  background:var(--cream); border-radius:32px;
   display:flex; align-items:center; justify-content:center;
   padding:28px;
-  box-shadow:var(--shadow-lg);
-  transform:rotate(-3deg);
 }
-.hero__badge img{ border-radius:18px; }
+.hero__badge img{ width:100%; height:100%; object-fit:contain; }
 
 .stats{
   position:relative; z-index:1;
@@ -278,31 +275,23 @@ body[data-page="helachin"] .section{ padding-top:64px; }
   position:relative; z-index:1; justify-self:center;
   width:min(220px, 70%); aspect-ratio:3/4;
 }
-.promo__book::before, .promo__book::after{
-  content:""; position:absolute; inset:0;
-  background:var(--blue-100); border-radius:10px; box-shadow:var(--shadow-md);
-}
-.promo__book::before{ transform:rotate(-11deg) translate(6px,6px); }
-.promo__book::after{ transform:rotate(-5deg) translate(3px,3px); background:#fff; }
-.promo__book img{
-  position:relative; z-index:1; width:100%; height:100%; object-fit:cover;
-  border-radius:10px; box-shadow:var(--shadow-lg); transform:rotate(3deg);
+.promo__book-img{
+  position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
+  border-radius:10px; box-shadow:var(--shadow-md);
   display:block;
 }
+.promo__book-img--back{ z-index:1; transform:rotate(-11deg) translate(6px,6px); }
+.promo__book-img--mid{ z-index:2; transform:rotate(-5deg) translate(3px,3px); }
+.promo__book-img--front{ z-index:3; transform:rotate(3deg); box-shadow:var(--shadow-lg); }
 
 /* ---------- About ---------- */
 .about__grid{ display:grid; grid-template-columns:.85fr 1.15fr; gap:64px; align-items:center; }
 .about__media{ position:relative; }
 .about__frame{
   position:relative; z-index:1;
-  background:var(--cream); border-radius:var(--radius-lg);
-  padding:44px; box-shadow:var(--shadow-lg);
+  background:var(--cream);
+  padding:44px;
   aspect-ratio:1; display:flex; align-items:center; justify-content:center;
-  max-width:380px; margin-inline:auto;
-}
-.about__frame-deco{
-  position:absolute; inset-block:22px -22px; inset-inline:-22px 22px; z-index:0;
-  border:2px solid var(--blue-100); border-radius:var(--radius-lg);
   max-width:380px; margin-inline:auto;
 }
 .about__content .eyebrow{ margin-bottom:16px; }
@@ -431,7 +420,7 @@ body[data-page="helachin"] .section{ padding-top:64px; }
   padding-block:44px; border-bottom:1px solid rgba(255,255,255,.1);
 }
 .footer__brand{ display:flex; align-items:center; gap:14px; }
-.footer__brand img{ width:44px; height:44px; border-radius:10px; }
+.footer__brand img{ width:44px; height:44px; }
 .footer__brand strong{ color:#fff; font-size:1.02rem; }
 .footer__brand p{ font-size:.82rem; margin-top:2px; }
 .footer__links{ display:flex; gap:22px; flex-wrap:wrap; }
