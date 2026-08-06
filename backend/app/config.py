@@ -58,6 +58,11 @@ class Settings:
     # Reject uploads larger than this before reading them fully into memory.
     MAX_UPLOAD_MB: int = int(_optional_env("MAX_UPLOAD_MB", "20"))
 
+    # Reject pasted-text correction requests longer than this (characters).
+    # Handled synchronously (unlike file uploads), so this is kept small
+    # enough to stay fast even for a paragraph with unusually long lines.
+    MAX_TEXT_CHARS: int = int(_optional_env("MAX_TEXT_CHARS", "20000"))
+
     # Bearer token required to call POST /api/cache/invalidate. Optional:
     # if unset, the endpoint is disabled entirely rather than left open.
     ADMIN_TOKEN: str | None = os.environ.get("ADMIN_TOKEN") or None

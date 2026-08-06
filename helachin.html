@@ -131,6 +131,29 @@
         </div>
 
       </div>
+
+      <div class="helachin-divider"><span>یان</span></div>
+
+      <div class="helachin-card reveal">
+        <h2 class="helachin-text-title">دەقێک بنووسە بۆ چاککردن</h2>
+        <p class="helachin-text-sub">دەقەکەت لێرە بنووسە یان بیپەیوەندە، بەبێ ئەوەی پێویستت بە بەڵگەنامەیەکی Word بێت.</p>
+
+        <textarea id="helachinTextInput" class="helachin-textarea" rows="6" placeholder="دەقەکەت لێرە بنووسە..."></textarea>
+
+        <button type="button" class="btn btn--primary helachin-start" id="helachinTextSubmit">چاککردنی دەق</button>
+
+        <p class="helachin-status" id="helachinTextStatus" hidden>دەقەکە چاک دەکرێتەوە...</p>
+
+        <div class="helachin-text-result" id="helachinTextResult" hidden>
+          <strong class="helachin-text-result__label">دەقی چاککراو</strong>
+          <div class="helachin-text-output" id="helachinTextOutput"></div>
+        </div>
+
+        <div class="helachin-result helachin-result--error" id="helachinTextError" hidden>
+          <p id="helachinTextErrorMessage"></p>
+        </div>
+      </div>
+
     </div>
   </section>
 </main>
@@ -170,6 +193,6 @@
 
 <script src="assets/js/script.js"></script>
 <script src="assets/js/i18n.js"></script>
-<script src="assets/js/helachin.js?v=7236528f"></script>
+<script src="assets/js/helachin.js?v=ad3e165e"></script>
 </body>
 </html>

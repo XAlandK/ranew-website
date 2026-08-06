@@ -2,11 +2,11 @@
 correction_engine.py
 ─────────────────────────
 Thin wrapper around the existing corrector.py algorithm for a single
-in-memory .docx upload (as opposed to corrector.py's own CLI, which walks a
-folder of volumes). No correction logic is reimplemented here — the exact
-same functions the CLI tool uses are imported and called in the same order
-as corrector.py's own process_volume_document, so behavior stays identical
-between the two entry points:
+in-memory .docx upload or a block of pasted text (as opposed to corrector.py's
+own CLI, which walks a folder of volumes). No correction logic is
+reimplemented here — the exact same functions the CLI tool uses are imported
+and called in the same order as corrector.py's own process_volume_document,
+so behavior stays identical across all three entry points:
 
     1. Normalize narrow NBSP
     2. Waw/comma pre-pass
@@ -14,10 +14,16 @@ between the two entry points:
     4. Highlight skipped words (SkippedWords), if any were supplied
     5. Remove highlights from text containing Arabic diacritics
     6. Waw/comma final pass
+
+Pasted text is run through the identical pipeline by wrapping each line in a
+fresh in-memory Document as its own paragraph — corrector.py's functions
+operate on python-docx paragraphs/runs either way, so nothing about the
+matching logic changes between "uploaded file" and "pasted text".
 """
 
 from __future__ import annotations
 
+import html
 import io
 import sys
 from pathlib import Path
@@ -44,7 +50,35 @@ class InvalidDocxError(ValueError):
 
 
 class CorrectionEngineError(RuntimeError):
-    """The correction algorithm itself failed on an otherwise valid document."""
+    """The correction algorithm itself failed on otherwise valid input."""
+
+
+def _run_pipeline(
+    document,
+    rules: list[tuple],
+    dictionary_entries: list[dict[str, str]],
+    skipped_words: list[str] | None,
+    highlight_key: str,
+) -> dict:
+    """The shared correction + highlight pipeline, run in-place on `document`."""
+    stats = {
+        "narrow_nbsp_normalized": normalize_document_narrow_nbsp(document),
+        "waw_fixes_pre": separate_waw(document),
+    }
+
+    stats["corrections_applied"] = apply_corrections(document, rules, None, None)
+
+    if skipped_words:
+        stats["skipped_highlights"] = highlight_words_with_list(
+            document, highlight_key, skipped_words, dictionary_entries
+        )
+        stats["harakat_highlight_cleanup"] = remove_harakat_highlights(document)
+    else:
+        stats["skipped_highlights"] = 0
+        stats["harakat_highlight_cleanup"] = 0
+
+    stats["waw_fixes_post"] = separate_waw(document)
+    return stats
 
 
 def correct_docx_bytes(
@@ -69,26 +103,50 @@ def correct_docx_bytes(
         raise InvalidDocxError(str(exc)) from exc
 
     try:
-        stats = {
-            "narrow_nbsp_normalized": normalize_document_narrow_nbsp(document),
-            "waw_fixes_pre": separate_waw(document),
-        }
-
-        stats["corrections_applied"] = apply_corrections(document, rules, None, None)
-
-        if skipped_words:
-            stats["skipped_highlights"] = highlight_words_with_list(
-                document, highlight_key, skipped_words, dictionary_entries
-            )
-            stats["harakat_highlight_cleanup"] = remove_harakat_highlights(document)
-        else:
-            stats["skipped_highlights"] = 0
-            stats["harakat_highlight_cleanup"] = 0
-
-        stats["waw_fixes_post"] = separate_waw(document)
-
+        stats = _run_pipeline(document, rules, dictionary_entries, skipped_words, highlight_key)
         output = io.BytesIO()
         document.save(output)
         return output.getvalue(), stats
+    except Exception as exc:
+        raise CorrectionEngineError(str(exc)) from exc
+
+
+def correct_text(
+    text: str,
+    dictionary_entries: list[dict[str, str]],
+    rules: list[tuple],
+    skipped_words: list[str] | None = None,
+    highlight_key: str = DEFAULT_HIGHLIGHT_KEY,
+) -> tuple[str, str, dict]:
+    """Run the same pipeline as correct_docx_bytes over pasted plain text.
+
+    Returns (corrected_html, corrected_text, stats). corrected_html wraps
+    every highlighted (skipped-word) run in a <mark> tag so the frontend can
+    render the highlights directly; corrected_text is the plain equivalent
+    (e.g. for copying).
+    """
+    try:
+        document = Document()
+        paragraphs = [document.add_paragraph(line) for line in text.split("\n")]
+
+        stats = _run_pipeline(document, rules, dictionary_entries, skipped_words, highlight_key)
+
+        html_lines: list[str] = []
+        text_lines: list[str] = []
+        for paragraph in paragraphs:
+            run_html_parts: list[str] = []
+            for run in paragraph.runs:
+                run_text = run.text or ""
+                if not run_text:
+                    continue
+                escaped = html.escape(run_text)
+                if run.font.highlight_color is not None:
+                    run_html_parts.append(f"<mark>{escaped}</mark>")
+                else:
+                    run_html_parts.append(escaped)
+            html_lines.append("".join(run_html_parts))
+            text_lines.append(paragraph.text)
+
+        return "<br>".join(html_lines), "\n".join(text_lines), stats
     except Exception as exc:
         raise CorrectionEngineError(str(exc)) from exc

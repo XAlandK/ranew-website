@@ -8,6 +8,9 @@ Routes:
     POST /api/correct                   upload a .docx, get back a job id
     GET  /api/correct/{job_id}          poll job status
     GET  /api/correct/{job_id}/download download the corrected .docx once done
+    POST /api/correct-text              correct pasted text synchronously,
+                                         returns corrected HTML (with
+                                         highlights) and plain text
     POST /api/cache/invalidate          force the next request to refetch
                                          from Supabase (protected by ADMIN_TOKEN)
 
@@ -37,10 +40,16 @@ from urllib.parse import quote
 from fastapi import FastAPI, File, HTTPException, Request, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, StreamingResponse
+from pydantic import BaseModel
 
 from . import messages
 from .config import settings
-from .correction_engine import CorrectionEngineError, InvalidDocxError, correct_docx_bytes
+from .correction_engine import (
+    CorrectionEngineError,
+    InvalidDocxError,
+    correct_docx_bytes,
+    correct_text,
+)
 from .jobs import JobError, job_store
 from .supabase_client import (
     SupabaseConnectionError,
@@ -203,6 +212,49 @@ def correction_download(job_id: str):
         media_type=DOCX_MEDIA_TYPE,
         headers={"Content-Disposition": _content_disposition(job.output_name or "corrected.docx")},
     )
+
+
+class TextCorrectionRequest(BaseModel):
+    text: str
+
+
+@app.post("/api/correct-text")
+def correct_text_endpoint(payload: TextCorrectionRequest):
+    """Correct pasted text synchronously — short enough (capped at
+    MAX_TEXT_CHARS) that, unlike file uploads, it doesn't need the
+    background-job treatment."""
+    text = payload.text or ""
+    if not text.strip():
+        raise HTTPException(status_code=400, detail=messages.EMPTY_TEXT)
+    if len(text) > settings.MAX_TEXT_CHARS:
+        raise HTTPException(status_code=400, detail=messages.TEXT_TOO_LONG)
+
+    try:
+        corrections_data = corrections_cache.get()
+    except (SupabaseConnectionError, SupabaseQueryError) as exc:
+        logger.error("Supabase fetch failed: %s", exc)
+        raise HTTPException(status_code=503, detail=messages.DB_UNAVAILABLE) from exc
+
+    if not corrections_data.entries:
+        logger.error("Correction dictionary is empty; refusing to process text.")
+        raise HTTPException(status_code=503, detail=messages.DB_UNAVAILABLE)
+
+    try:
+        skipped_words = skipped_words_cache.get()
+    except (SupabaseConnectionError, SupabaseQueryError) as exc:
+        logger.error("Supabase skipped-words fetch failed, continuing without highlighting: %s", exc)
+        skipped_words = []
+
+    try:
+        corrected_html, corrected_text, stats = correct_text(
+            text, corrections_data.entries, corrections_data.rules, skipped_words
+        )
+    except CorrectionEngineError as exc:
+        logger.exception("Text correction engine failed")
+        raise HTTPException(status_code=500, detail=messages.PROCESSING_FAILED) from exc
+
+    logger.info("Corrected pasted text: %s", stats)
+    return {"html": corrected_html, "text": corrected_text}
 
 
 @app.post("/api/cache/invalidate")

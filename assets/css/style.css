@@ -591,6 +591,36 @@ body[data-page="helachin"] .section{ padding-top:64px; }
 }
 .helachin-link-btn:hover{ color:var(--blue-800); }
 
+.helachin-divider{
+  display:flex; align-items:center; gap:14px;
+  max-width:640px; margin:32px auto; color:var(--ink-faint); font-size:.85rem; font-weight:700;
+}
+.helachin-divider::before, .helachin-divider::after{ content:""; flex:1 1 auto; height:1px; background:var(--line); }
+
+.helachin-text-title{ font-size:1.2rem; color:var(--blue-900); margin-bottom:8px; }
+.helachin-text-sub{ color:var(--ink-soft); font-size:.92rem; margin-bottom:20px; }
+
+.helachin-textarea{
+  width:100%; resize:vertical; min-height:140px;
+  border:1px solid var(--line); border-radius:var(--radius-md);
+  padding:16px; font-family:inherit; font-size:1rem; line-height:1.75; color:var(--ink);
+  background:var(--blue-50);
+  transition:border-color .25s var(--ease), background .25s var(--ease);
+}
+.helachin-textarea:focus{ outline:none; border-color:var(--blue-600); background:#fff; }
+
+.helachin-text-result{ margin-top:20px; text-align:start; }
+.helachin-text-result__label{ display:block; font-size:.85rem; color:var(--ink-faint); margin-bottom:8px; }
+.helachin-text-output{
+  border:1px solid var(--line); border-radius:var(--radius-md);
+  background:var(--blue-50); padding:16px;
+  font-size:1rem; line-height:1.9; color:var(--ink);
+  white-space:pre-wrap; word-break:break-word;
+}
+.helachin-text-output mark{
+  background:#fff3a3; color:inherit; border-radius:4px; padding:1px 2px;
+}
+
 @media (max-width: 640px){
   .helachin-card{ padding:28px 20px; }
   .helachin-drop{ padding:32px 16px; }

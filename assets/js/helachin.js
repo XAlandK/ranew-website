@@ -21,8 +21,12 @@
     timeout: "کاتی چاوەڕوانی تەواو بوو. تکایە دووبارە هەوڵبدەرەوە.",
     fallback: "هەڵەیەکی چاوەڕواننەکراو ڕوویدا. تکایە دواتر هەوڵبدەرەوە.",
     uploading: "بەڵگەنامەکە بار دەکرێت...",
-    processing: "بەڵگەنامەکە چاک دەکرێتەوە... ئەمە بۆ بەڵگەنامەی گەورە دەکرێت چەند خولەکێک بخایەنێت."
+    processing: "بەڵگەنامەکە چاک دەکرێتەوە... ئەمە بۆ بەڵگەنامەی گەورە دەکرێت چەند خولەکێک بخایەنێت.",
+    emptyText: "تکایە دەقێک بنووسە بۆ چاککردن.",
+    processingText: "دەقەکە چاک دەکرێتەوە..."
   };
+
+  var TEXT_TIMEOUT_MS = 30000;
 
   function resolveApiBase() {
     var isLocalHost = /^(localhost|127\.0\.0\.1)$/.test(window.location.hostname);
@@ -48,6 +52,14 @@
   var downloadLink = document.getElementById("helachinDownload");
   var retryAfterSuccess = document.getElementById("helachinRetryAfterSuccess");
   var retryAfterError = document.getElementById("helachinRetryAfterError");
+
+  var textInput = document.getElementById("helachinTextInput");
+  var textSubmit = document.getElementById("helachinTextSubmit");
+  var textStatus = document.getElementById("helachinTextStatus");
+  var textResult = document.getElementById("helachinTextResult");
+  var textOutput = document.getElementById("helachinTextOutput");
+  var textErrorBox = document.getElementById("helachinTextError");
+  var textErrorMessage = document.getElementById("helachinTextErrorMessage");
 
   if (!drop) return; // this script only applies to helachin.html
 
@@ -320,4 +332,57 @@
       resetToIdle();
     }
   });
+
+  // ---------- Paste-text correction ----------
+  function showTextError(message) {
+    textResult.hidden = true;
+    textErrorMessage.textContent = message;
+    textErrorBox.hidden = false;
+  }
+
+  function submitText() {
+    var text = textInput.value;
+    if (!text || !text.trim()) {
+      showTextError(MSG.emptyText);
+      return;
+    }
+
+    textResult.hidden = true;
+    textErrorBox.hidden = true;
+    textStatus.hidden = false;
+    textStatus.textContent = MSG.processingText;
+    textSubmit.disabled = true;
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", API_BASE_URL + "/api/correct-text");
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.responseType = "json";
+    xhr.timeout = TEXT_TIMEOUT_MS;
+
+    xhr.onload = function () {
+      textSubmit.disabled = false;
+      textStatus.hidden = true;
+      var body = xhr.response;
+      if (xhr.status >= 200 && xhr.status < 300 && body && typeof body.html === "string") {
+        textOutput.innerHTML = body.html;
+        textResult.hidden = false;
+      } else {
+        showTextError((body && body.detail) || MSG.fallback);
+      }
+    };
+    xhr.onerror = function () {
+      textSubmit.disabled = false;
+      textStatus.hidden = true;
+      showTextError(MSG.network);
+    };
+    xhr.ontimeout = function () {
+      textSubmit.disabled = false;
+      textStatus.hidden = true;
+      showTextError(MSG.timeout);
+    };
+
+    xhr.send(JSON.stringify({ text: text }));
+  }
+
+  if (textSubmit) textSubmit.addEventListener("click", submitText);
 })();
