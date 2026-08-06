@@ -35,6 +35,8 @@ from __future__ import annotations
 
 import io
 import logging
+import threading
+from contextlib import asynccontextmanager
 from urllib.parse import quote
 
 from fastapi import FastAPI, File, HTTPException, Request, UploadFile
@@ -69,7 +71,28 @@ logging.basicConfig(level=logging.INFO)
 
 DOCX_MEDIA_TYPE = "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
 
-app = FastAPI(title="Ranew Helachin Correction API")
+
+def _warm_caches() -> None:
+    try:
+        corrections_cache.get()
+        skipped_words_cache.get()
+        logger.info("Caches warmed at startup.")
+    except Exception:
+        logger.exception("Failed to warm caches at startup; will retry lazily on first request.")
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Pay the cold-fetch cost (paginated Supabase fetch + compiling ~86k
+    # regex rules, ~20-30s combined) at server startup instead of on
+    # whichever unlucky request arrives first after a deploy or a
+    # CACHE_TTL_SECONDS expiry. Runs in a background thread so it never
+    # delays the server accepting connections / passing health checks.
+    threading.Thread(target=_warm_caches, daemon=True).start()
+    yield
+
+
+app = FastAPI(title="Ranew Helachin Correction API", lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,

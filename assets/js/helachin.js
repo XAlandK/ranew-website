@@ -26,7 +26,12 @@
     processingText: "دەقەکە چاک دەکرێتەوە..."
   };
 
-  var TEXT_TIMEOUT_MS = 30000;
+  // Generous margin: the very first request after a deploy or a 10-minute
+  // cache expiry can trigger a cold Supabase refetch + rule rebuild that
+  // alone takes 20-30s, on top of the actual (normally near-instant) text
+  // correction. The backend also warms its caches at startup now, so this
+  // slow path should be rare in practice.
+  var TEXT_TIMEOUT_MS = 90000;
 
   function resolveApiBase() {
     var isLocalHost = /^(localhost|127\.0\.0\.1)$/.test(window.location.hostname);
