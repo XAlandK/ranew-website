@@ -202,6 +202,10 @@ button{ font-family:inherit; }
 .eyebrow::before{ content:""; width:7px; height:7px; border-radius:50%; background:#7fb2ff; }
 .eyebrow--dark{ color:var(--blue-700); background:var(--blue-100); }
 .eyebrow--dark::before{ background:var(--blue-600); }
+.eyebrow--green{ color:#166534; background:#eefaf1; margin-bottom:0; }
+.eyebrow--green::before{ background:#1c8a4b; }
+
+.helachin-stats{ display:flex; flex-wrap:wrap; justify-content:center; gap:10px; margin-bottom:22px; }
 
 .hero h1{ font-size:clamp(2.1rem, 4.4vw, 3.4rem); margin-bottom:22px; }
 .hero h1 .hero__line2{ color:#a9c8f7; }

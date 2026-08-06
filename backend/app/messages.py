@@ -7,7 +7,7 @@ without touching application code, and so the API layer never leaks
 internal exception text to the browser.
 """
 
-UNSUPPORTED_TYPE = "تکایە تەنها فایلێکی .docx باربکە."
+UNSUPPORTED_TYPE = "تکایە تەنیا فایلێکی .docx باربکە."
 EMPTY_FILE = "فایلەکە بەتاڵە یان بە دروستی بارنەکراوە."
 TOO_LARGE = "قەبارەی فایلەکە زۆر گەورەیە. تکایە بەڵگەنامەیەکی بچووکتر باربکە."
 EMPTY_TEXT = "تکایە دەقێک بنووسە بۆ چاککردن."

@@ -14,7 +14,7 @@
   // holding one long request open (which is what timed out in production).
 
   var MSG = {
-    unsupportedType: "تکایە تەنها فایلێکی .docx باربکە.",
+    unsupportedType: "تکایە تەنیا فایلێکی .docx باربکە.",
     emptyFile: "فایلەکە بەتاڵە یان بە دروستی هەڵنەبژێردراوە.",
     tooLarge: "قەبارەی فایلەکە زۆر گەورەیە (زۆرترین قەبارە " + MAX_UPLOAD_MB + " مێگابایت). تکایە بەڵگەنامەیەکی بچووکتر باربکە.",
     network: "پەیوەندی بە ڕاژەکارەوە سەرکەوتوو نەبوو. تکایە ئینتەرنێتەکەت بپشکنە و دووبارە هەوڵبدەرەوە.",
