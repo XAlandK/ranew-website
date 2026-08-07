@@ -73,7 +73,7 @@
       "team.m5.role": "سەرپەرشتی بەشی کارگێڕی و دارایی",
       "team.m6.initials": "ش.ع",
       "team.m6.name": "ئاسۆ عەلی",
-      "team.m6.role": "سەرپەرشتیاری بەشی سلێمانی",
+      "team.m6.role": "سەرپەرشتی بەشی سلێمانی",
       "team.m7.initials": "د.س",
       "team.m7.name": "ئەلەند کاوە",
       "team.m7.role": "تەکنەلۆجیا",
@@ -136,7 +136,7 @@
       "contact.address.label": "ناونیشان",
       "contact.address.value": "هەولێر، گوڵان 2، بەرامبەر ماجیدی مۆڵ",
       "contact.phone.label": "ژمارەی مۆبایل",
-      "contact.email.label": "ئیمەیل",
+      "contact.email.label": "ئیمێڵ",
       "contact.facebook.label": "فەیسبووک",
       "contact.mapTitle": "شوێنی دامەزراوەی ڕەنێو لەسەر نەخشە",
 
