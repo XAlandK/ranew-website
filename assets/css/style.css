@@ -364,11 +364,43 @@ body[data-page="helachin"] .section{ padding-top:64px; }
   transition:transform .3s var(--ease), box-shadow .3s var(--ease), border-color .3s var(--ease);
 }
 .book-row:hover{ transform:translateY(-6px); box-shadow:var(--shadow-md); border-color:transparent; }
-.book-row__cover{ flex:0 0 190px; align-self:stretch; aspect-ratio:3/4; padding:14px; box-sizing:border-box; }
-.book-row__cover img{ width:100%; height:100%; object-fit:contain; display:block; }
-.book-row__body{ flex:1 1 auto; padding-block:22px; padding-inline:38px; }
-.book-row h3{ font-size:1.3rem; color:var(--blue-900); margin-bottom:10px; }
-.book-row p{ font-size:1rem; color:var(--ink-soft); }
+.book-row__cover{ flex:0 0 240px; align-self:stretch; aspect-ratio:3/4; padding:14px; box-sizing:border-box; position:relative; }
+.book-row__cover img{ width:100%; height:100%; object-fit:contain; display:block; cursor:zoom-in; }
+.book-row__body{ flex:1 1 auto; padding-block:26px; padding-inline:42px; }
+.book-row h3{ font-size:1.4rem; color:var(--blue-900); margin-bottom:10px; }
+.book-row p{ font-size:1.05rem; color:var(--ink-soft); }
+
+/* ---------- Image zoom (magnifier) ---------- */
+.zoom-lens{
+  position:absolute;
+  border:2px solid var(--blue-500, #2c5cd6);
+  background:rgba(255,255,255,.3);
+  pointer-events:none;
+  display:none;
+  z-index:5;
+}
+.zoom-backdrop{
+  position:fixed; inset:0;
+  background:rgba(15,23,42,.55);
+  display:none;
+  z-index:998;
+  pointer-events:none;
+}
+.zoom-result{
+  position:fixed;
+  width:min(520px, 90vw); height:min(520px, 90vh);
+  border:1px solid var(--line);
+  border-radius:16px;
+  background-repeat:no-repeat;
+  background-color:#fff;
+  box-shadow:var(--shadow-md);
+  display:none;
+  z-index:999;
+  pointer-events:none;
+}
+@media (max-width:640px){
+  .zoom-result{ width:min(320px, 88vw); height:min(320px, 88vw); }
+}
 
 /* ---------- Team card ---------- */
 .team-card{
@@ -457,7 +489,7 @@ body[data-page="helachin"] .section{ padding-top:64px; }
   .cards--4{ grid-template-columns:1fr 1fr; }
   .cards--5{ grid-template-columns:1fr 1fr; }
   .book-row{ flex-direction:column; align-items:stretch; }
-  .book-row__cover{ flex-basis:auto; aspect-ratio:auto; height:200px; }
+  .book-row__cover{ flex-basis:auto; aspect-ratio:auto; height:250px; }
   .book-row__body{ padding:22px; }
   .promo{ grid-template-columns:1fr; padding:40px 32px; text-align:center; }
   .promo__overlay{ background-position:center; background-size:80% auto; }
