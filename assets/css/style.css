@@ -415,6 +415,8 @@ body[data-page="helachin"] .section{ padding-top:64px; }
   display:flex; align-items:center; justify-content:center;
   font-size:1.4rem; font-weight:800;
 }
+.team-card__avatar--photo{ overflow:hidden; padding:0; }
+.team-card__avatar--photo img{ width:100%; height:100%; object-fit:cover; }
 .team-card h3{ font-size:1.1rem; color:var(--blue-900); margin-bottom:8px; }
 .team-card p{ font-size:.92rem; color:var(--ink-soft); }
 
