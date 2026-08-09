@@ -79,7 +79,7 @@
       "team.m7.role": "تەکنەلۆجیا",
       "team.m8.initials": "ل.ف",
       "team.m8.name": "بڕیار حوسێن",
-      "team.m8.role": "ڕێنووس و هەڵەچنین",
+      "team.m8.role": "ڕێنووس و دیزاین",
       "team.m9.initials": "ئـ.ج",
       "team.m9.name": "ئەمین جەوهەر",
       "team.m9.role": "ڤیدیۆگراف، ئیدیتەر",
