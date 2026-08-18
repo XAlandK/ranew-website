@@ -54,6 +54,11 @@
       "publications.p7.title": "چاوبەخۆداگێڕانەوە",
       "publications.p7.desc": "ئەم کتێبە وەک لە ناونیشانەکەشیەوە دیارە چاو بەخۆداگێڕانەوەیەکی گشتگیر و هەمەلایەنەیە بۆ کۆی بوار و لایەنەکانی دینداریی مسوڵمانانمان. هەوڵم داوە لە سەرجەم بوارەکانی تێڕوانین و بوونناسی و ئیمان و عەقیدە و خواپەرستی و تەزکییە و تەقوا و ڕەوشت و ئاکار و کاروباری کەسێتی و کۆمەڵایەتی و سیاسیدا، نوختە بخەمە سەر پیت و بە شێوەیەکی بەڵگەیی هاوسەنگانەی دوور لە کورتھێنان و تێپەڕاندن، نەخشەڕێ و هێڵە گشتییەکانی موسڵمانێتییەکی ڕاست و ساغ بخەمە ڕوو.",
 
+      "promo.eyebrow": "بڵاوکراوەی تازە",
+      "promo.title": "کتێبی \"هاوسەنگی\"",
+      "promo.desc": "یەکێک لە کتێبە تازەکانمان، سەبارەت بە بونیادنانی هۆشیاری کۆمەڵایەتی. بیبینە لە بەشی بڵاوکراوەکاندا.",
+      "promo.cta": "بینینی هەموو بڵاوکراوەکان",
+
       "team.title": "ئەندامانی تیمەکەمان",
       "team.sub": "ئەو کەسانەی بە پەرۆشەوە کار لەسەر ئامانجەکانی دامەزراوە دەکەن.",
       "team.m1.initials": "ئ.م",
@@ -193,6 +198,11 @@
       "publications.p7.title": "Book Title",
       "publications.p7.desc": "Description coming soon.",
 
+      "promo.eyebrow": "New Publication",
+      "promo.title": "\"Hawsangi\" Book",
+      "promo.desc": "One of our newest books, on building social awareness. Check it out in the Publications section.",
+      "promo.cta": "View All Publications",
+
       "team.title": "Meet Our Team",
       "team.sub": "The people working with passion toward the foundation's mission.",
       "team.m1.initials": "M.J",
@@ -331,6 +341,11 @@
       "publications.p7.category": "منشور",
       "publications.p7.title": "عنوان الكتاب",
       "publications.p7.desc": "سيتم إضافة التفاصيل قريبًا.",
+
+      "promo.eyebrow": "منشور جديد",
+      "promo.title": "كتاب \"هاوسەنگی\"",
+      "promo.desc": "أحد أحدث كتبنا، يتناول بناء الوعي المجتمعي. شاهده في قسم المنشورات.",
+      "promo.cta": "عرض جميع المنشورات",
 
       "team.title": "تعرف على فريقنا",
       "team.sub": "الأشخاص الذين يعملون بشغف لتحقيق أهداف المؤسسة.",
