@@ -30,6 +30,7 @@
     img.onload = function () {
       if (done) return;
       video.replaceWith(img);
+      loader.classList.add("is-image");
       setTimeout(finish, FALLBACK_MS);
     };
     img.onerror = finish;                           // nothing playable: just show the site
