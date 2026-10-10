@@ -15,8 +15,8 @@
 
 <!-- ===== Intro loader (plays once per session, like nishtmansi.com) ===== -->
 <div class="loader" id="loader" aria-hidden="true">
-  <video id="loaderVideo" muted playsinline preload="auto" src="assets/video/loader.mp4"></video>
-  <button type="button" class="loader__skip" id="loaderSkip">تێپەڕاندن</button>
+  <video id="loaderVideo" muted playsinline webkit-playsinline preload="auto" src="assets/video/loader.mp4"></video>
+  <button type="button" class="loader__skip" id="loaderSkip" data-i18n="loader.skip">تێپەڕاندن</button>
 </div>
 <script src="assets/js/loader.js"></script>
 
@@ -141,6 +141,32 @@
         </ul>
 
         <a href="#contact" class="btn btn--primary" data-i18n="about.cta">بۆ زانیاری زیاتر</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Oak (scroll-driven growth) ===== -->
+  <section class="oak" id="oak" aria-label="دار بەڕوو">
+    <div class="oak__sticky">
+      <div class="container oak__grid">
+        <div class="oak__content">
+          <span class="eyebrow eyebrow--green" data-i18n="oak.eyebrow">وەک دارێکی بەڕوو</span>
+          <h2 class="section__title" data-i18n="oak.title">لە تۆوێکی بچووکەوە بۆ دارێکی بەهێز</h2>
+          <p data-i18n="oak.desc">
+            پەروەردە وەک چاندنی دارێکی بەڕووە؛ بە ئارامی و بەردەوامی گەشە دەکات، ڕەگی قووڵ دادەکوتێت
+            و سێبەرێکی فراوان بۆ نەوەکانی داهاتوو دروست دەکات.
+          </p>
+          <div class="oak__stages" aria-hidden="true">
+            <span class="oak__stage" data-at="0" data-i18n="oak.stage1">تۆو</span>
+            <span class="oak__stage" data-at="0.15" data-i18n="oak.stage2">نەمام</span>
+            <span class="oak__stage" data-at="0.5" data-i18n="oak.stage3">لق</span>
+            <span class="oak__stage" data-at="0.8" data-i18n="oak.stage4">دار</span>
+          </div>
+          <div class="oak__progress" aria-hidden="true"><span id="oakBar"></span></div>
+        </div>
+        <div class="oak__canvas-wrap">
+          <canvas class="oak__canvas" id="oakCanvas" role="img" data-i18n-attr="aria-label:oak.canvasAlt" aria-label="دارێکی بەڕوو کە لەگەڵ سکرۆڵکردن گەشە دەکات"></canvas>
+        </div>
       </div>
     </div>
   </section>
@@ -324,5 +350,6 @@
 
 <script src="assets/js/script.js"></script>
 <script src="assets/js/i18n.js"></script>
+<script src="assets/js/oak.js"></script>
 </body>
 </html>

@@ -290,7 +290,7 @@ body[data-page="helachin"] .section{ padding-top:64px; }
 /* Linked scroll timeline: script.js adds .is-pinned, making the section tall and the banner sticky,
    then scrubs one master timeline (books in → fan out → text in) with scroll position. */
 .promo-section.is-pinned{ height:280vh; padding-block:0; }
-.promo-section.is-pinned .promo-section__pin{ position:sticky; top:0; height:100vh; padding-top:83px; display:flex; align-items:center; }
+.promo-section.is-pinned .promo-section__pin{ position:-webkit-sticky; position:sticky; top:0; height:100vh; height:100svh; padding-top:83px; display:flex; align-items:center; }
 .promo-section.is-pinned .container{ width:100%; }
 .promo-section.is-pinned .promo{ opacity:1; transform:none; }
 .promo-section.is-pinned [data-tl]{ will-change:transform, opacity; }
@@ -679,13 +679,37 @@ body[data-page="helachin"] .section{ padding-top:64px; }
 }
 
 /* ---------- Intro loader video ---------- */
-.loader{ position:fixed; inset:0; z-index:9999; background:#184883; /* matches the video's backdrop as browsers render it (file pixel is #134075) */ display:flex; align-items:center; justify-content:center;
+.loader{ position:fixed; top:0; right:0; bottom:0; left:0; z-index:9999; overscroll-behavior:contain; touch-action:none; background:#184883; /* matches the video's backdrop as browsers render it (file pixel is #134075) */ display:flex; align-items:center; justify-content:center;
   transition:opacity .7s var(--ease), visibility .7s; }
 /* video is portrait; size by height and feather its sides into the backdrop so no seam shows on wide screens */
-.loader video{ height:100%; max-width:100%; aspect-ratio:9/16; object-fit:cover;
+.loader video{ height:100%; width:calc(100vh * 9 / 16); width:calc(100dvh * 9 / 16); max-width:100%; object-fit:cover;
   -webkit-mask-image:linear-gradient(90deg, transparent, #000 18%, #000 82%, transparent);
           mask-image:linear-gradient(90deg, transparent, #000 18%, #000 82%, transparent); }
 .loader.is-done{ opacity:0; visibility:hidden; pointer-events:none; }
-.loader__skip{ position:absolute; bottom:24px; inset-inline-start:24px; padding:6px 16px; border-radius:999px; border:1px solid rgba(255,255,255,.5);
+.loader__skip{ position:absolute; bottom:24px; bottom:calc(24px + env(safe-area-inset-bottom)); inset-inline-start:24px; padding:6px 16px; border-radius:999px; border:1px solid rgba(255,255,255,.5);
   background:rgba(0,0,0,.25); color:#fff; font-size:.9rem; cursor:pointer; }
 html.is-loading, html.is-loading body{ overflow:hidden; }
+
+/* ---------- Scroll-driven oak tree (see assets/js/oak.js) ---------- */
+.oak{ position:relative; height:320vh; background:linear-gradient(180deg, var(--cream) 0%, #eef3ea 55%, var(--cream) 100%); }
+.oak__sticky{ position:-webkit-sticky; position:sticky; top:0; height:100vh; height:100svh; padding-top:83px; overflow:hidden; display:flex; align-items:center; }
+.oak__grid{ display:grid; grid-template-columns:1fr 1.15fr; gap:40px; align-items:center; width:100%; }
+.oak__content .section__title{ margin-bottom:16px; }
+.oak__content p{ color:var(--ink-soft); font-size:1.05rem; max-width:46ch; }
+.oak__stages{ display:flex; gap:10px; margin-top:28px; flex-wrap:wrap; }
+.oak__stage{ padding:6px 16px; border-radius:999px; font-size:.92rem; font-weight:600; color:var(--ink-faint);
+  background:rgba(255,255,255,.6); border:1px solid var(--line); transition:all .35s var(--ease); }
+.oak__stage.is-active{ color:#fff; background:#2f6b3a; border-color:#2f6b3a; transform:translateY(-2px); }
+.oak__progress{ margin-top:22px; height:4px; max-width:320px; border-radius:4px; background:var(--line); overflow:hidden; }
+.oak__progress span{ display:block; height:100%; width:0; background:linear-gradient(90deg,#2f6b3a,#7aa860); }
+.oak__canvas-wrap{ position:relative; height:min(86vh, 760px); height:min(86svh, 760px); }
+.oak__canvas{ width:100%; height:100%; display:block; }
+@media (max-width: 860px){
+  .oak{ height:280vh; }
+  .oak__grid{ grid-template-columns:1fr; gap:0; }
+  .oak__canvas-wrap{ height:58vh; height:58svh; order:-1; }
+  .oak__content{ text-align:center; }
+  .oak__content p{ margin-inline:auto; font-size:.95rem; }
+  .oak__stages, .oak__progress{ justify-content:center; margin-inline:auto; }
+  .oak__stages{ margin-top:16px; }
+}

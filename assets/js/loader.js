@@ -5,7 +5,8 @@
   var video = document.getElementById("loaderVideo");
   var seen = false;
   try { seen = sessionStorage.getItem("ranewIntroSeen") === "1"; } catch (e) {}
-  if (seen || (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches)) {
+  var saveData = navigator.connection && navigator.connection.saveData;
+  if (seen || saveData || (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches)) {
     loader.remove(); return;
   }
   document.documentElement.classList.add("is-loading");
@@ -20,6 +21,8 @@
   video.addEventListener("ended", finish);
   video.addEventListener("error", finish);          // missing/unsupported file: never block the site
   document.getElementById("loaderSkip").addEventListener("click", finish);
-  var p = video.play(); if (p && p.catch) p.catch(finish);
+  video.muted = true;                               // iOS/Android only autoplay muted, inline video
+  var p = video.play(); if (p && p.catch) p.catch(finish);  // e.g. iOS Low Power Mode blocks autoplay
+  setTimeout(function () { if (!video.currentTime) finish(); }, 4000); // slow connection: don't make people wait
   setTimeout(finish, 12000);                        // hard cap in case the video stalls
 })();
