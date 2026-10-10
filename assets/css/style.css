@@ -682,7 +682,7 @@ body[data-page="helachin"] .section{ padding-top:64px; }
 .loader{ position:fixed; top:0; right:0; bottom:0; left:0; z-index:9999; overscroll-behavior:contain; touch-action:none; background:#184883; /* matches the video's backdrop as browsers render it (file pixel is #134075) */ display:flex; align-items:center; justify-content:center;
   transition:opacity .7s var(--ease), visibility .7s; }
 /* video is portrait; size by height and feather its sides into the backdrop so no seam shows on wide screens */
-.loader video{ height:100%; width:calc(100vh * 9 / 16); width:calc(100dvh * 9 / 16); max-width:100%; object-fit:cover;
+.loader video, .loader img{ height:100%; width:calc(100vh * 9 / 16); width:calc(100dvh * 9 / 16); max-width:100%; object-fit:cover;
   -webkit-mask-image:linear-gradient(90deg, transparent, #000 18%, #000 82%, transparent);
           mask-image:linear-gradient(90deg, transparent, #000 18%, #000 82%, transparent); }
 .loader.is-done{ opacity:0; visibility:hidden; pointer-events:none; }
@@ -707,9 +707,20 @@ html.is-loading, html.is-loading body{ overflow:hidden; }
 @media (max-width: 860px){
   .oak{ height:280vh; }
   .oak__grid{ grid-template-columns:1fr; gap:0; }
-  .oak__canvas-wrap{ height:58vh; height:58svh; order:-1; }
+  /* the text keeps its natural height and the tree takes whatever is left, so nothing is cut off on short phones */
+  .oak__sticky{ align-items:stretch; padding-bottom:16px; padding-bottom:calc(16px + env(safe-area-inset-bottom)); }
+  .oak__grid{ height:100%; grid-template-rows:minmax(0,1fr) auto; }
+  .oak__canvas-wrap{ height:auto; min-height:0; align-self:stretch; order:-1; }
+  .oak__canvas{ position:absolute; top:0; left:0; width:100%; height:100%; }
+  .oak__content .section__title{ font-size:1.35rem; margin:10px 0 8px; }
+  .oak__stage{ padding:4px 12px; font-size:.82rem; }
+  .oak__progress{ margin-top:12px; }
   .oak__content{ text-align:center; }
-  .oak__content p{ margin-inline:auto; font-size:.95rem; }
+  .oak__content p{ margin-inline:auto; font-size:.9rem; line-height:1.65; }
   .oak__stages, .oak__progress{ justify-content:center; margin-inline:auto; }
-  .oak__stages{ margin-top:16px; }
+  .oak__stages{ margin-top:12px; }
+}
+/* very short screens (phones in landscape): drop the paragraph so the tree still has room */
+@media (max-width: 860px) and (max-height: 560px){
+  .oak__content p{ display:none; }
 }

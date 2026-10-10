@@ -186,7 +186,8 @@
       strokePartial(b.pts, b.widths, null, g2, barkColor(b.depth), girth);
     }
 
-    // leaves + acorns
+    // leaves + acorns (acorns sized relative to the tree so they don't look huge on phones)
+    var acornK = Math.max(0.45, Math.min(1, scale / 230));
     for (var c = 0; c < clusters.length; c++) {
       var cl = clusters[c];
       if (T <= cl.t) continue;
@@ -204,7 +205,7 @@
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       if (cl.acorn && T > 0.9) {
         ctx.globalAlpha = clamp01((T - 0.9) / 0.06);
-        drawAcorn(X(cl.x), Y(cl.y) + 6, 0.8);
+        drawAcorn(X(cl.x), Y(cl.y) + 6 * acornK, 0.8 * acornK);
         ctx.globalAlpha = 1;
       }
     }
