@@ -287,6 +287,21 @@ body[data-page="helachin"] .section{ padding-top:64px; }
 .promo__book-img--mid{ z-index:2; transform:rotate(-5deg) translate(3px,3px); }
 .promo__book-img--front{ z-index:3; transform:rotate(3deg); box-shadow:var(--shadow-lg); }
 
+/* Linked scroll timeline: script.js adds .is-pinned, making the section tall and the banner sticky,
+   then scrubs one master timeline (books in → fan out → text in) with scroll position. */
+.promo-section.is-pinned{ height:280vh; padding-block:0; }
+.promo-section.is-pinned .promo-section__pin{ position:sticky; top:0; height:100vh; padding-top:83px; display:flex; align-items:center; }
+.promo-section.is-pinned .container{ width:100%; }
+.promo-section.is-pinned .promo{ opacity:1; transform:none; }
+.promo-section.is-pinned [data-tl]{ will-change:transform, opacity; }
+.promo-section.is-pinned .promo-section__pin > .container{ transform-origin:center center; }
+@media (max-width: 860px){
+  .promo-section.is-pinned .promo{ padding:28px 22px; gap:20px; }
+  .promo-section.is-pinned .promo__book{ width:min(150px, 46%); }
+  .promo-section.is-pinned .promo__title{ margin:10px 0 8px; }
+  .promo-section.is-pinned .promo__desc{ margin-bottom:16px; font-size:.92rem; }
+}
+
 /* ---------- About ---------- */
 .about__grid{ display:grid; grid-template-columns:.85fr 1.15fr; gap:64px; align-items:center; }
 .about__media{ position:relative; }
@@ -449,6 +464,10 @@ body[data-page="helachin"] .section{ padding-top:64px; }
 .contact-card strong{ display:block; font-size:.92rem; color:var(--ink); margin-bottom:4px; }
 .contact-card span{ font-size:.88rem; color:var(--ink-soft); word-break:break-word; }
 .contact-card__phones{ display:flex; flex-direction:column; gap:2px; }
+.contact-card--donate{ grid-column:1 / -1; background:linear-gradient(135deg, var(--blue-50), #fff); border-color:var(--blue-100); }
+.contact-card--donate .icon{ color:#c2410c; }
+.contact-card--donate > div{ flex:1; }
+.contact-card__number{ display:block; margin-top:6px; font-size:1.05rem !important; font-weight:700; color:var(--blue-900) !important; letter-spacing:.02em; }
 
 /* ---------- Footer ---------- */
 .footer{ background:var(--blue-900); color:#c9d7ee; }
@@ -658,3 +677,15 @@ body[data-page="helachin"] .section{ padding-top:64px; }
   .helachin-card{ padding:28px 20px; }
   .helachin-drop{ padding:32px 16px; }
 }
+
+/* ---------- Intro loader video ---------- */
+.loader{ position:fixed; inset:0; z-index:9999; background:#184883; /* matches the video's backdrop as browsers render it (file pixel is #134075) */ display:flex; align-items:center; justify-content:center;
+  transition:opacity .7s var(--ease), visibility .7s; }
+/* video is portrait; size by height and feather its sides into the backdrop so no seam shows on wide screens */
+.loader video{ height:100%; max-width:100%; aspect-ratio:9/16; object-fit:cover;
+  -webkit-mask-image:linear-gradient(90deg, transparent, #000 18%, #000 82%, transparent);
+          mask-image:linear-gradient(90deg, transparent, #000 18%, #000 82%, transparent); }
+.loader.is-done{ opacity:0; visibility:hidden; pointer-events:none; }
+.loader__skip{ position:absolute; bottom:24px; inset-inline-start:24px; padding:6px 16px; border-radius:999px; border:1px solid rgba(255,255,255,.5);
+  background:rgba(0,0,0,.25); color:#fff; font-size:.9rem; cursor:pointer; }
+html.is-loading, html.is-loading body{ overflow:hidden; }

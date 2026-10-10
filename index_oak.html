@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="ckb" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>دامەزراوەی ڕەنێو | بۆ پەروەردە و ڕۆشنبیری</title>
+<meta name="description" content="دامەزراوەی ڕەنێو، ڕێکخراوێکی ناحکومی و ناقازانجخوازە لە هەولێر، کار لەسەر بواری پەروەردە و ڕۆشنبیری دەکات؛ بە وتاری هەفتانە، بەرنامەی پەروەردەیی و چالاکی کۆمەڵایەتی.">
+<link rel="icon" type="image/png" href="assets/img/logos/ranew_logo_blue (white_in).png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+<style>
+  /* ---------- Scroll-driven oak (test) ---------- */
+  .oak{ position:relative; height:320vh; background:linear-gradient(180deg, var(--cream) 0%, #eef3ea 55%, var(--cream) 100%); }
+  .oak__sticky{ position:sticky; top:0; height:100vh; padding-top:83px; overflow:hidden; display:flex; align-items:center; }
+  .oak__grid{ display:grid; grid-template-columns:1fr 1.15fr; gap:40px; align-items:center; width:100%; }
+  .oak__content .section__title{ margin-bottom:16px; }
+  .oak__content p{ color:var(--ink-soft); font-size:1.05rem; max-width:46ch; }
+  .oak__stages{ display:flex; gap:10px; margin-top:28px; flex-wrap:wrap; }
+  .oak__stage{ padding:6px 16px; border-radius:999px; font-size:.92rem; font-weight:600; color:var(--ink-faint);
+    background:rgba(255,255,255,.6); border:1px solid var(--line); transition:all .35s var(--ease); }
+  .oak__stage.is-active{ color:#fff; background:#2f6b3a; border-color:#2f6b3a; transform:translateY(-2px); }
+  .oak__progress{ margin-top:22px; height:4px; max-width:320px; border-radius:4px; background:var(--line); overflow:hidden; }
+  .oak__progress span{ display:block; height:100%; width:0; background:linear-gradient(90deg,#2f6b3a,#7aa860); }
+  .oak__canvas-wrap{ position:relative; height:min(86vh, 760px); }
+  .oak__canvas{ width:100%; height:100%; display:block; }
+  @media (max-width: 860px){
+    .oak{ height:280vh; }
+    .oak__grid{ grid-template-columns:1fr; gap:0; }
+    .oak__canvas-wrap{ height:58vh; order:-1; }
+    .oak__content{ text-align:center; }
+    .oak__content p{ margin-inline:auto; font-size:.95rem; }
+    .oak__stages, .oak__progress{ justify-content:center; margin-inline:auto; }
+    .oak__stages{ margin-top:16px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== Intro loader (plays once per session, like nishtmansi.com) ===== -->
+<div class="loader" id="loader" aria-hidden="true">
+  <video id="loaderVideo" muted playsinline preload="auto" src="assets/video/loader.mp4"></video>
+  <button type="button" class="loader__skip" id="loaderSkip">تێپەڕاندن</button>
+</div>
+<script src="assets/js/loader.js"></script>
+
+<!-- ===== Top bar ===== -->
+<div class="topbar">
+  <div class="container topbar__inner">
+    <div class="topbar__contact">
+      <a href="tel:+9647509923332" dir="ltr"><span class="icon icon-phone"></span>0750 992 3332</a>
+      <a href="mailto:Info@ranew.org" dir="ltr"><span class="icon icon-mail"></span>Info@ranew.org</a>
+    </div>
+    <div class="topbar__right">
+      <div class="lang-switch" id="langSwitch" role="group" aria-label="Language / زمان / اللغة">
+        <button type="button" class="lang-switch__btn" data-lang="ckb">کوردی</button>
+        <button type="button" class="lang-switch__btn" data-lang="en">English</button>
+        <button type="button" class="lang-switch__btn" data-lang="ar">العربية</button>
+      </div>
+      <div class="topbar__social">
+        <a href="https://www.facebook.com/Ranewfoundation" target="_blank" rel="noopener" data-i18n-attr="aria-label:aria.facebook">
+          <span class="icon icon-facebook"></span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== Header / Nav ===== -->
+<header class="site-header" id="siteHeader">
+  <div class="container header__inner">
+    <a href="#top" class="brand">
+      <img src="assets/img/logos/ranew_logo_blue (white_in).png" data-i18n-attr="alt:brand.logoAlt" alt="لۆگۆی دامەزراوەی ڕەنێو" class="brand__logo">
+      <span class="brand__text">
+        <strong data-i18n="hero.title1">دامەزراوەی ڕەنێو</strong>
+        <small data-i18n="hero.title2">بۆ پەروەردە و ڕۆشنبیری</small>
+      </span>
+    </a>
+
+    <nav class="nav" id="mainNav">
+      <a href="#top" class="nav__link active" data-i18n="nav.home">سەرەکی</a>
+      <a href="#about" class="nav__link" data-i18n="nav.about">لەبارە</a>
+      <a href="#programs" class="nav__link" data-i18n="nav.programs">بوارەکانی کار</a>
+      <a href="/publications" class="nav__link" data-i18n="nav.publications">بڵاوکراوەکان</a>
+      <a href="/team" class="nav__link" data-i18n="nav.team">تیمەکەمان</a>
+      <a href="/helachin" class="nav__link">هەڵەچن</a>
+      <a href="#contact" class="nav__link" data-i18n="nav.contact">پەیوەندی</a>
+    </nav>
+
+    <a href="https://www.facebook.com/Ranewfoundation" target="_blank" rel="noopener" class="btn btn--primary btn--nav" data-i18n="header.followBtn">شوێنمان بکەوە</a>
+
+    <button class="nav-toggle" id="navToggle" data-i18n-attr="aria-label:aria.navToggle" aria-label="کردنەوەی لیستە" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ===== Hero ===== -->
+  <section class="hero">
+    <div class="hero__pattern" aria-hidden="true"></div>
+    <div class="container hero__inner">
+      <div class="hero__content reveal">
+        <h1><span data-i18n="hero.title1">دامەزراوەی ڕەنێو</span><br><span class="hero__line2" data-i18n="hero.title2">بۆ پەروەردە و ڕۆشنبیری</span></h1>
+        <p class="hero__lead" data-i18n="hero.lead">
+          پەروەردە و پێگەیاندن دوو پایەی بنەڕەتیی زیندوومانەوە و پێشکەوتنی هەر کۆمەڵگەیەکن، ڕەنێو خزمەتکردن
+          بەم دوو کایە گرنگەی وەک ئەرک و بەرپرسیارێتیی سەرەکی گرتووەتە ئەستۆ. کار دەکەین بۆ بەرزکردنەوەی
+          ئاستی پەروەردە و ڕۆشنبیری لە ڕێگەی بڵاوکراوەی جۆراوجۆر، میدیایەکی هەمەلایەنی بینراو و بیستراو و
+          پڕۆژەی پەروەردەیی پێشەنگ؛ بە ئامانجی بنیاتنانی تاکێکی ئاگادار، بەرپرسیار و کاریگەر.
+        </p>
+        <div class="hero__cta">
+          <a href="#contact" class="btn btn--primary" data-i18n="hero.ctaContact">پەیوەندیمان پێوە بکە</a>
+          <a href="https://www.facebook.com/Ranewfoundation" target="_blank" rel="noopener" class="btn btn--ghost">
+            <span class="icon icon-facebook"></span> <span data-i18n="hero.ctaFacebook">بینینی پەیجی فەیسبووک</span>
+          </a>
+        </div>
+      </div>
+      <div class="hero__badge reveal">
+        <img src="assets/img/logos/ranew_logo_white.png" data-i18n-attr="alt:hero.badgeAlt" alt="نیشانی دامەزراوەی ڕەنێو">
+      </div>
+    </div>
+
+    <!--
+    <div class="stats container reveal">
+      <div class="stat">
+        <span class="stat__num" data-count="9000" data-suffix="+">0</span>
+        <span class="stat__label" data-i18n="stats.followers">شوێنکەوتووی فەیسبووک</span>
+      </div>
+      <div class="stat">
+        <span class="stat__num" data-count="3">0</span>
+        <span class="stat__label" data-i18n="stats.areas">بواری سەرەکی چالاکی</span>
+      </div>
+      <div class="stat">
+        <span class="stat__num" data-count="52" data-suffix="+">0</span>
+        <span class="stat__label" data-i18n="stats.talks">وتاری هەفتانە ساڵانە</span>
+      </div>
+      <div class="stat">
+        <span class="stat__num" data-count="100" data-suffix="%">0</span>
+        <span class="stat__label" data-i18n="stats.nonprofit">ناقازانجخواز و خزمەتگوزاری</span>
+      </div>
+    </div>
+    -->
+  </section>
+
+  <!-- ===== About ===== -->
+  <section class="section" id="about">
+    <div class="container about__grid">
+      <div class="about__media reveal">
+        <div class="about__frame">
+          <img src="assets/img/logos/ranew_logo_blue (white_in).png" data-i18n-attr="alt:brand.logoAlt" alt="لۆگۆی دامەزراوەی ڕەنێو">
+        </div>
+      </div>
+      <div class="about__content reveal">
+        <span class="eyebrow eyebrow--dark" data-i18n="about.eyebrow">لەبارەی ئێمە</span>
+        <h2 class="section__title" data-i18n="about.title">ڕەنێو دامەزراوەیەکی قازانجنەویستی ناحکومییە، کار لەسەر ڕەهەندەکانی پەروەردە و ڕۆشنبیری دەکات</h2>
+        <p data-i18n="about.p1">
+          ڕەنێو هەوڵ دەدات کۆمەڵگەیەک بنیات بنێت کە تاکەکانی خاوەن عەقڵێکی هۆشیار و دڵێکی بێدار و
+          ئاکارجوان و ڕەوشتپەسندن، بۆ پەروەردگاریان فەرمانبەری ڕاستن و لەگەڵ یەکدا چاکەکار و دڵسۆزن.
+        </p>
+        <ul class="check-list">
+          <li data-i18n="about.check1">ڕاستی — ڕاستی لە تێگەیشتنی دروستدا بەرجەستە دەبێت.</li>
+          <li data-i18n="about.check2">هاوسەنگی — هزرێکە نە تێدەپەڕێنێت و نە کورت هەڵدەهێنێت.</li>
+          <li data-i18n="about.check3">ڕەسەنایەتی — پابەندبوونە بە بەها باڵاکان و ئاکارە پەسندەکانەوە.</li>
+        </ul>
+
+        <a href="#contact" class="btn btn--primary" data-i18n="about.cta">بۆ زانیاری زیاتر</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Oak (scroll-driven growth) ===== -->
+  <section class="oak" id="oak" aria-label="دار بەڕوو">
+    <div class="oak__sticky">
+      <div class="container oak__grid">
+        <div class="oak__content">
+          <span class="eyebrow eyebrow--green">وەک دارێکی بەڕوو</span>
+          <h2 class="section__title">لە تۆوێکی بچووکەوە بۆ دارێکی بەهێز</h2>
+          <p>
+            پەروەردە وەک چاندنی دارێکی بەڕووە؛ بە ئارامی و بەردەوامی گەشە دەکات، ڕەگی قووڵ دادەکوتێت
+            و سێبەرێکی فراوان بۆ نەوەکانی داهاتوو دروست دەکات.
+          </p>
+          <div class="oak__stages" aria-hidden="true">
+            <span class="oak__stage" data-at="0">تۆو</span>
+            <span class="oak__stage" data-at="0.15">نەمام</span>
+            <span class="oak__stage" data-at="0.5">لق</span>
+            <span class="oak__stage" data-at="0.8">دار</span>
+          </div>
+          <div class="oak__progress" aria-hidden="true"><span id="oakBar"></span></div>
+        </div>
+        <div class="oak__canvas-wrap">
+          <canvas class="oak__canvas" id="oakCanvas" role="img" aria-label="دارێکی بەڕوو کە لەگەڵ سکرۆڵکردن گەشە دەکات"></canvas>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Values ===== -->
+  <section class="section section--dark" id="values">
+    <div class="hero__pattern hero__pattern--dark" aria-hidden="true"></div>
+    <div class="container">
+      <div class="section__head reveal">
+        <span class="eyebrow" data-i18n="values.eyebrow">ئامانجی ئێمە</span>
+        <h2 class="section__title section__title--light" data-i18n="values.title">ئەو بەهایانەی ڕێنماییمان دەکەن</h2>
+      </div>
+
+      <div class="cards cards--3">
+        <div class="value reveal">
+          <span class="icon icon-target"></span>
+          <h4 data-i18n="values.v1.title">ڕاستی</h4>
+          <p data-i18n="values.v1.desc">وردبینی لە تێگەیشتنی دروست و ڕاستگۆیی لە گەیاندنی پەیامدا.</p>
+        </div>
+        <div class="value reveal">
+          <span class="icon icon-shield-star"></span>
+          <h4 data-i18n="values.v2.title">ڕەسەنایەتی</h4>
+          <p data-i18n="values.v2.desc">پاراستنی شوناس و پابەندبوونی هەمیشەیی بە بەها و ئاکارە باڵاکانەوە.</p>
+        </div>
+        <div class="value reveal">
+          <span class="icon icon-scales"></span>
+          <h4 data-i18n="values.v3.title">هاوسەنگی</h4>
+          <p data-i18n="values.v3.desc">پەیڕەوکردنی هزرێکی میانجی؛ دوور لە تێپەڕاندن و کورتهێنان.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Programs ===== -->
+  <section class="section section--tint" id="programs">
+    <div class="container">
+      <div class="section__head reveal">
+        <span class="eyebrow eyebrow--dark" data-i18n="programs.eyebrow">بوارەکانی کار</span>
+        <h2 class="section__title" data-i18n="programs.title">بوارەکانی کار</h2>
+        <p class="section__sub" data-i18n="programs.sub">سێ بواری سەرەکیی تەواوکەر بۆ خزمەتکردنی دین و ژینی کۆمەڵگە.</p>
+      </div>
+
+      <div class="cards cards--3">
+        <article class="card reveal">
+          <div class="card__icon"><span class="icon icon-book"></span></div>
+          <h3 data-i18n="programs.card1.title">کتێب و چاپەمەنی</h3>
+          <p data-i18n="programs.card1.desc">دەوڵەمەندکردنی ئاستی ڕۆشنبیری و زانیاریی، لە ڕێگەی چاپکردن و بڵاوکردنەوەی کتێب و بڵاوکراوە، ئەنجامدانی توێژینەوەی زانستی و ڕاپرسی.</p>
+        </article>
+        <article class="card reveal">
+          <div class="card__icon"><span class="icon icon-culture"></span></div>
+          <h3 data-i18n="programs.card2.title">پەروەردە و پێگەیاندن</h3>
+          <p data-i18n="programs.card2.desc">پێگەیاندنی تاک و بەهێزکردنی لایەنی پەروەردە، لە ڕێگەی ئامادەکردنی پەیڕەو و پڕۆگرامی پەروەردەیی، چالاکی مەیدانی لە خول و ڕاهێنان، کۆڕ و کۆڕبەند و سیمینار.</p>
+        </article>
+        <article class="card reveal">
+          <div class="card__icon"><span class="icon icon-mic"></span></div>
+          <h3 data-i18n="programs.card3.title">میدیا و ڕاگەیاندن</h3>
+          <p data-i18n="programs.card3.desc">گەیاندنی پەیامی ڕۆشنبیری و پەروەردەیی بە شێوەیەکی فراوان، لە ڕێگەی بەرهەمهێنانی نێوەڕۆکی میدیای بینراو و بیستراو.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Book Promo ===== -->
+  <section class="section promo-section">
+    <div class="container">
+      <div class="promo reveal">
+        <div class="promo__overlay" aria-hidden="true"></div>
+        <div class="promo__content">
+          <span class="eyebrow" data-i18n="promo.eyebrow">بڵاوکراوەی تازە</span>
+          <h2 class="promo__title" data-i18n="promo.title">کتێبی "هاوسەنگی"</h2>
+          <p class="promo__desc" data-i18n="promo.desc">یەکێک لە کتێبە تازەکانمان، سەبارەت بە بونیادنانی هۆشیاری کۆمەڵایەتی. لە بەشی بڵاوکراوەکاندا ببینە.</p>
+          <a href="/publications" class="btn btn--ghost" data-i18n="promo.cta">بینینی هەموو بڵاوکراوەکان</a>
+        </div>
+        <div class="promo__book">
+          <img class="promo__book-img promo__book-img--back" src="assets/img/books/2ds/خێزان.png" alt="">
+          <img class="promo__book-img promo__book-img--mid" src="assets/img/books/2ds/دۆستایەتی.png" alt="">
+          <img class="promo__book-img promo__book-img--front" src="assets/img/books/2ds/هاوسەنگی.png" alt="">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Contact ===== -->
+  <section class="section" id="contact">
+    <div class="container">
+      <div class="section__head reveal">
+        <span class="eyebrow eyebrow--dark" data-i18n="contact.eyebrow">پەیوەندی</span>
+        <h2 class="section__title" data-i18n="contact.title">پەیوەندیمان پێوە بکە</h2>
+      </div>
+
+      <div class="contact__grid">
+        <div class="contact__cards reveal">
+          <a class="contact-card" href="https://www.google.com/maps/search/?api=1&query=36.198942,44.063415" target="_blank" rel="noopener">
+            <span class="icon icon-pin"></span>
+            <div>
+              <strong data-i18n="contact.address.label">ناونیشان</strong>
+              <span data-i18n="contact.address.value">هەولێر، گوڵان 2، بەرامبەر ماجیدی مۆڵ</span>
+            </div>
+          </a>
+          <div class="contact-card">
+            <span class="icon icon-phone"></span>
+            <div>
+              <strong data-i18n="contact.phone.label">ژمارەی مۆبایل</strong>
+              <span dir="ltr" class="contact-card__phones">
+                <a href="tel:+9647509923332">0750 992 3332</a>
+                <a href="tel:+9647709923332">0770 992 3332</a>
+              </span>
+            </div>
+          </div>
+          <a class="contact-card" href="mailto:Info@ranew.org">
+            <span class="icon icon-mail"></span>
+            <div>
+              <strong data-i18n="contact.email.label">ئیمێڵ</strong>
+              <span dir="ltr">Info@ranew.org</span>
+            </div>
+          </a>
+          <a class="contact-card" href="https://www.facebook.com/Ranewfoundation" target="_blank" rel="noopener">
+            <span class="icon icon-share"></span>
+            <div>
+              <strong data-i18n="contact.facebook.label">میدیای کۆمەڵایەتی</strong>
+              <span dir="ltr">@Ranewfoundation</span>
+            </div>
+          </a>
+          <div class="contact-card contact-card--donate" id="donate">
+            <span class="icon icon-heart"></span>
+            <div>
+              <strong data-i18n="contact.donate.label">بەخشین</strong>
+              <span data-i18n="contact.donate.desc">دەتوانیت لە ڕێگەی ناردنی باڵانس یان پارە بۆ ئەم ژمارەیە پاڵپشتیمان بکەیت</span>
+              <!-- TODO: replace with the donation phone number (and update the tel: link) -->
+              <a class="contact-card__number" href="tel:+964"><bdi dir="ltr">07XX XXX XXXX</bdi></a>
+            </div>
+          </div>
+        </div>
+
+        <div class="contact__map reveal">
+          <iframe
+            src="https://www.google.com/maps?q=36.198942,44.063415&z=16&output=embed"
+            width="100%" height="100%" style="border:0;" loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="Ranew Foundation - Google Maps location">
+          </iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ===== Footer ===== -->
+<footer class="footer">
+  <div class="container footer__inner">
+    <div class="footer__brand">
+      <img src="assets/img/logos/ranew_logo_blue (white_in).png" data-i18n-attr="alt:brand.logoAlt" alt="لۆگۆی دامەزراوەی ڕەنێو">
+      <div>
+        <strong data-i18n="hero.title1">دامەزراوەی ڕەنێو</strong>
+        <p data-i18n="footer.tagline">بۆ پەروەردە و ڕۆشنبیری</p>
+      </div>
+    </div>
+
+    <nav class="footer__links">
+      <a href="#top" data-i18n="nav.home">سەرەکی</a>
+      <a href="#about" data-i18n="nav.about">لەبارەی ئێمە</a>
+      <a href="#programs" data-i18n="nav.programs">بوارەکانی کار</a>
+      <a href="#contact" data-i18n="nav.contact">پەیوەندی</a>
+    </nav>
+
+    <div class="footer__social">
+      <a href="https://www.facebook.com/Ranewfoundation" target="_blank" rel="noopener" data-i18n-attr="aria-label:aria.facebook"><span class="icon icon-facebook"></span></a>
+    </div>
+  </div>
+  <div class="footer__bottom">
+    <div class="container">
+      <p>© <span id="year"></span> <span data-i18n="footer.copyright">دامەزراوەی ڕەنێو. هەموو مافێک پارێزراوە.</span></p>
+    </div>
+  </div>
+</footer>
+
+<button id="backToTop" class="back-to-top" data-i18n-attr="aria-label:aria.backToTop" aria-label="گەڕانەوە بۆ سەرەوە">
+  <span class="icon icon-up"></span>
+</button>
+
+<script src="assets/js/script.js"></script>
+<script src="assets/js/i18n.js"></script>
+<script>
+/* ============================================================
+   Scroll-scrubbed oak tree. Like nishtmansi.com's frame sequence,
+   the tree's growth is tied to scroll position (forwards and back),
+   but it is drawn procedurally on a canvas instead of from images.
+   ============================================================ */
+(function () {
+  "use strict";
+  var section = document.getElementById("oak");
+  var canvas = document.getElementById("oakCanvas");
+  if (!section || !canvas || !canvas.getContext) return;
+  var ctx = canvas.getContext("2d");
+  var bar = document.getElementById("oakBar");
+  var stages = Array.prototype.slice.call(section.querySelectorAll(".oak__stage"));
+  var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* ---------- deterministic randomness so the tree is the same every load ---------- */
+  var seed = 20240611;
+  function rand() {
+    seed |= 0; seed = (seed + 0x6D2B79F5) | 0;
+    var t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  }
+  function rnd(a, b) { return a + rand() * (b - a); }
+  function clamp01(v) { return v < 0 ? 0 : v > 1 ? 1 : v; }
+  function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
+  function easeOutBack(t) { var c = 1.7; return 1 + (c + 1) * Math.pow(t - 1, 3) + c * Math.pow(t - 1, 2); }
+
+  /* ---------- build the tree (units: trunk length = 1, y up) ---------- */
+  var MAX_DEPTH = 7;
+  var branches = [];
+  var clusters = [];
+  var roots = [];
+  var LEAF_GREENS = ["#2f6b3a", "#3b7a43", "#4a8a48", "#5a9850", "#6ea35a", "#2a5e34", "#82b066"];
+
+  function grow(x, y, ang, len, w, depth, t0) {
+    var n = depth < 2 ? 10 : depth < 4 ? 6 : 3;
+    var seg = len / n;
+    var pts = [[x, y]], widths = [], angs = [];
+    var a = ang;
+    for (var i = 0; i < n; i++) {
+      a += rnd(-0.2, 0.2);
+      // oaks spread wide: gently pull deep branches outward, keep within a sane fan
+      if (depth >= 2) a += (a > 0 ? 1 : -1) * 0.025;
+      a = Math.max(-1.75, Math.min(1.75, a));
+      x += Math.sin(a) * seg; y += Math.cos(a) * seg;
+      pts.push([x, y]); angs.push(a);
+      widths.push(w * (1 - 0.38 * (i / n)));
+    }
+    var dur = 0.05 + 0.13 * len;
+    var b = { pts: pts, widths: widths, t0: t0, t1: t0 + dur, depth: depth };
+    branches.push(b);
+
+    if (depth < MAX_DEPTH && len > 0.035) {
+      var count = depth === 0 ? 3 : (rand() < 0.35 ? 3 : 2);
+      var side = rand() < 0.5 ? -1 : 1;
+      for (var c = 0; c < count; c++) {
+        var f, childAng;
+        if (depth === 0) {
+          f = rnd(0.62, 0.95);
+          childAng = [-1.0, 0.15, 0.95][c] + rnd(-0.15, 0.15);
+        } else {
+          f = c === 0 ? 1 : rnd(0.45, 0.95);
+          side = -side;
+          childAng = angs[Math.max(0, Math.round(f * n) - 1)] + side * rnd(0.3, 0.75);
+        }
+        var idx = Math.max(1, Math.round(f * n));
+        var p = pts[idx];
+        var wAt = widths[idx - 1] || w;
+        var childLen = len * (depth === 0 ? rnd(0.62, 0.75) : rnd(0.64, 0.8));
+        grow(p[0], p[1], childAng, childLen, wAt * rnd(0.58, 0.7), depth + 1, t0 + dur * f);
+      }
+    }
+
+    if (depth >= 4) {
+      var end = pts[pts.length - 1];
+      var leaves = [];
+      var k = depth >= 6 ? 7 : 4;
+      for (var j = 0; j < k; j++) {
+        leaves.push({
+          dx: rnd(-0.055, 0.055), dy: rnd(-0.04, 0.06),
+          rot: rnd(-Math.PI, Math.PI), size: rnd(0.035, 0.055),
+          color: LEAF_GREENS[(rand() * LEAF_GREENS.length) | 0], delay: rnd(0, 0.04)
+        });
+      }
+      clusters.push({ x: end[0], y: end[1], t: b.t1, leaves: leaves, acorn: depth >= 6 && rand() < 0.12 });
+    }
+  }
+  grow(0, 0, rnd(-0.05, 0.05), 1, 0.17, 0, 0);
+
+  for (var r = 0; r < 6; r++) {
+    var ra = (r / 5 - 0.5) * 2.6 + rnd(-0.15, 0.15);
+    var rx = 0, ry = 0, pts = [[0, 0]];
+    for (var s = 0; s < 6; s++) {
+      ra += rnd(-0.25, 0.25);
+      rx += Math.sin(ra) * 0.045; ry -= Math.abs(Math.cos(ra)) * 0.03 + 0.012;
+      pts.push([rx, ry]);
+    }
+    roots.push({ pts: pts, w: rnd(0.03, 0.05), t0: rnd(0, 0.04) });
+  }
+
+  // Remap raw growth times into the scroll timeline:
+  // 0–0.10 acorn + roots, 0.10–0.82 wood, leaves pop in as each twig finishes, up to ~1.
+  var maxRaw = 0;
+  branches.forEach(function (b) { if (b.t1 > maxRaw) maxRaw = b.t1; });
+  function mapT(t) { return 0.1 + (t / maxRaw) * 0.72; }
+  branches.forEach(function (b) { b.t0 = mapT(b.t0); b.t1 = mapT(b.t1); });
+  clusters.forEach(function (c) { c.t = Math.min(mapT(c.t) + 0.04, 0.9); });
+
+  var minX = Infinity, maxX = -Infinity, maxY = 0;
+  branches.forEach(function (b) {
+    b.pts.forEach(function (p) {
+      if (p[0] < minX) minX = p[0]; if (p[0] > maxX) maxX = p[0]; if (p[1] > maxY) maxY = p[1];
+    });
+  });
+  minX -= 0.08; maxX += 0.08; maxY += 0.08;
+
+  /* ---------- oak leaf shape (base at 0,0, tip at 0,-1) ---------- */
+  var leafPath = new Path2D(
+    "M0,0 Q.16,-.06 .24,-.2 Q.12,-.27 .17,-.34 Q.36,-.4 .3,-.55 Q.15,-.58 .19,-.65" +
+    " Q.3,-.74 .2,-.85 Q.1,-.96 0,-1 Q-.1,-.96 -.2,-.85 Q-.3,-.74 -.19,-.65" +
+    " Q-.15,-.58 -.3,-.55 Q-.36,-.4 -.17,-.34 Q-.12,-.27 -.24,-.2 Q-.16,-.06 0,0Z"
+  );
+
+  /* ---------- rendering ---------- */
+  var W = 0, H = 0, dpr = 1, scale = 1, ox = 0, oy = 0;
+  function resize() {
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = canvas.clientWidth; H = canvas.clientHeight;
+    canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr);
+    var groundY = H * 0.88;
+    scale = Math.min((W * 0.96) / (maxX - minX), (groundY - H * 0.03) / maxY);
+    ox = W / 2 - ((minX + maxX) / 2) * scale;
+    oy = groundY;
+    draw(current);
+  }
+  function X(x) { return ox + x * scale; }
+  function Y(y) { return oy - y * scale; }
+
+  function barkColor(depth) {
+    var t = depth / MAX_DEPTH;
+    var r = Math.round(74 + (110 - 74) * t), g = Math.round(51 + (84 - 51) * t), b = Math.round(36 + (52 - 36) * t);
+    return "rgb(" + r + "," + g + "," + b + ")";
+  }
+
+  function draw(T) {
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, W, H);
+    ctx.lineCap = "round"; ctx.lineJoin = "round";
+
+    // ground + canopy shadow
+    var leafAmt = clamp01((T - 0.45) / 0.45);
+    ctx.fillStyle = "rgba(47,107,58," + (0.08 + 0.1 * leafAmt) + ")";
+    ctx.beginPath();
+    ctx.ellipse(X(0), oy + 4, Math.max(30, (maxX - minX) * scale * (0.15 + 0.35 * leafAmt)), 10 + 8 * leafAmt, 0, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.strokeStyle = "rgba(74,51,36,.25)"; ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.moveTo(W * 0.1, oy); ctx.lineTo(W * 0.9, oy); ctx.stroke();
+
+    // roots (drawn under the soil line, faded)
+    ctx.globalAlpha = 0.45;
+    roots.forEach(function (rt) {
+      var g = clamp01((T - 0.03 - rt.t0) / 0.12);
+      if (g <= 0) return;
+      strokePartial(rt.pts, null, rt.w, g, "#5b4030");
+    });
+    ctx.globalAlpha = 1;
+
+    // acorn: sits on the ground, then splits open as the sprout appears
+    if (T < 0.16) {
+      var fade = 1 - clamp01((T - 0.09) / 0.07);
+      ctx.globalAlpha = fade;
+      drawAcorn(X(0), oy - 9, 1.4 + 0.3 * clamp01(T / 0.08));
+      ctx.globalAlpha = 1;
+    }
+
+    // wood: thickens over time like a real trunk
+    for (var i = 0; i < branches.length; i++) {
+      var b = branches[i];
+      if (T <= b.t0) continue;
+      var g2 = clamp01((T - b.t0) / (b.t1 - b.t0));
+      var girth = 0.35 + 0.65 * easeOut(clamp01((T - b.t0) / 0.55));
+      strokePartial(b.pts, b.widths, null, g2, barkColor(b.depth), girth);
+    }
+
+    // leaves + acorns
+    for (var c = 0; c < clusters.length; c++) {
+      var cl = clusters[c];
+      if (T <= cl.t) continue;
+      for (var l = 0; l < cl.leaves.length; l++) {
+        var lf = cl.leaves[l];
+        var lg = clamp01((T - cl.t - lf.delay) / 0.07);
+        if (lg <= 0) continue;
+        var s = easeOutBack(lg) * lf.size * scale;
+        var cos = Math.cos(lf.rot) * s, sin = Math.sin(lf.rot) * s;
+        ctx.setTransform(dpr * cos, dpr * sin, -dpr * sin, dpr * cos, dpr * X(cl.x + lf.dx), dpr * Y(cl.y + lf.dy));
+        ctx.fillStyle = lf.color;
+        ctx.fill(leafPath);
+      }
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      if (cl.acorn && T > 0.9) {
+        ctx.globalAlpha = clamp01((T - 0.9) / 0.06);
+        drawAcorn(X(cl.x), Y(cl.y) + 6, 0.8);
+        ctx.globalAlpha = 1;
+      }
+    }
+  }
+
+  function strokePartial(pts, widths, w, g, color, girth) {
+    var n = pts.length - 1, upto = g * n;
+    ctx.strokeStyle = color;
+    for (var i = 0; i < n && i < upto; i++) {
+      var a = pts[i], b = pts[i + 1], f = Math.min(1, upto - i);
+      ctx.lineWidth = Math.max(0.6, (widths ? widths[i] * (girth || 1) : w) * scale);
+      ctx.beginPath();
+      ctx.moveTo(X(a[0]), Y(a[1]));
+      ctx.lineTo(X(a[0] + (b[0] - a[0]) * f), Y(a[1] + (b[1] - a[1]) * f));
+      ctx.stroke();
+    }
+  }
+
+  function drawAcorn(x, y, k) {
+    ctx.fillStyle = "#9a6a35";
+    ctx.beginPath(); ctx.ellipse(x, y + 2 * k, 4 * k, 5.5 * k, 0, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = "#5e4128";
+    ctx.beginPath(); ctx.ellipse(x, y - 1.5 * k, 4.8 * k, 2.8 * k, 0, Math.PI, 0); ctx.fill();
+    ctx.fillRect(x - 0.6 * k, y - 6 * k, 1.2 * k, 2.4 * k);
+  }
+
+  /* ---------- scroll → progress (smoothed, like the reference site) ---------- */
+  var target = 0, current = 0, rafId = 0;
+  function readTarget() {
+    var rect = section.getBoundingClientRect();
+    var travel = rect.height - window.innerHeight;
+    var p = travel > 0 ? clamp01(-rect.top / travel) : 1;
+    target = clamp01(p / 0.9); // finish slightly before the section unpins
+  }
+  function updateUI(T) {
+    if (bar) bar.style.width = (T * 100).toFixed(1) + "%";
+    var active = 0;
+    stages.forEach(function (el, i) { if (T >= parseFloat(el.getAttribute("data-at"))) active = i; });
+    stages.forEach(function (el, i) { el.classList.toggle("is-active", i === active); });
+  }
+  function tick() {
+    var d = target - current;
+    if (reduceMotion || Math.abs(d) < 0.0006) { current = target; rafId = 0; }
+    else { current += d * 0.12; rafId = requestAnimationFrame(tick); }
+    draw(current); updateUI(current);
+  }
+  function onScroll() {
+    readTarget();
+    if (!rafId) rafId = requestAnimationFrame(tick);
+  }
+
+  window.addEventListener("scroll", onScroll, { passive: true });
+  window.addEventListener("resize", function () { resize(); onScroll(); });
+  readTarget(); current = target;
+  resize(); updateUI(current);
+})();
+</script>
+</body>
+</html>

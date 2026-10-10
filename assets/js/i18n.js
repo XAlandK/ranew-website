@@ -143,6 +143,8 @@
       "contact.phone.label": "ژمارەی مۆبایل",
       "contact.email.label": "ئیمێڵ",
       "contact.facebook.label": "فەیسبووک",
+      "contact.donate.label": "بەخشین",
+      "contact.donate.desc": "دەتوانیت لە ڕێگەی ناردنی باڵانس یان پارە بۆ ئەم ژمارەیە پاڵپشتیمان بکەیت",
       "contact.mapTitle": "شوێنی دامەزراوەی ڕەنێو لەسەر نەخشە",
 
       "footer.tagline": "بۆ پەروەردە و ڕۆشنبیری",
@@ -287,6 +289,8 @@
       "contact.phone.label": "Phone Number",
       "contact.email.label": "Email",
       "contact.facebook.label": "Facebook",
+      "contact.donate.label": "Donate",
+      "contact.donate.desc": "You can support us by sending a transfer to this phone number",
       "contact.mapTitle": "Map of Ranew Foundation's location",
 
       "footer.tagline": "For Education & Culture",
@@ -431,6 +435,8 @@
       "contact.phone.label": "رقم الهاتف",
       "contact.email.label": "البريد الإلكتروني",
       "contact.facebook.label": "فيسبوك",
+      "contact.donate.label": "التبرع",
+      "contact.donate.desc": "يمكنك دعمنا عبر إرسال تحويل إلى رقم الهاتف هذا",
       "contact.mapTitle": "خريطة موقع مؤسسة رانيو",
 
       "footer.tagline": "للتربية والثقافة",

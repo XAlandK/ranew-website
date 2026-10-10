@@ -50,6 +50,99 @@
   onScrollSpy();
   window.addEventListener("scroll", onScrollSpy, { passive: true });
 
+  /* ---------- Book promo: linked scroll timeline ----------
+     One master timeline is scrubbed by scroll while the banner is pinned. Each child tween is
+     linked to the one before it (starts at an offset into the previous), so the sequence plays
+     books → fan → text forwards when scrolling down and rewinds when scrolling up. */
+  var promoSection = document.querySelector(".promo-section");
+  var promo = promoSection && promoSection.querySelector(".promo");
+  if (promo && !(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches)) {
+    // wrap the container in a sticky pin
+    var pin = document.createElement("div");
+    pin.className = "promo-section__pin";
+    while (promoSection.firstChild) pin.appendChild(promoSection.firstChild);
+    promoSection.appendChild(pin);
+    promoSection.classList.add("is-pinned");
+
+    var q = function (sel) { return promo.querySelector(sel); };
+    var ease = function (t) { return 1 - Math.pow(1 - t, 3); };
+    var lerp = function (a, b, t) { return a + (b - a) * t; };
+    var tracks = [];   // { el, from, to, start, dur }
+    var cursor = 0;
+    // add(el, from, to, dur, offset): offset is relative to the END of the previous tween ("-=" overlap if negative)
+    var add = function (el, from, to, dur, offset) {
+      if (!el) return;
+      var start = Math.max(0, cursor + (offset || 0));
+      el.setAttribute("data-tl", "");
+      tracks.push({ el: el, from: from, to: to, start: start, dur: dur });
+      cursor = start + dur;
+    };
+    var BOOK = { x: 0, y: 0, r: 0, s: 1, o: 1 };
+    var at = function (o) { var r = {}; for (var k in BOOK) r[k] = k in o ? o[k] : BOOK[k]; return r; };
+
+    // 1) books drop in one after another (stacked), 2) fan out, 3) text lines follow
+    add(q(".promo__book-img--back"),  at({ y: 60, r: -25, o: 0, s: .9 }), at({ x: 4, y: 4, r: -8 }), .16);
+    add(q(".promo__book-img--mid"),   at({ y: 60, r: 20, o: 0, s: .9 }),  at({ x: 2, y: 2, r: -3 }), .16, -.08);
+    add(q(".promo__book-img--front"), at({ y: 70, r: -12, o: 0, s: .9 }), at({ r: 2 }), .16, -.08);
+    add(q(".promo__book-img--back"),  at({ x: 4, y: 4, r: -8 }), at({ x: -38, y: 8, r: -17 }), .16, 0);
+    add(q(".promo__book-img--mid"),   at({ x: 2, y: 2, r: -3 }), at({ x: 38, y: 6, r: 12 }), .16, -.16);
+    add(q(".promo__book-img--front"), at({ r: 2 }), at({ y: -4, r: 3, s: 1.04 }), .16, -.16);
+    add(q(".promo__content .eyebrow"), at({ y: 30, o: 0 }), at({}), .1, -.08);
+    add(q(".promo__title"),            at({ y: 30, o: 0 }), at({}), .1, -.05);
+    add(q(".promo__desc"),             at({ y: 30, o: 0 }), at({}), .1, -.05);
+    add(q(".promo__content .btn"),     at({ y: 30, o: 0, s: .95 }), at({}), .1, -.05);
+    var total = cursor;
+    // background calligraphy drifts across the whole timeline
+    var overlay = q(".promo__overlay");
+
+    // tracks that share an element: later tweens only take over once they have started
+    var byEl = new Map();
+    tracks.forEach(function (t) { (byEl.get(t.el) || byEl.set(t.el, []).get(t.el)).push(t); });
+
+    var render = function (p) {
+      var time = p * total;
+      byEl.forEach(function (list, el) {
+        var active = list[0];
+        for (var i = 1; i < list.length; i++) if (time >= list[i].start) active = list[i];
+        var t = ease(Math.min(1, Math.max(0, (time - active.start) / active.dur)));
+        var v = {}; for (var k in BOOK) v[k] = lerp(active.from[k], active.to[k], t);
+        // books move in % of their own size; text in px
+        var unit = el.tagName === "IMG" ? "%" : "px";
+        el.style.transform = "translate(" + v.x.toFixed(2) + unit + "," + v.y.toFixed(2) + unit + ") rotate(" + v.r.toFixed(2) + "deg) scale(" + v.s.toFixed(3) + ")";
+        el.style.opacity = v.o.toFixed(3);
+      });
+      if (overlay) overlay.style.transform = "translateY(" + (lerp(30, -30, p)).toFixed(1) + "px) rotate(" + lerp(4, -4, p).toFixed(2) + "deg) scale(1.08)";
+    };
+
+    var target = 0, current = 0, raf = 0;
+    var read = function () {
+      var r = promoSection.getBoundingClientRect();
+      var travel = r.height - window.innerHeight;
+      var p = travel > 0 ? -r.top / travel : 1;
+      // leave a little dwell at both ends of the pin
+      p = (p - 0.05) / 0.85;
+      target = p < 0 ? 0 : p > 1 ? 1 : p;
+    };
+    var tick = function () {
+      var d = target - current;
+      if (Math.abs(d) < 0.0008) { current = target; raf = 0; }
+      else { current += d * 0.12; raf = requestAnimationFrame(tick); }
+      render(current);
+    };
+    var onScroll = function () { read(); if (!raf) raf = requestAnimationFrame(tick); };
+    // shrink the banner if it is taller than the space under the fixed header (small phones)
+    var fit = function () {
+      var box = pin.firstElementChild;
+      box.style.transform = "";
+      var avail = window.innerHeight - 83 - 16;
+      var s = Math.min(1, avail / promo.offsetHeight);
+      if (s < 1) box.style.transform = "scale(" + s.toFixed(3) + ")";
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", function () { fit(); onScroll(); });
+    fit(); read(); current = target; render(current);
+  }
+
   /* ---------- Reveal on scroll ---------- */
   var revealEls = Array.prototype.slice.call(document.querySelectorAll(".reveal"));
   if ("IntersectionObserver" in window) {

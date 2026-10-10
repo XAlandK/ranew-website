@@ -13,6 +13,13 @@
 </head>
 <body>
 
+<!-- ===== Intro loader (plays once per session, like nishtmansi.com) ===== -->
+<div class="loader" id="loader" aria-hidden="true">
+  <video id="loaderVideo" muted playsinline preload="auto" src="assets/video/loader.mp4"></video>
+  <button type="button" class="loader__skip" id="loaderSkip">تێپەڕاندن</button>
+</div>
+<script src="assets/js/loader.js"></script>
+
 <!-- ===== Top bar ===== -->
 <div class="topbar">
   <div class="container topbar__inner">
@@ -257,6 +264,15 @@
               <span dir="ltr">@Ranewfoundation</span>
             </div>
           </a>
+          <div class="contact-card contact-card--donate" id="donate">
+            <span class="icon icon-heart"></span>
+            <div>
+              <strong data-i18n="contact.donate.label">بەخشین</strong>
+              <span data-i18n="contact.donate.desc">دەتوانیت لە ڕێگەی ناردنی باڵانس یان پارە بۆ ئەم ژمارەیە پاڵپشتیمان بکەیت</span>
+              <!-- TODO: replace with the donation phone number (and update the tel: link) -->
+              <a class="contact-card__number" href="tel:+964"><bdi dir="ltr">07XX XXX XXXX</bdi></a>
+            </div>
+          </div>
         </div>
 
         <div class="contact__map reveal">
