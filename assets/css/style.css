@@ -435,7 +435,44 @@ body[data-page="helachin"] .section{ padding-top:64px; }
 }
 .team-card__avatar--photo{ overflow:hidden; padding:0; }
 .team-card__avatar--photo img{ width:100%; height:100%; object-fit:cover; }
+.team-card__avatar--photo[role="button"]{ cursor:zoom-in; transition:transform .25s var(--ease), box-shadow .25s var(--ease); }
+.team-card__avatar--photo[role="button"]:hover{ transform:scale(1.05); box-shadow:0 8px 22px rgba(13,42,82,.22); }
+.team-card__avatar--photo[role="button"]:focus-visible{ outline:3px solid var(--blue-500); outline-offset:3px; }
 .team-card h3{ font-size:1.1rem; color:var(--blue-900); margin-bottom:8px; }
+
+/* ---------- Team photo viewer (see script.js) ---------- */
+html.photo-viewer-open{ overflow:hidden; }
+.photo-viewer{
+  position:fixed; inset:0; z-index:1100; display:flex; align-items:center; justify-content:center;
+  padding:24px; background:rgba(8,22,44,.86); -webkit-backdrop-filter:blur(6px); backdrop-filter:blur(6px);
+  opacity:0; transition:opacity .25s var(--ease); cursor:zoom-out;
+}
+.photo-viewer[hidden]{ display:none; }
+.photo-viewer.is-open{ opacity:1; }
+.photo-viewer__figure{
+  margin:0; display:flex; flex-direction:column; align-items:center; gap:16px;
+  transform:scale(.92); transition:transform .3s var(--ease);
+}
+.photo-viewer.is-open .photo-viewer__figure{ transform:none; }
+.photo-viewer__img{
+  display:block; width:min(560px, 88vw, calc(100vh - 190px)); width:min(560px, 88vw, calc(100svh - 190px));
+  aspect-ratio:1; object-fit:cover; border-radius:var(--radius-lg); box-shadow:0 30px 80px rgba(0,0,0,.45);
+  background:#1c2433; cursor:default;
+}
+.photo-viewer__caption{ text-align:center; color:#fff; cursor:default; }
+.photo-viewer__caption strong{ display:block; font-size:1.2rem; font-weight:800; }
+.photo-viewer__caption span{ display:block; margin-top:4px; font-size:.95rem; color:rgba(255,255,255,.75); }
+.photo-viewer__close{
+  position:absolute; top:16px; inset-inline-end:16px; width:46px; height:46px; border-radius:50%;
+  border:1px solid rgba(255,255,255,.3); background:rgba(255,255,255,.12); color:#fff;
+  font-size:1.9rem; line-height:1; cursor:pointer; display:flex; align-items:center; justify-content:center;
+  transition:background .2s var(--ease);
+}
+.photo-viewer__close:hover{ background:rgba(255,255,255,.24); }
+.photo-viewer__close:focus-visible{ outline:3px solid #fff; outline-offset:2px; }
+@media (prefers-reduced-motion: reduce){
+  .photo-viewer, .photo-viewer__figure{ transition:none; }
+}
 .team-card p{ font-size:.92rem; color:var(--ink-soft); }
 
 @media (min-width: 981px){

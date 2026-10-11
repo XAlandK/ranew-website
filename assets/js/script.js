@@ -334,6 +334,85 @@
     });
   })();
 
+  /* ---------- Team photo viewer: tap / click an avatar to see it full size ---------- */
+  (function () {
+    var avatars = Array.prototype.slice.call(document.querySelectorAll(".team-card__avatar--photo"));
+    if (!avatars.length) return;
+
+    var box = document.createElement("div");
+    box.className = "photo-viewer";
+    box.setAttribute("role", "dialog");
+    box.setAttribute("aria-modal", "true");
+    box.hidden = true;
+    box.innerHTML =
+      '<button type="button" class="photo-viewer__close" data-i18n-attr="aria-label:aria.closePhoto" aria-label="داخستنی وێنە">&times;</button>' +
+      '<figure class="photo-viewer__figure"><img class="photo-viewer__img" alt="">' +
+      '<figcaption class="photo-viewer__caption"><strong></strong><span></span></figcaption></figure>';
+    document.body.appendChild(box);
+
+    var closeBtn = box.querySelector(".photo-viewer__close");
+    var bigImg = box.querySelector(".photo-viewer__img");
+    var capName = box.querySelector(".photo-viewer__caption strong");
+    var capRole = box.querySelector(".photo-viewer__caption span");
+    var opener = null, hideTimer = 0;
+
+    function open(avatar) {
+      var img = avatar.querySelector("img");
+      var card = avatar.closest(".team-card");
+      var name = card && card.querySelector("h3");
+      var role = card && card.querySelector("p");
+      clearTimeout(hideTimer);
+      opener = avatar;
+      bigImg.src = img.currentSrc || img.src;
+      bigImg.alt = name ? name.textContent : "";
+      capName.textContent = name ? name.textContent : "";
+      capRole.textContent = role ? role.textContent : "";
+      box.setAttribute("aria-label", capName.textContent);
+      box.hidden = false;
+      document.documentElement.classList.add("photo-viewer-open");
+      void box.offsetWidth; // start the fade from the hidden state
+      box.classList.add("is-open");
+      closeBtn.focus();
+    }
+    function close() {
+      if (box.hidden) return;
+      box.classList.remove("is-open");
+      document.documentElement.classList.remove("photo-viewer-open");
+      hideTimer = setTimeout(function () { box.hidden = true; }, 250);
+      if (opener) opener.focus();
+      opener = null;
+    }
+
+    avatars.forEach(function (avatar, i) {
+      var img = avatar.querySelector("img");
+      var name = avatar.closest(".team-card") && avatar.closest(".team-card").querySelector("h3");
+      if (!img) return;
+      // the avatar becomes a button named after the member (follows language switches via aria-labelledby)
+      avatar.removeAttribute("aria-hidden");
+      avatar.setAttribute("role", "button");
+      avatar.setAttribute("tabindex", "0");
+      if (name) {
+        if (!name.id) name.id = "team-member-" + (i + 1);
+        avatar.setAttribute("aria-labelledby", name.id);
+      }
+      avatar.addEventListener("click", function () { open(avatar); });
+      avatar.addEventListener("keydown", function (e) {
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(avatar); }
+      });
+    });
+
+    closeBtn.addEventListener("click", close);
+    // tapping anywhere outside the photo closes it
+    box.addEventListener("click", function (e) {
+      if (e.target === box || e.target.classList.contains("photo-viewer__figure")) close();
+    });
+    document.addEventListener("keydown", function (e) {
+      if (box.hidden) return;
+      if (e.key === "Escape") close();
+      else if (e.key === "Tab") { e.preventDefault(); closeBtn.focus(); }
+    });
+  })();
+
   /* ---------- Back to top ---------- */
   var backToTop = document.getElementById("backToTop");
   function onScrollBackToTop() {

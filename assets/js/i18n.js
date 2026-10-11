@@ -13,6 +13,7 @@
       "aria.facebook": "فەیسبووک",
       "aria.navToggle": "کردنەوەی لیستە",
       "aria.backToTop": "گەڕانەوە بۆ سەرەوە",
+      "aria.closePhoto": "داخستنی وێنە",
 
       "brand.logoAlt": "لۆگۆی دامەزراوەی ڕەنێو",
 
@@ -168,6 +169,7 @@
       "aria.facebook": "Facebook",
       "aria.navToggle": "Open menu",
       "aria.backToTop": "Back to top",
+      "aria.closePhoto": "Close photo",
 
       "brand.logoAlt": "Ranew Foundation logo",
 
@@ -323,6 +325,7 @@
       "aria.facebook": "فيسبوك",
       "aria.navToggle": "فتح القائمة",
       "aria.backToTop": "العودة إلى الأعلى",
+      "aria.closePhoto": "إغلاق الصورة",
 
       "brand.logoAlt": "شعار مؤسسة رانيو",
 
