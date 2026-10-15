@@ -6,7 +6,7 @@
   var loader = document.getElementById("loader");
   var video = document.getElementById("loaderVideo");
   var FALLBACK = "assets/video/loader.webp";
-  var FALLBACK_MS = 4900;                           // length of the clip
+  var FALLBACK_MS = 3700;                           // length of the clip
   var seen = false;
   try { seen = sessionStorage.getItem("ranewIntroSeen") === "1"; } catch (e) {}
   var saveData = navigator.connection && navigator.connection.saveData;

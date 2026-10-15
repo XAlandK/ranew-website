@@ -74,60 +74,175 @@
         <p class="section__sub" data-i18n="publications.sub">هەندێک لە کتێبە بڵاوکراوەکانی دامەزراوە.</p>
       </div>
 
-      <div class="book-rows">
-        <article class="book-row reveal">
+      <div class="book-sort reveal" role="group" data-i18n-attr="aria-label:publications.sort.label" aria-label="ڕیزکردن بەپێی">
+        <span class="book-sort__label" data-i18n="publications.sort.label">ڕیزکردن بەپێی</span>
+        <button type="button" class="book-sort__btn is-active" data-sort="newest" aria-pressed="true" data-i18n="publications.sort.newest">نوێترین</button>
+        <button type="button" class="book-sort__btn" data-sort="oldest" aria-pressed="false" data-i18n="publications.sort.oldest">کۆنترین</button>
+      </div>
+
+      <div class="book-rows" id="bookRows">
+        <article class="book-row reveal" data-year="2026" data-hijri="1448" data-number="10">
           <div class="book-row__body">
-            <span class="book-card__category" data-i18n="publications.p1.category">کۆمەڵایەتی</span>
-            <h3 data-i18n="publications.p1.title">خێزان لە ئیسلامدا</h3>
-            <p data-i18n="publications.p1.desc">ئەم کتێبە باسی چەمکی فراوانی خێزان دەکات لە ئیسلامدا، کە باری سروشتی و بناغە و بونیادی کۆمەڵگەیە. پاشان باس لە کۆسپ و ڕێگرە هەڵوەشێنەرەوەکانی دەکات لە ڕۆژگاری ئێستادا، لە نێوانیاندا بابەتەکانی فێمینیزم و جێندەر، لە پشت ئەوانیشەوە هاوڕەگەزبازی و کاریگەرییان لەسەر خێزان دەخاتە ڕوو. لەم بەرهەمەدا کۆمەڵێک باسی دیکەی هەستیار توێژراونەتەوە، وەک بارە تایبەتەکانی خێزان لە ئیسلامدا؛ چەندژنی (فرەژنی) و هاوسەرگیریی میسیار.</p>
+            <div class="book-row__meta">
+              <span class="book-card__category" data-i18n="publications.p10.category">پەروەردەیی</span>
+              <span class="book-row__year"><span data-i18n="publications.year">ساڵی چاپ</span> <bdi>2026</bdi></span>
+            </div>
+            <h3 data-i18n="publications.p10.title">گەڕانەوە بۆ لای خوا</h3>
+            <p data-i18n="publications.p10.desc">کتێبێکی گشتگیرە لەبارەی تۆبە و گەڕانەوە بۆ لای خوا، لە حەوت بەشدا: پێناسە و حوکمی تۆبە، چۆنیەتیی تۆبەکردن و تۆبەی ڕاست و ساغ، مەرجەکان و هۆکارەکانی سەرگرتنی، و ئەو گوناحە گەورە و بچووکانەی کە تۆبەیان لێ دەکرێت.</p>
           </div>
           <div class="book-row__cover">
-            <img src="assets/img/books/3ds/1.png" alt="" loading="lazy">
+            <img src="assets/img/books/3ds/10.webp" alt="" loading="lazy">
           </div>
         </article>
-        <article class="book-row reveal">
+        <article class="book-row reveal" data-year="2026" data-hijri="1447" data-number="19">
           <div class="book-row__body">
-            <span class="book-card__category" data-i18n="publications.p2.category">ڕۆشنبیری</span>
-            <h3 data-i18n="publications.p2.title">هاوسەنگی: نە بەزایەدان، نە تێپەڕاندن</h3>
-            <p data-i18n="publications.p2.desc">ئەم کتێبە باسی یەکێک لە دروشمە هەرە بنەڕەتییەکانی ئیسلام دەکات کە هاوسەنگییە. بە بڕوای نووسەر، بەزۆری مرۆڤایەتی یان تووشی بەزایەدان و کەمتەرخەمی و کورتھێنان دەبن، یان تووشی سنووربەزاندن و زێدەڕۆیی و تێنووسانی زۆر دەبن. لەم سۆنگەیەوە، پێویستیی ئەم کتێبە لە هەر کاتێکی دیکەدا زیاترە.</p>
+            <div class="book-row__meta">
+              <span class="book-card__category" data-i18n="publications.p19.category">فیکری</span>
+              <span class="book-row__year"><span data-i18n="publications.year">ساڵی چاپ</span> <bdi>2026</bdi></span>
+            </div>
+            <h3 data-i18n="publications.p19.title">الحرية التي تُحاسَب</h3>
+            <p data-i18n="publications.p19.desc">کتێبێکە لەبارەی ئیرادەی ئازاد و بەرپرسیارێتیی ئاکاری؛ بەدوای ئەوەدا دەچێت کە پرسیاری ئیرادەی ئازاد چۆن بە درێژایی مێژوو گۆڕاوە، و ئەو پرسیارە جیاوازانە لێک جیا دەکاتەوە کە لە پشت وشەی «ئازادی»یەوە شاراونەتەوە، تا دەربخات حوکمی لێپرسینەوە لەسەر چ بناغەیەک دادەمەزرێت.</p>
           </div>
           <div class="book-row__cover">
-            <img src="assets/img/books/3ds/2.png" alt="" loading="lazy">
+            <img src="assets/img/books/3ds/19.webp" alt="" loading="lazy">
           </div>
         </article>
-        <article class="book-row reveal">
+        <article class="book-row reveal" data-year="2026" data-hijri="1447" data-number="18">
           <div class="book-row__body">
-            <span class="book-card__category" data-i18n="publications.p3.category">پەروەردەیی</span>
-            <h3 data-i18n="publications.p3.title">بەرەو دۆستایەتی و هاوکاریی نێوان مسوڵمانان</h3>
-            <p data-i18n="publications.p3.desc">ئەم کتێبە باسی پێویستی و گرنگیی دۆستایەتی و ئاشتی و هاوکاریی نێوان تاکەکانی کۆمەڵگە دەکات، بەتایبەت ئەو کەسانەی کە ناسنامەی باوەڕیان هاوبەشە (مسوڵمانن)، لەبەر ئەوەی بەر لە هەموو شتێک بیروباوەڕیان ئەوە لەسەریان پێویست دەکات. ئەم کتێبە باسی چەند دەرد و نەخۆشییەکیش دەکات کە بوونەتە هۆی پەرتەوازەیی و لێکدوورکەوتنەوەی مسوڵمانان لە نێوان خۆیاندا و لە ئەنجامدا بێهێزبوونیان باس دەکات.</p>
+            <div class="book-row__meta">
+              <span class="book-card__category" data-i18n="publications.p18.category">فیکری</span>
+              <span class="book-row__year"><span data-i18n="publications.year">ساڵی چاپ</span> <bdi>2026</bdi></span>
+            </div>
+            <h3 data-i18n="publications.p18.title">الفلسفة وحدودها</h3>
+            <p data-i18n="publications.p18.desc">توێژینەوەیەکی فەلسەفیی بەراوردکارییە لە سنوورەکانی دامەزراندندا: ئەو پڕۆژە فەلسەفییانە تاقی دەکاتەوە کە عەقڵ، ئەزموون، هۆشیاری، زمان یان مێژوویان کردووەتە سەرچاوەی کۆتایی مانا و پێوەر، و بە چوارچێوەیەکی قوڕئانییان بەراورد دەکات کە لە ڕاستییەکی پێش مرۆڤەوە دەست پێ دەکات.</p>
           </div>
           <div class="book-row__cover">
-            <img src="assets/img/books/3ds/3.png" alt="" loading="lazy">
+            <img src="assets/img/books/3ds/18.webp" alt="" loading="lazy">
           </div>
         </article>
-        <article class="book-row reveal">
+        <article class="book-row reveal" data-year="2026" data-hijri="1447" data-number="16">
           <div class="book-row__body">
-            <span class="book-card__category" data-i18n="publications.p4.category">ڕۆشنبیری</span>
-            <h3 data-i18n="publications.p4.title">هیچ ئایەتێکی مەنسووخ لە قوڕئاندا نییە</h3>
-            <p data-i18n="publications.p4.desc">ئەم کتێبە لێکۆڵینەوەیەکی پشوودرێژانەیە لە بابەتێکی هەستیار کە جێی ڕاجیاییە لە نێوان لێکۆڵەرانی قورئان؛ بابەتی نەسخ، واتە هەڵوەشاندنەوەی ئایەتێکی قورئان یاخود حوکمێکی قورئان بەهۆی ئایەتێکی دیکەوە. نووسەر لەم کتێبەدا لەڕێی چەند لێکۆڵینەوە و بەڵگەیەکی زانستیی قورئانەوە ئەوە دەسەلمێنێت کە هیچ ئایەتێکی قورئان نەسخ نەکراوە و نەسخ لە قورئاندا بوونی نییە.</p>
+            <div class="book-row__meta">
+              <span class="book-card__category" data-i18n="publications.p16.category">بیروباوەڕ</span>
+              <span class="book-row__year"><span data-i18n="publications.year">ساڵی چاپ</span> <bdi>2026</bdi></span>
+            </div>
+            <h3 data-i18n="publications.p16.title">ڕوونکردنەوەی عەقیدەی تەحاوی</h3>
+            <p data-i18n="publications.p16.desc">ڕوونکردنەوەی مەتنی بەناوبانگی «عەقیدەی تەحاوی»یە، کە لە بنەڕەتدا ساڵی ١٩٩٣ لە بیست و دوو (٢٢) دەرسدا گوتراوەتەوە؛ نووسەر تێیدا جەخت لەوە دەکاتەوە کە ئیمان و عەقیدە بناغەی دینداری و مسوڵمانێتییە.</p>
           </div>
           <div class="book-row__cover">
-            <img src="assets/img/books/3ds/4.png" alt="" loading="lazy">
+            <img src="assets/img/books/3ds/16.webp" alt="" loading="lazy">
           </div>
         </article>
-        <article class="book-row reveal">
+        <article class="book-row reveal" data-year="2026" data-hijri="1447" data-number="15">
           <div class="book-row__body">
-            <span class="book-card__category" data-i18n="publications.p5.category">پەروەردەیی</span>
-            <h3 data-i18n="publications.p5.title">طريق الصلاح والسير إلى الله</h3>
-            <p data-i18n="publications.p5.desc">إن َّ تزكية النفس والتي اخترت لها في هذا الكتاب عنوان: «طريق الصلاح والسير إلى الله» ، بَحْر لا ساحل له، وذلك لارتباطها من جانب بالروح التي هي سر من أسرار الله تعالى، وبعد دخولها في الجسد تسمى النفس، ويقع عليها المدح والقدح بحسب ما تحملة من الفضائل والرذائل. وكذلك لها ارتباط - من جانب آخر - بالله ال الذي ليس كمثله شيء. وحاولت في هذا الكتاب - الذي هو عصارة ما وصلت إليه من فهوم وخبرات في هذا المجال - تسليط أضواء كثيرة ومتعددة على تزكية النفس، في عشرة فصول بمختلف نواحيها، وآمل أن يستوعب الفراء الكرام مضمون ما كتبته في هذا الموضوع الحساس العميق المترامي الأطراف، وأن يُتَّحِفوني بملاحظاتهم المخلصة، إذْ لَمْ تُصْمَن لنا العِصْمَةُ في غير كتاب الله وسنة رسول الله.</p>
+            <div class="book-row__meta">
+              <span class="book-card__category" data-i18n="publications.p15.category">پەروەردەیی</span>
+              <span class="book-row__year"><span data-i18n="publications.year">ساڵی چاپ</span> <bdi>2026</bdi></span>
+            </div>
+            <h3 data-i18n="publications.p15.title">زانایانی ئیسلام کێن و چۆنن</h3>
+            <p data-i18n="publications.p15.desc">لە بنەڕەتدا وتارێکی هەینییە کە ساڵی ١٩٩٩ لە مزگەوتی جیهاد لە سلێمانی دراوە و دواتر فراوان کراوە: پێناسەی زانایانی ئیسلام، پلە و پایەیان لە قوڕئان و سوننەتدا، سیفەت و ئاکارەکانیان، مافیان بەسەر ئوممەتەوە و ئەرکیان بەرانبەر بە ئیسلام و مسوڵمانان، لەگەڵ چەند ئامۆژگارییەک بۆ گەنج و قوتابیان.</p>
           </div>
           <div class="book-row__cover">
-            <img src="assets/img/books/3ds/5.png" alt="" loading="lazy">
+            <img src="assets/img/books/3ds/15.webp" alt="" loading="lazy">
           </div>
         </article>
-        <article class="book-row reveal">
+        <article class="book-row reveal" data-year="2026" data-hijri="1447" data-number="14">
           <div class="book-row__body">
-            <span class="book-card__category" data-i18n="publications.p6.category">پەروەردەیی</span>
+            <div class="book-row__meta">
+              <span class="book-card__category" data-i18n="publications.p14.category">ڕۆشنبیری</span>
+              <span class="book-row__year"><span data-i18n="publications.year">ساڵی چاپ</span> <bdi>2026</bdi></span>
+            </div>
+            <h3 data-i18n="publications.p14.title">پوختەیەک دەربارەی ئیسلام</h3>
+            <p data-i18n="publications.p14.desc">پوختەیەکی کورت و ڕوونە دەربارەی ئیسلام؛ ڕوونی دەکاتەوە کە مرۆڤ وەک هەموو بوونەوەرێکی دیکە پێویستی بە ڕێنمایی پەروەردگارەکەیەتی، و ئیسلام ئەو ڕێنمایی و بەرنامەیەیە کە خوا بۆ ژیانی مرۆڤی داناوە.</p>
+          </div>
+          <div class="book-row__cover">
+            <img src="assets/img/books/3ds/14.webp" alt="" loading="lazy">
+          </div>
+        </article>
+        <article class="book-row reveal" data-year="2026" data-hijri="1447" data-number="13">
+          <div class="book-row__body">
+            <div class="book-row__meta">
+              <span class="book-card__category" data-i18n="publications.p13.category">پەروەردەیی</span>
+              <span class="book-row__year"><span data-i18n="publications.year">ساڵی چاپ</span> <bdi>2026</bdi></span>
+            </div>
+            <h3 data-i18n="publications.p13.title">لە خزمەت قوڕئاندا</h3>
+            <p data-i18n="publications.p13.desc">پێناسەیەکی قوڕئانە، دوایین فەرمایشتی خوا بۆ مرۆڤ و جن، و لە پێنج خاڵی سەرەکیدا ئەو ئەرکانە ڕوون دەکاتەوە کە لە بەرانبەر قوڕئاندا لەسەر شانی ئێمەیە.</p>
+          </div>
+          <div class="book-row__cover">
+            <img src="assets/img/books/3ds/13.webp" alt="" loading="lazy">
+          </div>
+        </article>
+        <article class="book-row reveal" data-year="2026" data-hijri="1447" data-number="12">
+          <div class="book-row__body">
+            <div class="book-row__meta">
+              <span class="book-card__category" data-i18n="publications.p12.category">پەروەردەیی</span>
+              <span class="book-row__year"><span data-i18n="publications.year">ساڵی چاپ</span> <bdi>2026</bdi></span>
+            </div>
+            <h3 data-i18n="publications.p12.title">مسوڵمانی ڕاست و ساغ کێیە</h3>
+            <p data-i18n="publications.p12.desc">نووسەر لەم کتێبەدا سەرنج دەداتە واقیعی دینداریی مسوڵمانانی ئەمڕۆ و ئەو کەموکووڕییانەی ڕووی تێکردووە، و لەبەر ڕۆشنایی قوڕئان و سوننەتدا سیما و نیشانەکانی مسوڵمانی ڕاست و ساغ دەخاتە ڕوو.</p>
+          </div>
+          <div class="book-row__cover">
+            <img src="assets/img/books/3ds/12.webp" alt="" loading="lazy">
+          </div>
+        </article>
+        <article class="book-row reveal" data-year="2026" data-hijri="1447" data-number="11">
+          <div class="book-row__body">
+            <div class="book-row__meta">
+              <span class="book-card__category" data-i18n="publications.p11.category">فیکری</span>
+              <span class="book-row__year"><span data-i18n="publications.year">ساڵی چاپ</span> <bdi>2026</bdi></span>
+            </div>
+            <h3 data-i18n="publications.p11.title">دەبەرێکڕاچوونی ئیسلام و ڕێچکان</h3>
+            <p data-i18n="publications.p11.desc">زنجیرەیەک وتووێژە کە زۆربەیان لە ڕووداوی ڕاستەقینەوە وەرگیراون، تێیدا ئیسلام ڕووبەڕووی ئەو بیردۆزە و ڕێچکە دەستکردانە دەبێتەوە کە لە کۆمەڵگەدا بڵاو بوونەتەوە، و بە پەراوێز و پاشکۆ و فەرهەنگۆکێک تەواو کراوە.</p>
+          </div>
+          <div class="book-row__cover">
+            <img src="assets/img/books/3ds/11.webp" alt="" loading="lazy">
+          </div>
+        </article>
+        <article class="book-row reveal" data-year="2026" data-hijri="1447" data-number="9">
+          <div class="book-row__body">
+            <div class="book-row__meta">
+              <span class="book-card__category" data-i18n="publications.p9.category">بیروباوەڕ</span>
+              <span class="book-row__year"><span data-i18n="publications.year">ساڵی چاپ</span> <bdi>2026</bdi></span>
+            </div>
+            <h3 data-i18n="publications.p9.title">بەکافردانانی مسوڵمانان</h3>
+            <p data-i18n="publications.p9.desc">ئەم کتێبە کۆی سێ وتارە کە ساڵی ٢٠٢٥ بۆ کۆمەڵێک مامۆستای مزگەوت گوتراونەتەوە. لە هەشت تەوەردا باسی بەکافردانان (تەکفیر) دەکات، لە پێناسەکەیەوە دەست پێ دەکات و جەخت لەوە دەکاتەوە کە بناغە لە مسوڵماناندا ئیمان و ئیسلامە.</p>
+          </div>
+          <div class="book-row__cover">
+            <img src="assets/img/books/3ds/9.webp" alt="" loading="lazy">
+          </div>
+        </article>
+        <article class="book-row reveal" data-year="2026" data-hijri="1447" data-number="8">
+          <div class="book-row__body">
+            <div class="book-row__meta">
+              <span class="book-card__category" data-i18n="publications.p8.category">فیکری</span>
+              <span class="book-row__year"><span data-i18n="publications.year">ساڵی چاپ</span> <bdi>2026</bdi></span>
+            </div>
+            <h3 data-i18n="publications.p8.title">أهمية الأخلاق في العمل السياسي</h3>
+            <p data-i18n="publications.p8.desc">ئەم کتێبە باس لە قەیرانی ئاکار و ڕەوشت دەکات لە بواری سیاسەت و حوکمڕانیدا، و ڕوونی دەکاتەوە کە پابەندبوون بە ئاکاری بەرز و بەها باڵاکان لە کاری سیاسیدا تەنها بە ئیمان و عەقیدەی ساغ و خواپەرستیی پاک و ڕەوشتی جوان دەستەبەر دەبێت، کە سەرچاوەکەیان وەحییە: قوڕئان و سوننەتی پێغەمبەر ﷺ.</p>
+          </div>
+          <div class="book-row__cover">
+            <img src="assets/img/books/3ds/8.webp" alt="" loading="lazy">
+          </div>
+        </article>
+        <article class="book-row reveal" data-year="2025" data-hijri="1446" data-number="7">
+          <div class="book-row__body">
+            <div class="book-row__meta">
+              <span class="book-card__category" data-i18n="publications.p7.category">پەروەردەیی</span>
+              <span class="book-row__year"><span data-i18n="publications.year">ساڵی چاپ</span> <bdi>2025</bdi></span>
+            </div>
+            <h3 data-i18n="publications.p7.title">چاوبەخۆداگێڕانەوە</h3>
+            <p data-i18n="publications.p7.desc">ئەم کتێبە وەک لە ناونیشانەکەشیەوە دیارە چاو بەخۆداگێڕانەوەیەکی گشتگیر و هەمەلایەنەیە بۆ کۆی بوار و لایەنەکانی دینداریی مسوڵمانانمان. هەوڵم داوە لە سەرجەم بوارەکانی تێڕوانین و بوونناسی و ئیمان و عەقیدە و خواپەرستی و تەزکییە و تەقوا و ڕەوشت و ئاکار و کاروباری کەسێتی و کۆمەڵایەتی و سیاسیدا، نوختە بخەمە سەر پیت و بە شێوەیەکی بەڵگەیی هاوسەنگانەی دوور لە کورتھێنان و تێپەڕاندن، نەخشەڕێ و هێڵە گشتییەکانی موسڵمانێتییەکی ڕاست و ساغ بخەمە ڕوو.</p>
+          </div>
+          <div class="book-row__cover">
+            <img src="assets/img/books/3ds/7.png" alt="" loading="lazy">
+          </div>
+        </article>
+        <article class="book-row reveal" data-year="2025" data-hijri="1446" data-number="6">
+          <div class="book-row__body">
+            <div class="book-row__meta">
+              <span class="book-card__category" data-i18n="publications.p6.category">پەروەردەیی</span>
+              <span class="book-row__year"><span data-i18n="publications.year">ساڵی چاپ</span> <bdi>2025</bdi></span>
+            </div>
             <h3 data-i18n="publications.p6.title">ڕوونکردنەوە و هەڵسەنگاندنی حیکمەتەکانی 'ابن عطاء الله السكندري'</h3>
             <p data-i18n="publications.p6.desc">ڕوونکردنەوە و هەڵسەنگاندنێکی پشوودرێژانەیە بۆ حیکمەتەکانی ئەحمەد کوڕی عەتائوڵڵای سەکنندەری. لە بنەڕەتدا سی و سێ (٣٣) دەرس بوون و لە خوولێکدا پێشکەش کراون. شایەنی باسیشە ئەو حیکمەتانە لەمێژە زانایانی بواری تەزکیە و تەسەووف بە ڕوونکردنەوە و لێکدانەوەیانەوە سەرقاڵن و شەرحی زۆریان کراون، کەم و زۆریش سوودم لە بەشێک لەو کتێب و بەرهەمانە وەرگرتووە. ڕەنگە ئیمتیاز و جیاوازیی سەرەکیی ئەم بەرهەمە ئەوە بێت بەپێچەوانەی سەرجەم شەرحەکانی دیکەوە، وێڕای ڕوونکردنەوە و لێکدانەوە، هەڵسەنگاندنم بۆ ژمارەیەکی زۆر لە حیکمەتەکان کردووە.</p>
           </div>
@@ -135,14 +250,69 @@
             <img src="assets/img/books/3ds/6.png" alt="" loading="lazy">
           </div>
         </article>
-        <article class="book-row reveal">
+        <article class="book-row reveal" data-year="2024" data-hijri="1445" data-number="5">
           <div class="book-row__body">
-            <span class="book-card__category" data-i18n="publications.p7.category">پەروەردەیی</span>
-            <h3 data-i18n="publications.p7.title">چاوبەخۆداگێڕانەوە</h3>
-            <p data-i18n="publications.p7.desc">ئەم کتێبە وەک لە ناونیشانەکەشیەوە دیارە چاو بەخۆداگێڕانەوەیەکی گشتگیر و هەمەلایەنەیە بۆ کۆی بوار و لایەنەکانی دینداریی مسوڵمانانمان. هەوڵم داوە لە سەرجەم بوارەکانی تێڕوانین و بوونناسی و ئیمان و عەقیدە و خواپەرستی و تەزکییە و تەقوا و ڕەوشت و ئاکار و کاروباری کەسێتی و کۆمەڵایەتی و سیاسیدا، نوختە بخەمە سەر پیت و بە شێوەیەکی بەڵگەیی هاوسەنگانەی دوور لە کورتھێنان و تێپەڕاندن، نەخشەڕێ و هێڵە گشتییەکانی موسڵمانێتییەکی ڕاست و ساغ بخەمە ڕوو.</p>
+            <div class="book-row__meta">
+              <span class="book-card__category" data-i18n="publications.p5.category">پەروەردەیی</span>
+              <span class="book-row__year"><span data-i18n="publications.year">ساڵی چاپ</span> <bdi>2024</bdi></span>
+            </div>
+            <h3 data-i18n="publications.p5.title">طريق الصلاح والسير إلى الله</h3>
+            <p data-i18n="publications.p5.desc">إن َّ تزكية النفس والتي اخترت لها في هذا الكتاب عنوان: «طريق الصلاح والسير إلى الله» ، بَحْر لا ساحل له، وذلك لارتباطها من جانب بالروح التي هي سر من أسرار الله تعالى، وبعد دخولها في الجسد تسمى النفس، ويقع عليها المدح والقدح بحسب ما تحملة من الفضائل والرذائل. وكذلك لها ارتباط - من جانب آخر - بالله ال الذي ليس كمثله شيء. وحاولت في هذا الكتاب - الذي هو عصارة ما وصلت إليه من فهوم وخبرات في هذا المجال - تسليط أضواء كثيرة ومتعددة على تزكية النفس، في عشرة فصول بمختلف نواحيها، وآمل أن يستوعب الفراء الكرام مضمون ما كتبته في هذا الموضوع الحساس العميق المترامي الأطراف، وأن يُتَّحِفوني بملاحظاتهم المخلصة، إذْ لَمْ تُصْمَن لنا العِصْمَةُ في غير كتاب الله وسنة رسول الله.</p>
           </div>
           <div class="book-row__cover">
-            <img src="assets/img/books/3ds/7.png" alt="" loading="lazy">
+            <img src="assets/img/books/3ds/5.png" alt="" loading="lazy">
+          </div>
+        </article>
+        <article class="book-row reveal" data-year="2024" data-hijri="1445" data-number="4">
+          <div class="book-row__body">
+            <div class="book-row__meta">
+              <span class="book-card__category" data-i18n="publications.p4.category">ڕۆشنبیری</span>
+              <span class="book-row__year"><span data-i18n="publications.year">ساڵی چاپ</span> <bdi>2024</bdi></span>
+            </div>
+            <h3 data-i18n="publications.p4.title">هیچ ئایەتێکی مەنسووخ لە قوڕئاندا نییە</h3>
+            <p data-i18n="publications.p4.desc">ئەم کتێبە لێکۆڵینەوەیەکی پشوودرێژانەیە لە بابەتێکی هەستیار کە جێی ڕاجیاییە لە نێوان لێکۆڵەرانی قورئان؛ بابەتی نەسخ، واتە هەڵوەشاندنەوەی ئایەتێکی قورئان یاخود حوکمێکی قورئان بەهۆی ئایەتێکی دیکەوە. نووسەر لەم کتێبەدا لەڕێی چەند لێکۆڵینەوە و بەڵگەیەکی زانستیی قورئانەوە ئەوە دەسەلمێنێت کە هیچ ئایەتێکی قورئان نەسخ نەکراوە و نەسخ لە قورئاندا بوونی نییە.</p>
+          </div>
+          <div class="book-row__cover">
+            <img src="assets/img/books/3ds/4.png" alt="" loading="lazy">
+          </div>
+        </article>
+        <article class="book-row reveal" data-year="2024" data-hijri="1445" data-number="3">
+          <div class="book-row__body">
+            <div class="book-row__meta">
+              <span class="book-card__category" data-i18n="publications.p3.category">پەروەردەیی</span>
+              <span class="book-row__year"><span data-i18n="publications.year">ساڵی چاپ</span> <bdi>2024</bdi></span>
+            </div>
+            <h3 data-i18n="publications.p3.title">بەرەو دۆستایەتی و هاوکاریی نێوان مسوڵمانان</h3>
+            <p data-i18n="publications.p3.desc">ئەم کتێبە باسی پێویستی و گرنگیی دۆستایەتی و ئاشتی و هاوکاریی نێوان تاکەکانی کۆمەڵگە دەکات، بەتایبەت ئەو کەسانەی کە ناسنامەی باوەڕیان هاوبەشە (مسوڵمانن)، لەبەر ئەوەی بەر لە هەموو شتێک بیروباوەڕیان ئەوە لەسەریان پێویست دەکات. ئەم کتێبە باسی چەند دەرد و نەخۆشییەکیش دەکات کە بوونەتە هۆی پەرتەوازەیی و لێکدوورکەوتنەوەی مسوڵمانان لە نێوان خۆیاندا و لە ئەنجامدا بێهێزبوونیان باس دەکات.</p>
+          </div>
+          <div class="book-row__cover">
+            <img src="assets/img/books/3ds/3.png" alt="" loading="lazy">
+          </div>
+        </article>
+        <article class="book-row reveal" data-year="2024" data-hijri="1445" data-number="2">
+          <div class="book-row__body">
+            <div class="book-row__meta">
+              <span class="book-card__category" data-i18n="publications.p2.category">ڕۆشنبیری</span>
+              <span class="book-row__year"><span data-i18n="publications.year">ساڵی چاپ</span> <bdi>2024</bdi></span>
+            </div>
+            <h3 data-i18n="publications.p2.title">هاوسەنگی: نە بەزایەدان، نە تێپەڕاندن</h3>
+            <p data-i18n="publications.p2.desc">ئەم کتێبە باسی یەکێک لە دروشمە هەرە بنەڕەتییەکانی ئیسلام دەکات کە هاوسەنگییە. بە بڕوای نووسەر، بەزۆری مرۆڤایەتی یان تووشی بەزایەدان و کەمتەرخەمی و کورتھێنان دەبن، یان تووشی سنووربەزاندن و زێدەڕۆیی و تێنووسانی زۆر دەبن. لەم سۆنگەیەوە، پێویستیی ئەم کتێبە لە هەر کاتێکی دیکەدا زیاترە.</p>
+          </div>
+          <div class="book-row__cover">
+            <img src="assets/img/books/3ds/2.png" alt="" loading="lazy">
+          </div>
+        </article>
+        <article class="book-row reveal" data-year="2024" data-hijri="1445" data-number="1">
+          <div class="book-row__body">
+            <div class="book-row__meta">
+              <span class="book-card__category" data-i18n="publications.p1.category">کۆمەڵایەتی</span>
+              <span class="book-row__year"><span data-i18n="publications.year">ساڵی چاپ</span> <bdi>2024</bdi></span>
+            </div>
+            <h3 data-i18n="publications.p1.title">خێزان لە ئیسلامدا</h3>
+            <p data-i18n="publications.p1.desc">ئەم کتێبە باسی چەمکی فراوانی خێزان دەکات لە ئیسلامدا، کە باری سروشتی و بناغە و بونیادی کۆمەڵگەیە. پاشان باس لە کۆسپ و ڕێگرە هەڵوەشێنەرەوەکانی دەکات لە ڕۆژگاری ئێستادا، لە نێوانیاندا بابەتەکانی فێمینیزم و جێندەر، لە پشت ئەوانیشەوە هاوڕەگەزبازی و کاریگەرییان لەسەر خێزان دەخاتە ڕوو. لەم بەرهەمەدا کۆمەڵێک باسی دیکەی هەستیار توێژراونەتەوە، وەک بارە تایبەتەکانی خێزان لە ئیسلامدا؛ چەندژنی (فرەژنی) و هاوسەرگیریی میسیار.</p>
+          </div>
+          <div class="book-row__cover">
+            <img src="assets/img/books/3ds/1.png" alt="" loading="lazy">
           </div>
         </article>
       </div>

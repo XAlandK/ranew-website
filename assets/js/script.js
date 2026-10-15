@@ -413,6 +413,36 @@
     });
   })();
 
+  /* ---------- Publications: sort the books by newest / oldest ----------
+     Each .book-row carries its Ranew edition year (AD and Hijri) and book number;
+     the number breaks ties between books from the same year. */
+  (function () {
+    var list = document.getElementById("bookRows");
+    var buttons = Array.prototype.slice.call(document.querySelectorAll(".book-sort__btn"));
+    if (!list || !buttons.length) return;
+    function key(el) {
+      return ["data-year", "data-hijri", "data-number"].map(function (a) { return +el.getAttribute(a) || 0; });
+    }
+    function sortBooks(order) {
+      var dir = order === "oldest" ? 1 : -1;
+      Array.prototype.slice.call(list.children)
+        .sort(function (a, b) {
+          var ka = key(a), kb = key(b);
+          for (var i = 0; i < ka.length; i++) if (ka[i] !== kb[i]) return dir * (ka[i] - kb[i]);
+          return 0;
+        })
+        .forEach(function (el) { list.appendChild(el); });
+      buttons.forEach(function (btn) {
+        var on = btn.getAttribute("data-sort") === order;
+        btn.classList.toggle("is-active", on);
+        btn.setAttribute("aria-pressed", on ? "true" : "false");
+      });
+    }
+    buttons.forEach(function (btn) {
+      btn.addEventListener("click", function () { sortBooks(btn.getAttribute("data-sort")); });
+    });
+  })();
+
   /* ---------- Back to top ---------- */
   var backToTop = document.getElementById("backToTop");
   function onScrollBackToTop() {

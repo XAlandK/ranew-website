@@ -8,7 +8,7 @@
 <link rel="icon" type="image/png" href="assets/img/logos/ranew_logo_blue (white_in).png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Amiri+Quran&family=Vazirmatn:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
@@ -145,27 +145,167 @@
     </div>
   </section>
 
-  <!-- ===== Oak (scroll-driven growth) ===== -->
-  <section class="oak" id="oak" aria-label="دار بەڕوو">
-    <div class="oak__sticky">
-      <div class="container oak__grid">
-        <div class="oak__content">
-          <span class="eyebrow eyebrow--green" data-i18n="oak.eyebrow">وەک داربەڕوویەک</span>
-          <h2 class="section__title" data-i18n="oak.title">لە تۆوێکی بچووکەوە بۆ درەختێکی بەهێز</h2>
-          <p data-i18n="oak.desc">
-            پەروەردە وەک چاندنی داربەڕوویەکە؛ بە ئارامی و بەردەوامی گەشە دەکات، ڕەگی قووڵ دادەکوتێت
-            و سێبەرێکی فراوان بۆ نەوەکانی داهاتوو دروست دەکات.
-          </p>
-          <div class="oak__stages" aria-hidden="true">
-            <span class="oak__stage" data-at="0" data-i18n="oak.stage1">تۆو</span>
-            <span class="oak__stage" data-at="0.15" data-i18n="oak.stage2">نەمام</span>
-            <span class="oak__stage" data-at="0.5" data-i18n="oak.stage3">لق</span>
-            <span class="oak__stage" data-at="0.8" data-i18n="oak.stage4">درەخت</span>
+  <!-- ===== The good tree (Ibrahim 14:24–25), revealed with scroll — see assets/js/tree.js ===== -->
+  <section class="gtree" id="tree" data-step="1" aria-labelledby="treeTitle">
+    <div class="gtree__sticky">
+      <div class="container gtree__grid">
+        <div class="gtree__content">
+          <span class="eyebrow eyebrow--green" data-i18n="tree.eyebrow">مەسەلێکی قورئانی</span>
+          <h2 class="section__title" id="treeTitle" data-i18n="tree.title">وشەی پاک، وەک درەختێکی پاک</h2>
+          <blockquote class="gtree__verse" lang="ar" dir="rtl">
+            <p>﴿أَلَمْ تَرَ كَيْفَ ضَرَبَ اللَّهُ مَثَلًا <span class="gtree__phrase" data-step="1">كَلِمَةً طَيِّبَةً</span> <span class="gtree__phrase" data-step="2">كَشَجَرَةٍ طَيِّبَةٍ</span> <span class="gtree__phrase" data-step="3">أَصْلُهَا ثَابِتٌ</span> <span class="gtree__phrase" data-step="4">وَفَرْعُهَا فِي السَّمَاءِ</span> (٢٤) <span class="gtree__phrase" data-step="5">تُؤْتِي أُكُلَهَا كُلَّ حِينٍ بِإِذْنِ رَبِّهَا</span> وَيَضْرِبُ اللَّهُ الْأَمْثَالَ لِلنَّاسِ لَعَلَّهُمْ يَتَذَكَّرُونَ (٢٥)﴾</p>
+            <cite data-i18n="tree.ref">[ئیبراهیم: ٢٤-٢٥]</cite>
+          </blockquote>
+
+          <div class="gtree__cards">
+            <article class="gtree__card" data-step="1">
+              <h3><span class="gtree__card-ar" lang="ar">الكلمة الطيبة</span><span class="gtree__card-tr" data-i18n="tree.s1.label">وشەی پاک</span></h3>
+              <p data-i18n="tree.s1.text">بریتییە لە وشەی تەوحید (لا إله إلا الله)، هەروەها مەبەست پێی ئیمانی دروست و کردەوەی چاکیشە.</p>
+            </article>
+            <article class="gtree__card" data-step="2">
+              <h3><span class="gtree__card-ar" lang="ar">الشجرة الطيبة</span><span class="gtree__card-tr" data-i18n="tree.s2.label">درەختی پاک</span></h3>
+              <p data-i18n="tree.s2.text">خوای گەورە بە دارخورما چواندوویەتی، وەک لە تەفسیری پێغەمبەر ﷺ و هاوەڵانیدا، وەک ئەنەسی کوڕی مالیک و ئیبنو عومەر، هاتووە.</p>
+            </article>
+            <article class="gtree__card" data-step="3">
+              <h3><span class="gtree__card-ar" lang="ar">أصلها ثابت</span><span class="gtree__card-tr" data-i18n="tree.s3.label">ڕەگەکەی چەسپاوە</span></h3>
+              <p data-i18n="tree.s3.text">واتە ئیمان لە ڕووی زانین و باوەڕەوە لە دڵی ئیمانداردا ڕەگی داکوتاوە و چەسپاو و جێگیرە.</p>
+            </article>
+            <article class="gtree__card" data-step="4">
+              <h3><span class="gtree__card-ar" lang="ar">فرعها في السماء</span><span class="gtree__card-tr" data-i18n="tree.s4.label">لقەکەی لە ئاسماندایە</span></h3>
+              <p data-i18n="tree.s4.text">واتە کردەوە چاکەکان و گوتە پاکەکان هەمیشە بەرز دەبنەوە و بەرەو لای خوا سەردەکەون.</p>
+            </article>
+            <article class="gtree__card" data-step="5">
+              <h3><span class="gtree__card-ar" lang="ar">تؤتي أكلها كل حين بإذن ربها</span><span class="gtree__card-tr" data-i18n="tree.s5.label">هەموو کاتێک بەرهەم دەدات</span></h3>
+              <p data-i18n="tree.s5.text">واتە ئەم درەختە (ئیمان) لە هەموو کات و ساتێکدا بەر و سوودی خۆی دەدات، خاوەنەکەی و کەسانی دیکەش بەردەوام سوودی لێ دەبینن.</p>
+            </article>
           </div>
-          <div class="oak__progress" aria-hidden="true"><span id="oakBar"></span></div>
+
+          <div class="gtree__steps">
+            <button type="button" class="gtree__step" data-step="1" data-i18n="tree.s1.short">وشە</button>
+            <button type="button" class="gtree__step" data-step="2" data-i18n="tree.s2.short">درەخت</button>
+            <button type="button" class="gtree__step" data-step="3" data-i18n="tree.s3.short">ڕەگ</button>
+            <button type="button" class="gtree__step" data-step="4" data-i18n="tree.s4.short">لق</button>
+            <button type="button" class="gtree__step" data-step="5" data-i18n="tree.s5.short">بەر</button>
+          </div>
+          <div class="gtree__progress" aria-hidden="true"><span id="treeBar"></span></div>
         </div>
-        <div class="oak__canvas-wrap">
-          <canvas class="oak__canvas" id="oakCanvas" role="img" data-i18n-attr="aria-label:oak.canvasAlt" aria-label="داربەڕوویەک کە لەگەڵ سکرۆڵکردن گەشە دەکات"></canvas>
+
+        <div class="gtree__art">
+          <svg class="gtree__svg" viewBox="0 0 600 720" role="img" data-i18n-attr="aria-label:tree.artAlt" aria-label="درەختێکی بەرهەمدار کە لەگەڵ سکڕۆڵکردندا ڕەگ و قەد و لق و بەرەکەی ڕوون دەبنەوە">
+            <defs>
+              <radialGradient id="gtSky" cx="50%" cy="45%" r="50%">
+                <stop offset="0" stop-color="#ffffff" stop-opacity=".95"/>
+                <stop offset=".6" stop-color="#e6efdf" stop-opacity=".7"/>
+                <stop offset="1" stop-color="#e6efdf" stop-opacity="0"/>
+              </radialGradient>
+              <radialGradient id="gtSkyDay" cx="50%" cy="40%" r="50%">
+                <stop offset="0" stop-color="#f3f8ff"/>
+                <stop offset=".55" stop-color="#d4e5f7" stop-opacity=".85"/>
+                <stop offset="1" stop-color="#d4e5f7" stop-opacity="0"/>
+              </radialGradient>
+              <radialGradient id="gtGlow" cx="50%" cy="50%" r="50%">
+                <stop offset="0" stop-color="#ffe7a3" stop-opacity=".95"/>
+                <stop offset=".45" stop-color="#ffe7a3" stop-opacity=".45"/>
+                <stop offset="1" stop-color="#ffe7a3" stop-opacity="0"/>
+              </radialGradient>
+              <linearGradient id="gtSoil" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#ecdfc6"/>
+                <stop offset=".6" stop-color="#efe5d2" stop-opacity=".8"/>
+                <stop offset="1" stop-color="#f3ecdf" stop-opacity="0"/>
+              </linearGradient>
+              <!-- the canopy's outline: its lit side is clipped to it -->
+              <clipPath id="gtCanopyClip">
+                <circle cx="300" cy="195" r="138"/><circle cx="180" cy="258" r="84"/><circle cx="420" cy="258" r="84"/>
+                <circle cx="228" cy="134" r="86"/><circle cx="372" cy="134" r="86"/><circle cx="300" cy="288" r="84"/>
+                <circle cx="238" cy="310" r="58"/><circle cx="362" cy="310" r="58"/>
+              </clipPath>
+              <!-- roots: smooth tapered shapes, no little rootlets -->
+              <g id="gtRootShapes">
+                <path d="M290 520 C289 560 293 600 300 652 C307 600 311 560 310 520 Z"/>
+                <path d="M286 522 C268 552 246 590 226 642 C252 596 280 562 300 538 Z"/>
+                <path d="M314 522 C332 552 354 590 374 642 C348 596 320 562 300 538 Z"/>
+                <path d="M282 522 C246 532 196 548 140 592 C196 560 246 548 296 536 Z"/>
+                <path d="M318 522 C354 532 404 548 460 592 C404 560 354 548 304 536 Z"/>
+                <path d="M280 521 C230 524 170 528 96 554 C168 540 232 536 292 530 Z"/>
+                <path d="M320 521 C370 524 430 528 504 554 C432 540 368 536 308 530 Z"/>
+              </g>
+            </defs>
+
+            <circle class="gt-sky" cx="300" cy="262" r="262" fill="url(#gtSky)"/>
+            <circle class="gt-sky-day" cx="300" cy="250" r="250" fill="url(#gtSkyDay)"/>
+            <circle class="gt-halo" cx="300" cy="300" r="296" fill="url(#gtGlow)"/>
+
+            <!-- step 4: good words and deeds rising to the sky -->
+            <g class="gt-rise" fill="#ffd36b">
+              <circle class="gt-mote" cx="236" cy="120" r="5" style="--d:0s"/>
+              <circle class="gt-mote" cx="300" cy="96" r="6" style="--d:.7s"/>
+              <circle class="gt-mote" cx="364" cy="122" r="5" style="--d:1.4s"/>
+              <circle class="gt-mote" cx="190" cy="176" r="4.5" style="--d:2.1s"/>
+              <circle class="gt-mote" cx="410" cy="174" r="4.5" style="--d:.35s"/>
+              <circle class="gt-mote" cx="268" cy="150" r="4" style="--d:1.05s"/>
+              <circle class="gt-mote" cx="334" cy="148" r="4" style="--d:2.45s"/>
+              <circle class="gt-mote" cx="140" cy="236" r="4" style="--d:1.75s"/>
+              <circle class="gt-mote" cx="460" cy="232" r="4" style="--d:2.8s"/>
+            </g>
+
+            <!-- ground, cut away so the roots show -->
+            <path class="gt-soil" d="M34 532 C180 512 420 512 566 532 C566 640 452 704 300 704 C148 704 34 640 34 532 Z" fill="url(#gtSoil)"/>
+            <g class="gt-roots">
+              <use class="gt-roots-glow" href="#gtRootShapes"/>
+              <use class="gt-roots-body" href="#gtRootShapes"/>
+            </g>
+            <path class="gt-grass" d="M34 532 C180 512 420 512 566 532" fill="none" stroke="#86b874" stroke-width="10" stroke-linecap="round"/>
+
+            <!-- step 1: the word, planted -->
+            <g class="gt-seed">
+              <circle cx="300" cy="520" r="46" fill="url(#gtGlow)"/>
+              <circle class="gt-seed-core" cx="300" cy="520" r="9" fill="#f1b63c"/>
+            </g>
+
+            <g class="gt-trunk">
+              <path d="M248 524 C268 518 278 500 282 466 C286 430 287 380 288 330 L312 330 C313 380 314 430 318 466 C322 500 332 518 352 524 Z" fill="#a27b56"/>
+              <path d="M302 340 L311 340 C312 390 314 440 318 470 C321 495 328 510 340 519 C323 515 312 500 307 470 C304 440 303 390 302 340 Z" fill="#bb9673"/>
+            </g>
+
+            <g class="gt-canopy">
+              <g class="gt-sway">
+                <g fill="#5a9455">
+                  <circle cx="300" cy="205" r="150"/><circle cx="178" cy="268" r="96"/><circle cx="422" cy="268" r="96"/>
+                  <circle cx="226" cy="142" r="96"/><circle cx="374" cy="142" r="96"/><circle cx="300" cy="300" r="96"/>
+                  <circle cx="236" cy="322" r="70"/><circle cx="364" cy="322" r="70"/>
+                </g>
+                <g fill="#73ad69">
+                  <circle cx="300" cy="195" r="138"/><circle cx="180" cy="258" r="84"/><circle cx="420" cy="258" r="84"/>
+                  <circle cx="228" cy="134" r="86"/><circle cx="372" cy="134" r="86"/><circle cx="300" cy="288" r="84"/>
+                  <circle cx="238" cy="310" r="58"/><circle cx="362" cy="310" r="58"/>
+                </g>
+                <g fill="#86bc77" clip-path="url(#gtCanopyClip)">
+                  <circle cx="318" cy="177" r="120"/><circle cx="198" cy="240" r="68"/><circle cx="438" cy="240" r="68"/>
+                  <circle cx="246" cy="116" r="70"/><circle cx="390" cy="116" r="70"/><circle cx="318" cy="270" r="68"/>
+                  <circle cx="256" cy="292" r="44"/><circle cx="380" cy="292" r="44"/>
+                </g>
+                <g fill="#9fcf8d" clip-path="url(#gtCanopyClip)" opacity=".75">
+                  <circle cx="346" cy="128" r="62"/><circle cx="262" cy="92" r="40"/><circle cx="452" cy="222" r="34"/>
+                </g>
+
+                <!-- step 5: fruit, at every season -->
+                <g class="gt-fruits">
+                  <g transform="translate(214 176)"><g class="gt-fruit" style="--i:0"><circle r="14"/><circle class="gt-fruit-hl" cx="-5" cy="-5" r="4.5"/><path class="gt-leaf" d="M1 -13 C5 -21 13 -22 17 -19 C13 -13 7 -11 1 -13 Z"/></g></g>
+                  <g transform="translate(300 96)"><g class="gt-fruit" style="--i:1"><circle r="14"/><circle class="gt-fruit-hl" cx="-5" cy="-5" r="4.5"/><path class="gt-leaf" d="M1 -13 C5 -21 13 -22 17 -19 C13 -13 7 -11 1 -13 Z"/></g></g>
+                  <g transform="translate(386 178)"><g class="gt-fruit" style="--i:2"><circle r="14"/><circle class="gt-fruit-hl" cx="-5" cy="-5" r="4.5"/><path class="gt-leaf" d="M1 -13 C5 -21 13 -22 17 -19 C13 -13 7 -11 1 -13 Z"/></g></g>
+                  <g transform="translate(150 276)"><g class="gt-fruit" style="--i:3"><circle r="14"/><circle class="gt-fruit-hl" cx="-5" cy="-5" r="4.5"/><path class="gt-leaf" d="M1 -13 C5 -21 13 -22 17 -19 C13 -13 7 -11 1 -13 Z"/></g></g>
+                  <g transform="translate(256 236)"><g class="gt-fruit" style="--i:4"><circle r="14"/><circle class="gt-fruit-hl" cx="-5" cy="-5" r="4.5"/><path class="gt-leaf" d="M1 -13 C5 -21 13 -22 17 -19 C13 -13 7 -11 1 -13 Z"/></g></g>
+                  <g transform="translate(346 226)"><g class="gt-fruit" style="--i:5"><circle r="14"/><circle class="gt-fruit-hl" cx="-5" cy="-5" r="4.5"/><path class="gt-leaf" d="M1 -13 C5 -21 13 -22 17 -19 C13 -13 7 -11 1 -13 Z"/></g></g>
+                  <g transform="translate(452 282)"><g class="gt-fruit" style="--i:6"><circle r="14"/><circle class="gt-fruit-hl" cx="-5" cy="-5" r="4.5"/><path class="gt-leaf" d="M1 -13 C5 -21 13 -22 17 -19 C13 -13 7 -11 1 -13 Z"/></g></g>
+                  <g transform="translate(300 318)"><g class="gt-fruit" style="--i:7"><circle r="14"/><circle class="gt-fruit-hl" cx="-5" cy="-5" r="4.5"/><path class="gt-leaf" d="M1 -13 C5 -21 13 -22 17 -19 C13 -13 7 -11 1 -13 Z"/></g></g>
+                  <g transform="translate(212 334)"><g class="gt-fruit" style="--i:8"><circle r="14"/><circle class="gt-fruit-hl" cx="-5" cy="-5" r="4.5"/><path class="gt-leaf" d="M1 -13 C5 -21 13 -22 17 -19 C13 -13 7 -11 1 -13 Z"/></g></g>
+                  <g transform="translate(392 336)"><g class="gt-fruit" style="--i:9"><circle r="14"/><circle class="gt-fruit-hl" cx="-5" cy="-5" r="4.5"/><path class="gt-leaf" d="M1 -13 C5 -21 13 -22 17 -19 C13 -13 7 -11 1 -13 Z"/></g></g>
+                  <g transform="translate(166 196)"><g class="gt-fruit" style="--i:10"><circle r="14"/><circle class="gt-fruit-hl" cx="-5" cy="-5" r="4.5"/><path class="gt-leaf" d="M1 -13 C5 -21 13 -22 17 -19 C13 -13 7 -11 1 -13 Z"/></g></g>
+                  <g transform="translate(434 196)"><g class="gt-fruit" style="--i:11"><circle r="14"/><circle class="gt-fruit-hl" cx="-5" cy="-5" r="4.5"/><path class="gt-leaf" d="M1 -13 C5 -21 13 -22 17 -19 C13 -13 7 -11 1 -13 Z"/></g></g>
+                </g>
+              </g>
+            </g>
+          </svg>
         </div>
       </div>
     </div>
@@ -350,6 +490,6 @@
 
 <script src="assets/js/script.js"></script>
 <script src="assets/js/i18n.js"></script>
-<script src="assets/js/oak.js"></script>
+<script src="assets/js/tree.js"></script>
 </body>
 </html>
