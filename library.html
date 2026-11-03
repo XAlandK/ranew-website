@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="ckb" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>بڵاوکراوەکان (کتێبخانە) | دامەزراوەی ڕەنێو</title>
+<meta name="description" content="کتێبخانەی بڵاوکراوەکانی دامەزراوەی ڕەنێو؛ کتێبێک لە ڕەفەکە هەڵبژێرە.">
+<link rel="icon" type="image/png" href="assets/img/logos/ranew_logo_blue (white_in).png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body data-page="library">
+
+<!-- ===== Top bar ===== -->
+<div class="topbar">
+  <div class="container topbar__inner">
+    <div class="topbar__contact">
+      <a href="tel:+9647509923332" dir="ltr"><span class="icon icon-phone"></span>0750 992 3332</a>
+      <a href="mailto:Info@ranew.org" dir="ltr"><span class="icon icon-mail"></span>Info@ranew.org</a>
+    </div>
+    <div class="topbar__right">
+      <div class="lang-switch" id="langSwitch" role="group" aria-label="Language / زمان / اللغة">
+        <button type="button" class="lang-switch__btn" data-lang="ckb">کوردی</button>
+        <button type="button" class="lang-switch__btn" data-lang="en">English</button>
+        <button type="button" class="lang-switch__btn" data-lang="ar">العربية</button>
+      </div>
+      <div class="topbar__social">
+        <a href="https://www.facebook.com/Ranewfoundation" target="_blank" rel="noopener" data-i18n-attr="aria-label:aria.facebook">
+          <span class="icon icon-facebook"></span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== Header / Nav ===== -->
+<header class="site-header" id="siteHeader">
+  <div class="container header__inner">
+    <a href="/" class="brand">
+      <img src="assets/img/logos/ranew_logo_blue (white_in).png" data-i18n-attr="alt:brand.logoAlt" alt="لۆگۆی دامەزراوەی ڕەنێو" class="brand__logo">
+      <span class="brand__text">
+        <strong data-i18n="hero.title1">دامەزراوەی ڕەنێو</strong>
+        <small data-i18n="hero.title2">بۆ پەروەردە و ڕۆشنبیری</small>
+      </span>
+    </a>
+
+    <nav class="nav" id="mainNav">
+      <a href="/#top" class="nav__link" data-i18n="nav.home">سەرەکی</a>
+      <a href="/#about" class="nav__link" data-i18n="nav.about">لەبارە</a>
+      <a href="/#programs" class="nav__link" data-i18n="nav.programs">بوارەکانی کار</a>
+      <a href="/publications" class="nav__link active" data-i18n="nav.publications">بڵاوکراوەکان</a>
+      <a href="/team" class="nav__link" data-i18n="nav.team">تیمەکەمان</a>
+      <a href="/helachin" class="nav__link">هەڵەچن</a>
+      <a href="/#contact" class="nav__link" data-i18n="nav.contact">پەیوەندی</a>
+    </nav>
+
+    <a href="https://www.facebook.com/Ranewfoundation" target="_blank" rel="noopener" class="btn btn--primary btn--nav" data-i18n="header.followBtn">شوێنمان بکەوە</a>
+
+    <button class="nav-toggle" id="navToggle" data-i18n-attr="aria-label:aria.navToggle" aria-label="کردنەوەی لیستە" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main>
+  <section class="section">
+    <div class="container">
+      <div class="section__head reveal">
+        <span class="eyebrow eyebrow--dark" data-i18n="publications.view.shelf">کتێبخانە</span>
+        <h1 class="section__title" data-i18n="library.title">بڵاوکراوەکان (کتێبخانە)</h1>
+        <p class="section__sub" data-i18n="library.sub">ماوسەکەت بەسەر ڕەفەکەدا بجووڵێنە بۆ هەڵبژاردنی کتێبێک؛ ناونیشان و پوختەکەی لە خوارەوە دەردەکەوێت.</p>
+      </div>
+
+      <div class="book-toolbar reveal">
+        <div class="view-switch view-switch--depth" role="group" data-i18n-attr="aria-label:library.depth.label" aria-label="شێوەی ڕەفەکە">
+          <button type="button" class="view-switch__btn" data-shelf-view="2d" aria-pressed="false">2D</button>
+          <button type="button" class="view-switch__btn is-active" data-shelf-view="3d" aria-pressed="true">3D</button>
+        </div>
+        <nav class="view-switch" data-i18n-attr="aria-label:publications.view.label" aria-label="شێوازی پیشاندان">
+          <a href="/publications" class="view-switch__btn" data-i18n="publications.view.list">لیست</a>
+          <a href="/library" class="view-switch__btn is-active" aria-current="page" data-i18n="publications.view.shelf">کتێبخانە</a>
+        </nav>
+      </div>
+
+      <div class="bookcase bookcase--3d reveal">
+        <div class="bookcase__back">
+          <ul class="shelf" id="shelf" data-i18n-attr="aria-label:library.shelfLabel" aria-label="ڕەفی کتێبەکان">
+            <li class="bookcase__room" aria-hidden="true"><span class="room__back"></span><span class="room__floor"></span><span class="room__side room__side--l"></span><span class="room__side room__side--r"></span></li>
+            <li><button type="button" class="spine is-selected" data-book="10" aria-pressed="true" aria-describedby="book-10-desc" tabindex="0" style="--i:0; --w:46px; --h:252px; --spine:#2a1b38; --ink:#f3ead8; --accent:#c9a35a">
+              <span class="spine__title"><span data-i18n="publications.p10.title">گەڕانەوە بۆ لای خوا</span></span><span class="spine__logo" aria-hidden="true"></span>
+              <span class="spine__face spine__top"></span><span class="spine__face spine__side spine__side--l"></span><span class="spine__face spine__side spine__side--r"></span>
+            </button></li>
+            <li><button type="button" class="spine" data-book="19" aria-pressed="false" aria-describedby="book-19-desc" tabindex="-1" style="--i:1; --w:44px; --h:246px; --spine:#e7dccf; --ink:#3b2a1e; --accent:#c4874a">
+              <span class="spine__title"><span data-i18n="publications.p19.title">الحرية التي تُحاسَب</span></span><span class="spine__logo" aria-hidden="true"></span>
+              <span class="spine__face spine__top"></span><span class="spine__face spine__side spine__side--l"></span><span class="spine__face spine__side spine__side--r"></span>
+            </button></li>
+            <li><button type="button" class="spine" data-book="18" aria-pressed="false" aria-describedby="book-18-desc" tabindex="-1" style="--i:2; --w:42px; --h:248px; --spine:#ddd0bf; --ink:#3b2a1e; --accent:#b8733a">
+              <span class="spine__title"><span data-i18n="publications.p18.title">الفلسفة وحدودها</span></span><span class="spine__logo" aria-hidden="true"></span>
+              <span class="spine__face spine__top"></span><span class="spine__face spine__side spine__side--l"></span><span class="spine__face spine__side spine__side--r"></span>
+            </button></li>
+            <li><button type="button" class="spine" data-book="16" aria-pressed="false" aria-describedby="book-16-desc" tabindex="-1" style="--i:3; --w:56px; --h:258px; --spine:#e6e1cf; --ink:#0c4a63; --accent:#0c5d7a">
+              <span class="spine__title"><span data-i18n="publications.p16.title">ڕوونکردنەوەی عەقیدەی تەحاوی</span></span><span class="spine__logo" aria-hidden="true"></span>
+              <span class="spine__face spine__top"></span><span class="spine__face spine__side spine__side--l"></span><span class="spine__face spine__side spine__side--r"></span>
+            </button></li>
+            <li><button type="button" class="spine" data-book="15" aria-pressed="false" aria-describedby="book-15-desc" tabindex="-1" style="--i:4; --w:56px; --h:240px; --spine:#2a1f14; --ink:#f0dfc3; --accent:#c79a5a">
+              <span class="spine__title"><span data-i18n="publications.p15.title">زانایانی ئیسلام کێن و چۆنن</span></span><span class="spine__logo" aria-hidden="true"></span>
+              <span class="spine__face spine__top"></span><span class="spine__face spine__side spine__side--l"></span><span class="spine__face spine__side spine__side--r"></span>
+            </button></li>
+            <li><button type="button" class="spine" data-book="14" aria-pressed="false" aria-describedby="book-14-desc" tabindex="-1" style="--i:5; --w:46px; --h:244px; --spine:#283019; --ink:#eef2df; --accent:#79a83f">
+              <span class="spine__title"><span data-i18n="publications.p14.title">پوختەیەک دەربارەی ئیسلام</span></span><span class="spine__logo" aria-hidden="true"></span>
+              <span class="spine__face spine__top"></span><span class="spine__face spine__side spine__side--l"></span><span class="spine__face spine__side spine__side--r"></span>
+            </button></li>
+            <li><button type="button" class="spine" data-book="13" aria-pressed="false" aria-describedby="book-13-desc" tabindex="-1" style="--i:6; --w:44px; --h:250px; --spine:#1d3a2e; --ink:#f1ead6; --accent:#b9a77a">
+              <span class="spine__title"><span data-i18n="publications.p13.title">لە خزمەت قوڕئاندا</span></span><span class="spine__logo" aria-hidden="true"></span>
+              <span class="spine__face spine__top"></span><span class="spine__face spine__side spine__side--l"></span><span class="spine__face spine__side spine__side--r"></span>
+            </button></li>
+            <li><button type="button" class="spine" data-book="12" aria-pressed="false" aria-describedby="book-12-desc" tabindex="-1" style="--i:7; --w:48px; --h:248px; --spine:#1b4650; --ink:#e6f2ef; --accent:#4f9a8c">
+              <span class="spine__title"><span data-i18n="publications.p12.title">مسوڵمانی ڕاست و ساغ کێیە</span></span><span class="spine__logo" aria-hidden="true"></span>
+              <span class="spine__face spine__top"></span><span class="spine__face spine__side spine__side--l"></span><span class="spine__face spine__side spine__side--r"></span>
+            </button></li>
+            <li><button type="button" class="spine" data-book="11" aria-pressed="false" aria-describedby="book-11-desc" tabindex="-1" style="--i:8; --w:54px; --h:256px; --spine:#1d2222; --ink:#f5efe6; --accent:#e39b2e">
+              <span class="spine__title"><span data-i18n="publications.p11.title">دەبەرێکڕاچوونی ئیسلام و ڕێچکان</span></span><span class="spine__logo" aria-hidden="true"></span>
+              <span class="spine__face spine__top"></span><span class="spine__face spine__side spine__side--l"></span><span class="spine__face spine__side spine__side--r"></span>
+            </button></li>
+            <li><button type="button" class="spine" data-book="9" aria-pressed="false" aria-describedby="book-9-desc" tabindex="-1" style="--i:9; --w:46px; --h:242px; --spine:#3a1513; --ink:#f0d9d4; --accent:#b3261f">
+              <span class="spine__title"><span data-i18n="publications.p9.title">بەکافردانانی مسوڵمانان</span></span><span class="spine__logo" aria-hidden="true"></span>
+              <span class="spine__face spine__top"></span><span class="spine__face spine__side spine__side--l"></span><span class="spine__face spine__side spine__side--r"></span>
+            </button></li>
+            <li><button type="button" class="spine" data-book="8" aria-pressed="false" aria-describedby="book-8-desc" tabindex="-1" style="--i:10; --w:50px; --h:250px; --spine:#11233a; --ink:#e8f1fb; --accent:#59aee0">
+              <span class="spine__title"><span data-i18n="publications.p8.title">أهمية الأخلاق في العمل السياسي</span></span><span class="spine__logo" aria-hidden="true"></span>
+              <span class="spine__face spine__top"></span><span class="spine__face spine__side spine__side--l"></span><span class="spine__face spine__side spine__side--r"></span>
+            </button></li>
+            <li><button type="button" class="spine" data-book="7" aria-pressed="false" aria-describedby="book-7-desc" tabindex="-1" style="--i:11; --w:48px; --h:262px; --spine:#0f1c38; --ink:#e8eefc; --accent:#8fb0ec">
+              <span class="spine__title"><span data-i18n="publications.p7.title">چاوبەخۆداگێڕانەوە</span></span><span class="spine__logo" aria-hidden="true"></span>
+              <span class="spine__face spine__top"></span><span class="spine__face spine__side spine__side--l"></span><span class="spine__face spine__side spine__side--r"></span>
+            </button></li>
+            <li><button type="button" class="spine" data-book="6" aria-pressed="false" aria-describedby="book-6-desc" tabindex="-1" style="--i:12; --w:62px; --h:264px; --spine:#18221a; --ink:#efe6c9; --accent:#b9a46d">
+              <span class="spine__title"><span data-i18n="publications.p6.title">ڕوونکردنەوە و هەڵسەنگاندنی حیکمەتەکانی 'ابن عطاء الله السكندري'</span></span><span class="spine__logo" aria-hidden="true"></span>
+              <span class="spine__face spine__top"></span><span class="spine__face spine__side spine__side--l"></span><span class="spine__face spine__side spine__side--r"></span>
+            </button></li>
+            <li><button type="button" class="spine" data-book="5" aria-pressed="false" aria-describedby="book-5-desc" tabindex="-1" style="--i:13; --w:56px; --h:254px; --spine:#e3bd34; --ink:#4a1d0b; --accent:#b4501f">
+              <span class="spine__title"><span data-i18n="publications.p5.title">طريق الصلاح والسير إلى الله</span></span><span class="spine__logo" aria-hidden="true"></span>
+              <span class="spine__face spine__top"></span><span class="spine__face spine__side spine__side--l"></span><span class="spine__face spine__side spine__side--r"></span>
+            </button></li>
+            <li><button type="button" class="spine" data-book="4" aria-pressed="false" aria-describedby="book-4-desc" tabindex="-1" style="--i:14; --w:52px; --h:258px; --spine:#0a3a35; --ink:#efe4c4; --accent:#c8b27c">
+              <span class="spine__title"><span data-i18n="publications.p4.title">هیچ ئایەتێکی مەنسووخ لە قوڕئاندا نییە</span></span><span class="spine__logo" aria-hidden="true"></span>
+              <span class="spine__face spine__top"></span><span class="spine__face spine__side spine__side--l"></span><span class="spine__face spine__side spine__side--r"></span>
+            </button></li>
+            <li><button type="button" class="spine" data-book="3" aria-pressed="false" aria-describedby="book-3-desc" tabindex="-1" style="--i:15; --w:58px; --h:244px; --spine:#ebe5d3; --ink:#1f2a2e; --accent:#3a3a3a">
+              <span class="spine__title"><span data-i18n="publications.p3.title">بەرەو دۆستایەتی و هاوکاریی نێوان مسوڵمانان</span></span><span class="spine__logo" aria-hidden="true"></span>
+              <span class="spine__face spine__top"></span><span class="spine__face spine__side spine__side--l"></span><span class="spine__face spine__side spine__side--r"></span>
+            </button></li>
+            <li><button type="button" class="spine" data-book="2" aria-pressed="false" aria-describedby="book-2-desc" tabindex="-1" style="--i:16; --w:54px; --h:248px; --spine:#8c3938; --ink:#f0e9d6; --accent:#d08a6c">
+              <span class="spine__title"><span data-i18n="publications.p2.title">هاوسەنگی: نە بەزایەدان، نە تێپەڕاندن</span></span><span class="spine__logo" aria-hidden="true"></span>
+              <span class="spine__face spine__top"></span><span class="spine__face spine__side spine__side--l"></span><span class="spine__face spine__side spine__side--r"></span>
+            </button></li>
+            <li><button type="button" class="spine" data-book="1" aria-pressed="false" aria-describedby="book-1-desc" tabindex="-1" style="--i:17; --w:48px; --h:256px; --spine:#3f7283; --ink:#f3f7f6; --accent:#e2b04a">
+              <span class="spine__title"><span data-i18n="publications.p1.title">خێزان لە ئیسلامدا</span></span><span class="spine__logo" aria-hidden="true"></span>
+              <span class="spine__face spine__top"></span><span class="spine__face spine__side spine__side--l"></span><span class="spine__face spine__side spine__side--r"></span>
+            </button></li>
+            <li class="bookend" aria-hidden="true"><span class="spine__face spine__top"></span><span class="spine__face spine__side spine__side--l"></span><span class="spine__face spine__side spine__side--r"></span></li>
+          </ul>
+        </div>
+        <div class="bookcase__board"></div>
+      </div>
+
+      <div class="stand reveal" id="bookStand">
+        <article class="stand__book is-active" data-book="10">
+          <div class="stand__cover"><img src="assets/img/books/3ds/10.webp" alt="" loading="lazy"></div>
+          <div class="stand__body">
+            <div class="book-row__meta">
+              <span class="book-card__category" data-i18n="publications.p10.category">پەروەردەیی</span>
+              <span class="book-row__year"><span data-i18n="publications.year">ساڵی چاپ</span> <bdi>2026</bdi></span>
+            </div>
+            <h2 data-i18n="publications.p10.title">گەڕانەوە بۆ لای خوا</h2>
+            <p id="book-10-desc" data-i18n="publications.p10.desc">کتێبێکی گشتگیرە لەبارەی تۆبە و گەڕانەوە بۆ لای خوا، لە حەوت بەشدا: پێناسە و حوکمی تۆبە، چۆنیەتیی تۆبەکردن و تۆبەی ڕاست و ساغ، مەرجەکان و هۆکارەکانی سەرگرتنی، و ئەو گوناحە گەورە و بچووکانەی کە تۆبەیان لێ دەکرێت.</p>
+          </div>
+        </article>
+        <article class="stand__book" data-book="19">
+          <div class="stand__cover"><img src="assets/img/books/3ds/19.webp" alt="" loading="lazy"></div>
+          <div class="stand__body">
+            <div class="book-row__meta">
+              <span class="book-card__category" data-i18n="publications.p19.category">فیکری</span>
+              <span class="book-row__year"><span data-i18n="publications.year">ساڵی چاپ</span> <bdi>2026</bdi></span>
+            </div>
+            <h2 data-i18n="publications.p19.title">الحرية التي تُحاسَب</h2>
+            <p id="book-19-desc" data-i18n="publications.p19.desc">کتێبێکە لەبارەی ئیرادەی ئازاد و بەرپرسیارێتیی ئاکاری؛ بەدوای ئەوەدا دەچێت کە پرسیاری ئیرادەی ئازاد چۆن بە درێژایی مێژوو گۆڕاوە، و ئەو پرسیارە جیاوازانە لێک جیا دەکاتەوە کە لە پشت وشەی «ئازادی»یەوە شاراونەتەوە، تا دەربخات حوکمی لێپرسینەوە لەسەر چ بناغەیەک دادەمەزرێت.</p>
+          </div>
+        </article>
+        <article class="stand__book" data-book="18">
+          <div class="stand__cover"><img src="assets/img/books/3ds/18.webp" alt="" loading="lazy"></div>
+          <div class="stand__body">
+            <div class="book-row__meta">
+              <span class="book-card__category" data-i18n="publications.p18.category">فیکری</span>
+              <span class="book-row__year"><span data-i18n="publications.year">ساڵی چاپ</span> <bdi>2026</bdi></span>
+            </div>
+            <h2 data-i18n="publications.p18.title">الفلسفة وحدودها</h2>
+            <p id="book-18-desc" data-i18n="publications.p18.desc">توێژینەوەیەکی فەلسەفیی بەراوردکارییە لە سنوورەکانی دامەزراندندا: ئەو پڕۆژە فەلسەفییانە تاقی دەکاتەوە کە عەقڵ، ئەزموون، هۆشیاری، زمان یان مێژوویان کردووەتە سەرچاوەی کۆتایی مانا و پێوەر، و بە چوارچێوەیەکی قوڕئانییان بەراورد دەکات کە لە ڕاستییەکی پێش مرۆڤەوە دەست پێ دەکات.</p>
+          </div>
+        </article>
+        <article class="stand__book" data-book="16">
+          <div class="stand__cover"><img src="assets/img/books/3ds/16.webp" alt="" loading="lazy"></div>
+          <div class="stand__body">
+            <div class="book-row__meta">
+              <span class="book-card__category" data-i18n="publications.p16.category">بیروباوەڕ</span>
+              <span class="book-row__year"><span data-i18n="publications.year">ساڵی چاپ</span> <bdi>2026</bdi></span>
+            </div>
+            <h2 data-i18n="publications.p16.title">ڕوونکردنەوەی عەقیدەی تەحاوی</h2>
+            <p id="book-16-desc" data-i18n="publications.p16.desc">ڕوونکردنەوەی مەتنی بەناوبانگی «عەقیدەی تەحاوی»یە، کە لە بنەڕەتدا ساڵی ١٩٩٣ لە بیست و دوو (٢٢) دەرسدا گوتراوەتەوە؛ نووسەر تێیدا جەخت لەوە دەکاتەوە کە ئیمان و عەقیدە بناغەی دینداری و مسوڵمانێتییە.</p>
+          </div>
+        </article>
+        <article class="stand__book" data-book="15">
+          <div class="stand__cover"><img src="assets/img/books/3ds/15.webp" alt="" loading="lazy"></div>
+          <div class="stand__body">
+            <div class="book-row__meta">
+              <span class="book-card__category" data-i18n="publications.p15.category">پەروەردەیی</span>
+              <span class="book-row__year"><span data-i18n="publications.year">ساڵی چاپ</span> <bdi>2026</bdi></span>
+            </div>
+            <h2 data-i18n="publications.p15.title">زانایانی ئیسلام کێن و چۆنن</h2>
+            <p id="book-15-desc" data-i18n="publications.p15.desc">لە بنەڕەتدا وتارێکی هەینییە کە ساڵی ١٩٩٩ لە مزگەوتی جیهاد لە سلێمانی دراوە و دواتر فراوان کراوە: پێناسەی زانایانی ئیسلام، پلە و پایەیان لە قوڕئان و سوننەتدا، سیفەت و ئاکارەکانیان، مافیان بەسەر ئوممەتەوە و ئەرکیان بەرانبەر بە ئیسلام و مسوڵمانان، لەگەڵ چەند ئامۆژگارییەک بۆ گەنج و قوتابیان.</p>
+          </div>
+        </article>
+        <article class="stand__book" data-book="14">
+          <div class="stand__cover"><img src="assets/img/books/3ds/14.webp" alt="" loading="lazy"></div>
+          <div class="stand__body">
+            <div class="book-row__meta">
+              <span class="book-card__category" data-i18n="publications.p14.category">ڕۆشنبیری</span>
+              <span class="book-row__year"><span data-i18n="publications.year">ساڵی چاپ</span> <bdi>2026</bdi></span>
+            </div>
+            <h2 data-i18n="publications.p14.title">پوختەیەک دەربارەی ئیسلام</h2>
+            <p id="book-14-desc" data-i18n="publications.p14.desc">پوختەیەکی کورت و ڕوونە دەربارەی ئیسلام؛ ڕوونی دەکاتەوە کە مرۆڤ وەک هەموو بوونەوەرێکی دیکە پێویستی بە ڕێنمایی پەروەردگارەکەیەتی، و ئیسلام ئەو ڕێنمایی و بەرنامەیەیە کە خوا بۆ ژیانی مرۆڤی داناوە.</p>
+          </div>
+        </article>
+        <article class="stand__book" data-book="13">
+          <div class="stand__cover"><img src="assets/img/books/3ds/13.webp" alt="" loading="lazy"></div>
+          <div class="stand__body">
+            <div class="book-row__meta">
+              <span class="book-card__category" data-i18n="publications.p13.category">پەروەردەیی</span>
+              <span class="book-row__year"><span data-i18n="publications.year">ساڵی چاپ</span> <bdi>2026</bdi></span>
+            </div>
+            <h2 data-i18n="publications.p13.title">لە خزمەت قوڕئاندا</h2>
+            <p id="book-13-desc" data-i18n="publications.p13.desc">پێناسەیەکی قوڕئانە، دوایین فەرمایشتی خوا بۆ مرۆڤ و جن، و لە پێنج خاڵی سەرەکیدا ئەو ئەرکانە ڕوون دەکاتەوە کە لە بەرانبەر قوڕئاندا لەسەر شانی ئێمەیە.</p>
+          </div>
+        </article>
+        <article class="stand__book" data-book="12">
+          <div class="stand__cover"><img src="assets/img/books/3ds/12.webp" alt="" loading="lazy"></div>
+          <div class="stand__body">
+            <div class="book-row__meta">
+              <span class="book-card__category" data-i18n="publications.p12.category">پەروەردەیی</span>
+              <span class="book-row__year"><span data-i18n="publications.year">ساڵی چاپ</span> <bdi>2026</bdi></span>
+            </div>
+            <h2 data-i18n="publications.p12.title">مسوڵمانی ڕاست و ساغ کێیە</h2>
+            <p id="book-12-desc" data-i18n="publications.p12.desc">نووسەر لەم کتێبەدا سەرنج دەداتە واقیعی دینداریی مسوڵمانانی ئەمڕۆ و ئەو کەموکووڕییانەی ڕووی تێکردووە، و لەبەر ڕۆشنایی قوڕئان و سوننەتدا سیما و نیشانەکانی مسوڵمانی ڕاست و ساغ دەخاتە ڕوو.</p>
+          </div>
+        </article>
+        <article class="stand__book" data-book="11">
+          <div class="stand__cover"><img src="assets/img/books/3ds/11.webp" alt="" loading="lazy"></div>
+          <div class="stand__body">
+            <div class="book-row__meta">
+              <span class="book-card__category" data-i18n="publications.p11.category">فیکری</span>
+              <span class="book-row__year"><span data-i18n="publications.year">ساڵی چاپ</span> <bdi>2026</bdi></span>
+            </div>
+            <h2 data-i18n="publications.p11.title">دەبەرێکڕاچوونی ئیسلام و ڕێچکان</h2>
+            <p id="book-11-desc" data-i18n="publications.p11.desc">زنجیرەیەک وتووێژە کە زۆربەیان لە ڕووداوی ڕاستەقینەوە وەرگیراون، تێیدا ئیسلام ڕووبەڕووی ئەو بیردۆزە و ڕێچکە دەستکردانە دەبێتەوە کە لە کۆمەڵگەدا بڵاو بوونەتەوە، و بە پەراوێز و پاشکۆ و فەرهەنگۆکێک تەواو کراوە.</p>
+          </div>
+        </article>
+        <article class="stand__book" data-book="9">
+          <div class="stand__cover"><img src="assets/img/books/3ds/9.webp" alt="" loading="lazy"></div>
+          <div class="stand__body">
+            <div class="book-row__meta">
+              <span class="book-card__category" data-i18n="publications.p9.category">بیروباوەڕ</span>
+              <span class="book-row__year"><span data-i18n="publications.year">ساڵی چاپ</span> <bdi>2026</bdi></span>
+            </div>
+            <h2 data-i18n="publications.p9.title">بەکافردانانی مسوڵمانان</h2>
+            <p id="book-9-desc" data-i18n="publications.p9.desc">ئەم کتێبە کۆی سێ وتارە کە ساڵی ٢٠٢٥ بۆ کۆمەڵێک مامۆستای مزگەوت گوتراونەتەوە. لە هەشت تەوەردا باسی بەکافردانان (تەکفیر) دەکات، لە پێناسەکەیەوە دەست پێ دەکات و جەخت لەوە دەکاتەوە کە بناغە لە مسوڵماناندا ئیمان و ئیسلامە.</p>
+          </div>
+        </article>
+        <article class="stand__book" data-book="8">
+          <div class="stand__cover"><img src="assets/img/books/3ds/8.webp" alt="" loading="lazy"></div>
+          <div class="stand__body">
+            <div class="book-row__meta">
+              <span class="book-card__category" data-i18n="publications.p8.category">فیکری</span>
+              <span class="book-row__year"><span data-i18n="publications.year">ساڵی چاپ</span> <bdi>2026</bdi></span>
+            </div>
+            <h2 data-i18n="publications.p8.title">أهمية الأخلاق في العمل السياسي</h2>
+            <p id="book-8-desc" data-i18n="publications.p8.desc">ئەم کتێبە باس لە قەیرانی ئاکار و ڕەوشت دەکات لە بواری سیاسەت و حوکمڕانیدا، و ڕوونی دەکاتەوە کە پابەندبوون بە ئاکاری بەرز و بەها باڵاکان لە کاری سیاسیدا تەنها بە ئیمان و عەقیدەی ساغ و خواپەرستیی پاک و ڕەوشتی جوان دەستەبەر دەبێت، کە سەرچاوەکەیان وەحییە: قوڕئان و سوننەتی پێغەمبەر ﷺ.</p>
+          </div>
+        </article>
+        <article class="stand__book" data-book="7">
+          <div class="stand__cover"><img src="assets/img/books/3ds/7.png" alt="" loading="lazy"></div>
+          <div class="stand__body">
+            <div class="book-row__meta">
+              <span class="book-card__category" data-i18n="publications.p7.category">پەروەردەیی</span>
+              <span class="book-row__year"><span data-i18n="publications.year">ساڵی چاپ</span> <bdi>2025</bdi></span>
+            </div>
+            <h2 data-i18n="publications.p7.title">چاوبەخۆداگێڕانەوە</h2>
+            <p id="book-7-desc" data-i18n="publications.p7.desc">ئەم کتێبە وەک لە ناونیشانەکەشیەوە دیارە چاو بەخۆداگێڕانەوەیەکی گشتگیر و هەمەلایەنەیە بۆ کۆی بوار و لایەنەکانی دینداریی مسوڵمانانمان. هەوڵم داوە لە سەرجەم بوارەکانی تێڕوانین و بوونناسی و ئیمان و عەقیدە و خواپەرستی و تەزکییە و تەقوا و ڕەوشت و ئاکار و کاروباری کەسێتی و کۆمەڵایەتی و سیاسیدا، نوختە بخەمە سەر پیت و بە شێوەیەکی بەڵگەیی هاوسەنگانەی دوور لە کورتھێنان و تێپەڕاندن، نەخشەڕێ و هێڵە گشتییەکانی موسڵمانێتییەکی ڕاست و ساغ بخەمە ڕوو.</p>
+          </div>
+        </article>
+        <article class="stand__book" data-book="6">
+          <div class="stand__cover"><img src="assets/img/books/3ds/6.png" alt="" loading="lazy"></div>
+          <div class="stand__body">
+            <div class="book-row__meta">
+              <span class="book-card__category" data-i18n="publications.p6.category">پەروەردەیی</span>
+              <span class="book-row__year"><span data-i18n="publications.year">ساڵی چاپ</span> <bdi>2025</bdi></span>
+            </div>
+            <h2 data-i18n="publications.p6.title">ڕوونکردنەوە و هەڵسەنگاندنی حیکمەتەکانی 'ابن عطاء الله السكندري'</h2>
+            <p id="book-6-desc" data-i18n="publications.p6.desc">ڕوونکردنەوە و هەڵسەنگاندنێکی پشوودرێژانەیە بۆ حیکمەتەکانی ئەحمەد کوڕی عەتائوڵڵای سەکنندەری. لە بنەڕەتدا سی و سێ (٣٣) دەرس بوون و لە خوولێکدا پێشکەش کراون. شایەنی باسیشە ئەو حیکمەتانە لەمێژە زانایانی بواری تەزکیە و تەسەووف بە ڕوونکردنەوە و لێکدانەوەیانەوە سەرقاڵن و شەرحی زۆریان کراون، کەم و زۆریش سوودم لە بەشێک لەو کتێب و بەرهەمانە وەرگرتووە. ڕەنگە ئیمتیاز و جیاوازیی سەرەکیی ئەم بەرهەمە ئەوە بێت بەپێچەوانەی سەرجەم شەرحەکانی دیکەوە، وێڕای ڕوونکردنەوە و لێکدانەوە، هەڵسەنگاندنم بۆ ژمارەیەکی زۆر لە حیکمەتەکان کردووە.</p>
+          </div>
+        </article>
+        <article class="stand__book" data-book="5">
+          <div class="stand__cover"><img src="assets/img/books/3ds/5.png" alt="" loading="lazy"></div>
+          <div class="stand__body">
+            <div class="book-row__meta">
+              <span class="book-card__category" data-i18n="publications.p5.category">پەروەردەیی</span>
+              <span class="book-row__year"><span data-i18n="publications.year">ساڵی چاپ</span> <bdi>2024</bdi></span>
+            </div>
+            <h2 data-i18n="publications.p5.title">طريق الصلاح والسير إلى الله</h2>
+            <p id="book-5-desc" data-i18n="publications.p5.desc">إن َّ تزكية النفس والتي اخترت لها في هذا الكتاب عنوان: «طريق الصلاح والسير إلى الله» ، بَحْر لا ساحل له، وذلك لارتباطها من جانب بالروح التي هي سر من أسرار الله تعالى، وبعد دخولها في الجسد تسمى النفس، ويقع عليها المدح والقدح بحسب ما تحملة من الفضائل والرذائل. وكذلك لها ارتباط - من جانب آخر - بالله ال الذي ليس كمثله شيء. وحاولت في هذا الكتاب - الذي هو عصارة ما وصلت إليه من فهوم وخبرات في هذا المجال - تسليط أضواء كثيرة ومتعددة على تزكية النفس، في عشرة فصول بمختلف نواحيها، وآمل أن يستوعب الفراء الكرام مضمون ما كتبته في هذا الموضوع الحساس العميق المترامي الأطراف، وأن يُتَّحِفوني بملاحظاتهم المخلصة، إذْ لَمْ تُصْمَن لنا العِصْمَةُ في غير كتاب الله وسنة رسول الله.</p>
+          </div>
+        </article>
+        <article class="stand__book" data-book="4">
+          <div class="stand__cover"><img src="assets/img/books/3ds/4.png" alt="" loading="lazy"></div>
+          <div class="stand__body">
+            <div class="book-row__meta">
+              <span class="book-card__category" data-i18n="publications.p4.category">ڕۆشنبیری</span>
+              <span class="book-row__year"><span data-i18n="publications.year">ساڵی چاپ</span> <bdi>2024</bdi></span>
+            </div>
+            <h2 data-i18n="publications.p4.title">هیچ ئایەتێکی مەنسووخ لە قوڕئاندا نییە</h2>
+            <p id="book-4-desc" data-i18n="publications.p4.desc">ئەم کتێبە لێکۆڵینەوەیەکی پشوودرێژانەیە لە بابەتێکی هەستیار کە جێی ڕاجیاییە لە نێوان لێکۆڵەرانی قورئان؛ بابەتی نەسخ، واتە هەڵوەشاندنەوەی ئایەتێکی قورئان یاخود حوکمێکی قورئان بەهۆی ئایەتێکی دیکەوە. نووسەر لەم کتێبەدا لەڕێی چەند لێکۆڵینەوە و بەڵگەیەکی زانستیی قورئانەوە ئەوە دەسەلمێنێت کە هیچ ئایەتێکی قورئان نەسخ نەکراوە و نەسخ لە قورئاندا بوونی نییە.</p>
+          </div>
+        </article>
+        <article class="stand__book" data-book="3">
+          <div class="stand__cover"><img src="assets/img/books/3ds/3.png" alt="" loading="lazy"></div>
+          <div class="stand__body">
+            <div class="book-row__meta">
+              <span class="book-card__category" data-i18n="publications.p3.category">پەروەردەیی</span>
+              <span class="book-row__year"><span data-i18n="publications.year">ساڵی چاپ</span> <bdi>2024</bdi></span>
+            </div>
+            <h2 data-i18n="publications.p3.title">بەرەو دۆستایەتی و هاوکاریی نێوان مسوڵمانان</h2>
+            <p id="book-3-desc" data-i18n="publications.p3.desc">ئەم کتێبە باسی پێویستی و گرنگیی دۆستایەتی و ئاشتی و هاوکاریی نێوان تاکەکانی کۆمەڵگە دەکات، بەتایبەت ئەو کەسانەی کە ناسنامەی باوەڕیان هاوبەشە (مسوڵمانن)، لەبەر ئەوەی بەر لە هەموو شتێک بیروباوەڕیان ئەوە لەسەریان پێویست دەکات. ئەم کتێبە باسی چەند دەرد و نەخۆشییەکیش دەکات کە بوونەتە هۆی پەرتەوازەیی و لێکدوورکەوتنەوەی مسوڵمانان لە نێوان خۆیاندا و لە ئەنجامدا بێهێزبوونیان باس دەکات.</p>
+          </div>
+        </article>
+        <article class="stand__book" data-book="2">
+          <div class="stand__cover"><img src="assets/img/books/3ds/2.png" alt="" loading="lazy"></div>
+          <div class="stand__body">
+            <div class="book-row__meta">
+              <span class="book-card__category" data-i18n="publications.p2.category">ڕۆشنبیری</span>
+              <span class="book-row__year"><span data-i18n="publications.year">ساڵی چاپ</span> <bdi>2024</bdi></span>
+            </div>
+            <h2 data-i18n="publications.p2.title">هاوسەنگی: نە بەزایەدان، نە تێپەڕاندن</h2>
+            <p id="book-2-desc" data-i18n="publications.p2.desc">ئەم کتێبە باسی یەکێک لە دروشمە هەرە بنەڕەتییەکانی ئیسلام دەکات کە هاوسەنگییە. بە بڕوای نووسەر، بەزۆری مرۆڤایەتی یان تووشی بەزایەدان و کەمتەرخەمی و کورتھێنان دەبن، یان تووشی سنووربەزاندن و زێدەڕۆیی و تێنووسانی زۆر دەبن. لەم سۆنگەیەوە، پێویستیی ئەم کتێبە لە هەر کاتێکی دیکەدا زیاترە.</p>
+          </div>
+        </article>
+        <article class="stand__book" data-book="1">
+          <div class="stand__cover"><img src="assets/img/books/3ds/1.png" alt="" loading="lazy"></div>
+          <div class="stand__body">
+            <div class="book-row__meta">
+              <span class="book-card__category" data-i18n="publications.p1.category">کۆمەڵایەتی</span>
+              <span class="book-row__year"><span data-i18n="publications.year">ساڵی چاپ</span> <bdi>2024</bdi></span>
+            </div>
+            <h2 data-i18n="publications.p1.title">خێزان لە ئیسلامدا</h2>
+            <p id="book-1-desc" data-i18n="publications.p1.desc">ئەم کتێبە باسی چەمکی فراوانی خێزان دەکات لە ئیسلامدا، کە باری سروشتی و بناغە و بونیادی کۆمەڵگەیە. پاشان باس لە کۆسپ و ڕێگرە هەڵوەشێنەرەوەکانی دەکات لە ڕۆژگاری ئێستادا، لە نێوانیاندا بابەتەکانی فێمینیزم و جێندەر، لە پشت ئەوانیشەوە هاوڕەگەزبازی و کاریگەرییان لەسەر خێزان دەخاتە ڕوو. لەم بەرهەمەدا کۆمەڵێک باسی دیکەی هەستیار توێژراونەتەوە، وەک بارە تایبەتەکانی خێزان لە ئیسلامدا؛ چەندژنی (فرەژنی) و هاوسەرگیریی میسیار.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ===== Footer ===== -->
+<footer class="footer">
+  <div class="container footer__inner">
+    <div class="footer__brand">
+      <img src="assets/img/logos/ranew_logo_blue (white_in).png" data-i18n-attr="alt:brand.logoAlt" alt="لۆگۆی دامەزراوەی ڕەنێو">
+      <div>
+        <strong data-i18n="hero.title1">دامەزراوەی ڕەنێو</strong>
+        <p data-i18n="footer.tagline">بۆ پەروەردە و ڕۆشنبیری</p>
+      </div>
+    </div>
+
+    <nav class="footer__links">
+      <a href="/#top" data-i18n="nav.home">سەرەکی</a>
+      <a href="/#about" data-i18n="nav.about">لەبارە</a>
+      <a href="/#programs" data-i18n="nav.programs">بوارەکانی کار</a>
+      <a href="/#contact" data-i18n="nav.contact">پەیوەندی</a>
+    </nav>
+
+    <div class="footer__social">
+      <a href="https://www.facebook.com/Ranewfoundation" target="_blank" rel="noopener" data-i18n-attr="aria-label:aria.facebook"><span class="icon icon-facebook"></span></a>
+    </div>
+  </div>
+  <div class="footer__bottom">
+    <div class="container">
+      <p>© <span id="year"></span> <span data-i18n="footer.copyright">دامەزراوەی ڕەنێو. هەموو مافێک پارێزراوە.</span></p>
+    </div>
+  </div>
+</footer>
+
+<button id="backToTop" class="back-to-top" data-i18n-attr="aria-label:aria.backToTop" aria-label="گەڕانەوە بۆ سەرەوە">
+  <span class="icon icon-up"></span>
+</button>
+
+<script src="assets/js/script.js"></script>
+<script src="assets/js/library.js"></script>
+<script src="assets/js/i18n.js"></script>
+</body>
+</html>

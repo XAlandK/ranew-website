@@ -74,10 +74,16 @@
         <p class="section__sub" data-i18n="publications.sub">هەندێک لە کتێبە بڵاوکراوەکانی دامەزراوە.</p>
       </div>
 
-      <div class="book-sort reveal" role="group" data-i18n-attr="aria-label:publications.sort.label" aria-label="ڕیزکردن بەپێی">
-        <span class="book-sort__label" data-i18n="publications.sort.label">ڕیزکردن بەپێی</span>
-        <button type="button" class="book-sort__btn is-active" data-sort="newest" aria-pressed="true" data-i18n="publications.sort.newest">نوێترین</button>
-        <button type="button" class="book-sort__btn" data-sort="oldest" aria-pressed="false" data-i18n="publications.sort.oldest">کۆنترین</button>
+      <div class="book-toolbar reveal">
+        <div class="book-sort" role="group" data-i18n-attr="aria-label:publications.sort.label" aria-label="ڕیزکردن بەپێی">
+          <span class="book-sort__label" data-i18n="publications.sort.label">ڕیزکردن بەپێی</span>
+          <button type="button" class="book-sort__btn is-active" data-sort="newest" aria-pressed="true" data-i18n="publications.sort.newest">نوێترین</button>
+          <button type="button" class="book-sort__btn" data-sort="oldest" aria-pressed="false" data-i18n="publications.sort.oldest">کۆنترین</button>
+        </div>
+        <nav class="view-switch" data-i18n-attr="aria-label:publications.view.label" aria-label="شێوازی پیشاندان">
+          <a href="/publications" class="view-switch__btn is-active" aria-current="page" data-i18n="publications.view.list">لیست</a>
+          <a href="/library" class="view-switch__btn" data-i18n="publications.view.shelf">کتێبخانە</a>
+        </nav>
       </div>
 
       <div class="book-rows" id="bookRows">
