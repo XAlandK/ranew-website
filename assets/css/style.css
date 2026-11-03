@@ -400,6 +400,205 @@ body[data-page="helachin"] .section{ padding-top:64px; }
 .book-sort__btn:hover{ border-color:var(--blue-500); }
 .book-sort__btn.is-active{ color:#fff; background:var(--blue-700); border-color:var(--blue-700); }
 
+/* sort buttons and the list / library switch share one row above the books */
+.book-toolbar{ display:flex; flex-wrap:wrap; align-items:center; gap:12px; margin:-12px 0 28px; }
+.book-toolbar .book-sort{ margin:0; }
+.view-switch{ display:inline-flex; gap:2px; padding:3px; margin-inline-start:auto; border-radius:999px; background:#fff; border:1px solid var(--line); }
+.view-switch--depth{ margin-inline-start:0; }
+.view-switch__btn{ padding:5px 16px; border:0; border-radius:999px; background:none; font:inherit; font-size:.9rem; font-weight:600; color:var(--ink-soft); cursor:pointer; transition:background .2s var(--ease), color .2s var(--ease); }
+.view-switch__btn:hover{ color:var(--blue-700); }
+.view-switch__btn.is-active{ background:var(--blue-700); color:#fff; }
+
+/* ---------- Library bookshelf (library.html, see assets/js/library.js) ----------
+   library.js sets --lift on every spine from its distance to the cursor, so the books
+   near it rise off the shelf in a soft wave; the picked one stays pulled out and its
+   page is shown on the stand below. */
+.bookcase{
+  position:relative; padding:16px 16px 0;
+  border-radius:16px 16px 8px 8px;
+  background:linear-gradient(180deg, #95633c, #74472a);
+  box-shadow:var(--shadow-lg), inset 0 1px 0 rgba(255,255,255,.22);
+}
+.bookcase__back{
+  border-radius:6px 6px 0 0;
+  background:
+    linear-gradient(180deg, rgba(45,22,6,.38), transparent 34px),
+    radial-gradient(90% 85% at 50% 0, rgba(255,243,219,.75), transparent 72%),
+    repeating-linear-gradient(90deg, rgba(95,58,26,.05) 0 1px, transparent 1px 7px),
+    #e2cfb0;
+  box-shadow:inset 12px 0 16px -12px rgba(45,22,6,.5), inset -12px 0 16px -12px rgba(45,22,6,.5);
+  overflow-x:auto; overflow-y:hidden; overscroll-behavior-x:contain;
+  scrollbar-width:thin; scrollbar-color:rgba(116,71,42,.45) transparent;
+}
+.shelf{
+  position:relative; display:flex; align-items:flex-end; gap:3px;
+  width:max-content; min-width:100%;
+  padding:60px 22px 0;
+}
+.shelf > li{ flex:0 0 auto; display:flex; }
+.bookcase__board{
+  position:relative; height:26px; margin-inline:-16px;
+  border-radius:0 0 8px 8px;
+  background:linear-gradient(180deg, #b78457 0, #96643c 24%, #6b4024 100%);
+  box-shadow:0 16px 22px -10px rgba(13,42,82,.3);
+}
+.bookcase__board::before{ content:""; position:absolute; inset:0 16px auto; height:7px; background:linear-gradient(180deg, rgba(35,16,4,.38), transparent); }
+
+.spine{
+  --k:1;
+  position:relative; display:flex; flex-direction:column; align-items:center;
+  width:calc(var(--w) * var(--k)); height:calc(var(--h) * var(--k));
+  margin:0; padding:28px 0 12px; border:0; border-radius:3px 3px 1px 1px;
+  font:inherit; color:var(--ink); cursor:pointer;
+  background:
+    linear-gradient(90deg, rgba(0,0,0,.3), transparent 16%, rgba(255,255,255,.17) 40%, transparent 62%, rgba(0,0,0,.24)),
+    var(--spine);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.2), 3px 0 6px -2px rgba(35,16,4,.4);
+  transform:translateY(calc(var(--lift, 0) * -1px));
+  transition:transform .32s cubic-bezier(.2,.8,.25,1), box-shadow .32s var(--ease), filter .32s var(--ease);
+}
+/* gilt bands near the head and the foot of the spine */
+.spine::before, .spine::after{ content:""; position:absolute; inset-inline:5px; height:6px; border-block:1.5px solid var(--accent); }
+.spine::before{ top:13px; }
+.spine::after{ bottom:44px; }
+/* the full title, centred; it wraps onto more lines across the spine when it is long,
+   and library.js shrinks its font until it fits */
+.spine__title{
+  flex:1 1 0; min-height:0; align-self:stretch; margin:0 4px 28px;
+  writing-mode:vertical-rl;
+  display:flex; flex-direction:column; justify-content:center; align-items:center;
+  overflow:hidden;
+  font-size:.84rem; font-weight:700; line-height:1.3; text-align:center;
+}
+.spine__logo{
+  flex:none; width:22px; height:22px; background:currentColor; opacity:.9;
+  -webkit-mask:url("../img/logos/ranew_logo_mark_white.png") center / contain no-repeat;
+          mask:url("../img/logos/ranew_logo_mark_white.png") center / contain no-repeat;
+}
+.spine:hover, .spine.is-selected{ filter:brightness(1.07) saturate(1.05); }
+.spine.is-selected{ box-shadow:inset 0 1px 0 rgba(255,255,255,.2), 0 14px 22px -8px rgba(35,16,4,.55); }
+.spine:focus{ outline:none; }
+.spine:focus-visible{ outline:3px solid var(--blue-500); outline-offset:3px; }
+/* a Ranew block holds the row up at the end of the shelf */
+.bookend{
+  width:56px; height:92px; margin-inline-start:16px; align-self:flex-end;
+  border-radius:4px 4px 2px 2px;
+  background:
+    url("../img/logos/ranew_logo_mark_white.png") center 20px / 28px auto no-repeat,
+    linear-gradient(90deg, rgba(255,255,255,.14), transparent 40%, rgba(0,0,0,.22)),
+    var(--blue-800);
+  box-shadow:3px 0 6px -2px rgba(35,16,4,.4);
+}
+/* the books drop onto the shelf one after another when it scrolls into view
+   (no fade: opacity below 1 would flatten a 3D book while it falls) */
+.bookcase.is-visible .spine{ animation:spineIn .7s cubic-bezier(.2,.8,.25,1) backwards; animation-delay:calc(var(--i) * 40ms + .15s); }
+@keyframes spineIn{ from{ translate:0 calc(-100% - 90px); } }
+
+.stand{
+  display:grid; margin-top:36px;
+  background:var(--cream); border:1px solid var(--line); border-radius:var(--radius-md);
+  box-shadow:var(--shadow-sm); overflow:hidden;
+}
+.stand__book{
+  grid-area:1/1; display:grid; grid-template-columns:300px 1fr; align-items:center; gap:28px;
+  padding-block:18px; padding-inline:18px 42px;
+  opacity:0; visibility:hidden; transition:opacity .15s var(--ease), visibility 0s linear .15s;
+}
+/* the outgoing page fades out quickly before the new one fades in, so the two never read on top of each other */
+.stand__book.is-active{ opacity:1; visibility:visible; transition:opacity .35s var(--ease) .1s, visibility 0s; }
+.stand__cover img{
+  width:100%; aspect-ratio:1; object-fit:contain;
+  transform:translateY(-26px) rotate(-4deg) scale(.94);
+  transition:transform .55s cubic-bezier(.2,.8,.25,1);
+}
+.stand__book.is-active .stand__cover img{ transform:none; }
+.stand__body h2{ font-size:1.4rem; color:var(--blue-900); margin-bottom:10px; }
+.stand__body p{ font-size:1.02rem; color:var(--ink-soft); }
+
+@media (max-width: 760px){
+  .bookcase{ padding:10px 10px 0; }
+  .bookcase__board{ height:20px; margin-inline:-10px; }
+  .shelf{ padding:52px 14px 0; }
+  .spine{ --k:.84; padding-top:24px; }
+  .spine::after{ bottom:38px; }
+  .spine__title{ margin:0 3px 24px; font-size:.78rem; }
+  .spine__logo{ width:18px; height:18px; }
+  .bookend{ width:48px; height:80px; }
+  .stand{ margin-top:24px; }
+  /* stacked, one page at a time, so the card fits the picked book instead of the longest one */
+  .stand__book{ grid-template-columns:1fr; gap:0; padding:8px 20px 26px; display:none; }
+  .stand__book.is-active{ display:grid; animation:standIn .35s var(--ease); }
+  .stand__book.is-active .stand__cover img{ animation:coverIn .55s cubic-bezier(.2,.8,.25,1); }
+  .stand__cover{ width:min(250px, 78%); margin:-10px auto -14px; }
+}
+@keyframes standIn{ from{ opacity:0; } }
+@keyframes coverIn{ from{ transform:translateY(-26px) rotate(-4deg) scale(.94); } }
+
+/* ---------- 3D bookcase (the default; the 2D / 3D switch toggles .bookcase--3d) ----------
+   The cavity becomes a box seen from a little above: a back wall --depth behind the
+   opening, a floor and two side walls. Each spine is the front of a book block with a
+   page-edged top and two covers; instead of rising, the books near the cursor slide
+   out toward the viewer, the way a book is taken off a shelf. */
+.bookcase{ --depth:150px; --persp:1800px; --eye:50% -30%; }
+.spine__face, .shelf > .bookcase__room{ display:none; }
+/* the cavity scrolls, so the camera stays put while the books pass under it */
+.bookcase--3d .bookcase__back{ perspective:var(--persp); perspective-origin:var(--eye); }
+.bookcase--3d .shelf > .bookcase__room{ display:block; position:absolute; inset:0; transform-style:preserve-3d; pointer-events:none; }
+.bookcase__room > span{ position:absolute; }
+.room__back{
+  inset:0; transform:translateZ(calc(var(--depth) * -1));
+  background:
+    linear-gradient(180deg, rgba(45,22,6,.4), transparent 34%),
+    radial-gradient(80% 70% at 50% 10%, rgba(255,243,219,.7), transparent 75%),
+    repeating-linear-gradient(90deg, rgba(95,58,26,.06) 0 1px, transparent 1px 7px),
+    #d8c09b;
+}
+.room__floor{
+  left:0; right:0; bottom:0; height:var(--depth);
+  transform-origin:bottom; transform:rotateX(90deg);
+  background:
+    repeating-linear-gradient(90deg, rgba(70,40,15,.07) 0 1px, transparent 1px 11px),
+    linear-gradient(0deg, #c4935f, #9c6a3f);
+}
+.room__side{ top:0; bottom:0; width:var(--depth); }
+.room__side--l{ left:0; transform-origin:left; transform:rotateY(90deg); background:linear-gradient(90deg, #8f5d37, #5e3a1f); }
+.room__side--r{ right:0; transform-origin:right; transform:rotateY(-90deg); background:linear-gradient(270deg, #8f5d37, #5e3a1f); }
+/* the whole shelf is one 3D scene, so the browser sorts every book, cover and wall by depth */
+.bookcase--3d .shelf{ transform-style:preserve-3d; padding-top:70px; }
+.bookcase--3d .shelf > li{ transform-style:preserve-3d; }
+/* rising a little as it comes out keeps the book's foot clear of the shelf edge */
+.bookcase--3d .spine{
+  transform-style:preserve-3d;
+  transform:translate3d(0, calc(var(--lift, 0) * -.8px), calc(var(--lift, 0) * 2.4px));
+}
+/* filter would flatten the book, so the 3D highlight is a shadow only */
+.bookcase--3d .spine:hover, .bookcase--3d .spine.is-selected{ filter:none; }
+.bookcase--3d .spine.is-selected{ box-shadow:inset 0 1px 0 rgba(255,255,255,.25), 0 18px 26px -10px rgba(35,16,4,.6); }
+.bookcase--3d .spine__face{ display:block; position:absolute; pointer-events:none; }
+.spine__top{
+  left:0; top:0; width:100%; height:var(--depth);
+  transform-origin:top; transform:rotateX(-90deg);
+  background:
+    linear-gradient(180deg, var(--spine) 0 3px, transparent 3px),
+    linear-gradient(90deg, var(--spine) 0 2px, transparent 2px calc(100% - 2px), var(--spine) calc(100% - 2px)),
+    repeating-linear-gradient(90deg, #f7f0df 0 1px, #e2d4b6 1px 2px);
+}
+.spine__side{ top:0; height:100%; width:var(--depth); }
+.spine__side--l{ left:0; transform-origin:left; transform:rotateY(90deg); background:linear-gradient(90deg, rgba(0,0,0,.2), rgba(0,0,0,.5)), var(--spine); }
+.spine__side--r{ right:0; transform-origin:right; transform:rotateY(-90deg); background:linear-gradient(270deg, rgba(0,0,0,.2), rgba(0,0,0,.5)), var(--spine); }
+.bookcase--3d .bookend{ position:relative; transform-style:preserve-3d; }
+.bookend{ --spine:var(--blue-800); }
+.bookend .spine__top{ background:linear-gradient(180deg, #1e4a85, var(--blue-900)); }
+@media (max-width: 760px){
+  .bookcase{ --depth:120px; --persp:1100px; }
+  .bookcase--3d .shelf{ padding-top:62px; }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .spine, .stand__book, .stand__cover img{ transition:none; }
+  .bookcase.is-visible .spine, .stand__book.is-active, .stand__book.is-active .stand__cover img{ animation:none; }
+}
+
 /* ---------- Image zoom (magnifier) ---------- */
 .zoom-lens{
   position:absolute;
