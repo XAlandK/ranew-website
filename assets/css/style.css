@@ -481,7 +481,8 @@ body[data-page="helachin"] .section{ padding-top:64px; }
 .spine:focus-visible{ outline:3px solid var(--blue-500); outline-offset:3px; }
 /* a Ranew block holds the row up at the end of the shelf */
 .bookend{
-  width:56px; height:92px; margin-inline-start:16px; align-self:flex-end;
+  --w:56px; --k:1;
+  width:var(--w); height:92px; margin-inline-start:16px; align-self:flex-end;
   border-radius:4px 4px 2px 2px;
   background:
     url("../img/logos/ranew_logo_mark_white.png") center 20px / 28px auto no-repeat,
@@ -523,7 +524,7 @@ body[data-page="helachin"] .section{ padding-top:64px; }
   .spine::after{ bottom:38px; }
   .spine__title{ margin:0 3px 24px; font-size:.78rem; }
   .spine__logo{ width:18px; height:18px; }
-  .bookend{ width:48px; height:80px; }
+  .bookend{ --w:48px; height:80px; }
   .stand{ margin-top:24px; }
   /* stacked, one page at a time, so the card fits the picked book instead of the longest one */
   .stand__book{ grid-template-columns:1fr; gap:0; padding:8px 20px 26px; display:none; }
@@ -539,11 +540,8 @@ body[data-page="helachin"] .section{ padding-top:64px; }
    opening, a floor and two side walls. Each spine is the front of a book block with a
    page-edged top and two covers; instead of rising, the books near the cursor slide
    out toward the viewer, the way a book is taken off a shelf. */
-.bookcase{ --depth:150px; --persp:1800px; --eye:50% -30%; }
-.spine__face, .shelf > .bookcase__room{ display:none; }
-/* the cavity scrolls, so the camera stays put while the books pass under it */
-.bookcase--3d .bookcase__back{ perspective:var(--persp); perspective-origin:var(--eye); }
-.bookcase--3d .shelf > .bookcase__room{ display:block; position:absolute; inset:0; transform-style:preserve-3d; pointer-events:none; }
+.bookcase{ --depth:150px; --persp:1800px; --eye-y:-30%; }
+.spine__face, .shelf > .bookcase__room{ display:block; position:absolute; inset:0; transform-style:preserve-3d; pointer-events:none; }
 .bookcase__room > span{ position:absolute; }
 .room__back{
   inset:0; transform:translateZ(calc(var(--depth) * -1));
@@ -563,8 +561,14 @@ body[data-page="helachin"] .section{ padding-top:64px; }
 .room__side{ top:0; bottom:0; width:var(--depth); }
 .room__side--l{ left:0; transform-origin:left; transform:rotateY(90deg); background:linear-gradient(90deg, #8f5d37, #5e3a1f); }
 .room__side--r{ right:0; transform-origin:right; transform:rotateY(-90deg); background:linear-gradient(270deg, #8f5d37, #5e3a1f); }
-/* the whole shelf is one 3D scene, so the browser sorts every book, cover and wall by depth */
-.bookcase--3d .shelf{ transform-style:preserve-3d; padding-top:70px; }
+/* the whole shelf is one 3D scene, so the browser sorts every book, cover and wall by depth.
+   The camera (perspective) sits on the shelf, not on the scrolling cavity around it: Safari
+   draws everything flat under a perspective set on a scroll container. library.js keeps the
+   camera over the visible part of the shelf (--eye-x) as it scrolls. */
+.bookcase--3d .shelf{
+  transform-style:preserve-3d; padding-top:70px;
+  perspective:var(--persp); perspective-origin:var(--eye-x, 50%) var(--eye-y);
+}
 .bookcase--3d .shelf > li{ transform-style:preserve-3d; }
 /* rising a little as it comes out keeps the book's foot clear of the shelf edge */
 .bookcase--3d .spine{
@@ -583,9 +587,14 @@ body[data-page="helachin"] .section{ padding-top:64px; }
     linear-gradient(90deg, var(--spine) 0 2px, transparent 2px calc(100% - 2px), var(--spine) calc(100% - 2px)),
     repeating-linear-gradient(90deg, #f7f0df 0 1px, #e2d4b6 1px 2px);
 }
-.spine__side{ top:0; height:100%; width:var(--depth); }
-.spine__side--l{ left:0; transform-origin:left; transform:rotateY(90deg); background:linear-gradient(90deg, rgba(0,0,0,.2), rgba(0,0,0,.5)), var(--spine); }
-.spine__side--r{ right:0; transform-origin:right; transform:rotateY(-90deg); background:linear-gradient(270deg, rgba(0,0,0,.2), rgba(0,0,0,.5)), var(--spine); }
+/* Safari puts a face anchored with left:0 here about a book's depth off to the side, so both
+   covers hang from the right edge and the left one is moved across the spine's width */
+.spine__side{
+  top:0; right:0; height:100%; width:var(--depth); transform-origin:right;
+  background:linear-gradient(270deg, rgba(0,0,0,.2), rgba(0,0,0,.5)), var(--spine);
+}
+.spine__side--l{ transform:translateX(calc(var(--w) * var(--k) * -1)) rotateY(-90deg); }
+.spine__side--r{ transform:rotateY(-90deg); }
 .bookcase--3d .bookend{ position:relative; transform-style:preserve-3d; }
 .bookend{ --spine:var(--blue-800); }
 .bookend .spine__top{ background:linear-gradient(180deg, #1e4a85, var(--blue-900)); }

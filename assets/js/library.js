@@ -64,8 +64,19 @@
     schedule();
   });
   shelf.addEventListener("pointerleave", function () { pointerX = null; schedule(); });
-  // the bookcase's inside scrolls on narrow screens, sliding the books under a resting cursor
-  shelf.parentNode.addEventListener("scroll", function () { if (pointerX !== null) schedule(); }, { passive: true });
+  // the bookcase's inside scrolls on narrow screens, sliding the books under a resting cursor;
+  // the 3D camera rides on the shelf, so it is re-aimed at the middle of what is in view
+  var scroller = shelf.parentNode;
+  function aimCamera() {
+    var view = scroller.getBoundingClientRect(), box = shelf.getBoundingClientRect();
+    shelf.style.setProperty("--eye-x", Math.round(view.left + view.width / 2 - box.left) + "px");
+  }
+  scroller.addEventListener("scroll", function () {
+    aimCamera();
+    if (pointerX !== null) schedule();
+  }, { passive: true });
+  window.addEventListener("resize", aimCamera);
+  aimCamera();
 
   spines.forEach(function (spine) {
     spine.addEventListener("focus", function () {
