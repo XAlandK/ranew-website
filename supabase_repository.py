@@ -36,9 +36,9 @@ except ImportError:
 
 # Development-only fallback credentials. NEVER rely on these in production —
 # set the SUPABASE_URL and SUPABASE_KEY environment variables instead.
-_DEV_SUPABASE_URL = "https://ocpkvqspoxbseoojhwob.supabase.co"
+_DEV_SUPABASE_URL = "https://cdzkudkmedvedeqzyzno.supabase.co"
 _DEV_SUPABASE_KEY = (
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9jcGt2cXNwb3hic2Vvb2pod29iIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjMwNTk0NDgsImV4cCI6MjA3ODYzNTQ0OH0.QbXfD-3fufxSSdDSc__SREGeyNBokWV0WbZ6E8-WFCo"
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNkemt1ZGttZWR2ZWRlcXp5em5vIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAyMjk1NzgsImV4cCI6MjA4NTgwNTU3OH0.6NdlObsaUBtwufuEUYCXbJTtg9M0py8vPD1vwnEb_yE"
 )
 
 CORRECTIONS_TABLE = "CorrectedWords"
